@@ -48,7 +48,7 @@ exports.login = async (req, res, next) => {
             throw new Error("password is incorrect");
 
         // res.status(200).send(user)
-        const token = generateToken(user);
+        const token = generateToken({email:user.email, name:user.name ,userName:user.userName });
         return res.send({ user, token })
     }
     catch (err) {
