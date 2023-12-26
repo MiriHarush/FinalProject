@@ -7,12 +7,17 @@ import UserPersonalArea from './pages/UserPersonalArea'
 import CourseManagerDashboard from './pages/CourseManagerDashboard'
 import UserInvitations from './components/UserInvitations'
 import AddCourse from './pages/AddCourse'
-import SpacesDashboard from './pages/SpacesDashboard';
 function App() {
   return (
     <div>
       <RoutesNavBar />
-      <SpacesDashboard/>
+      <Home/>
+      <SignUp/>
+      <LogIn/>
+      <UserPersonalArea/>
+      <CourseManagerDashboard/>
+      <UserInvitations/>
+      <AddCourse/>
     </div>
   );
 }
