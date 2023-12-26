@@ -8,10 +8,10 @@ exports.auth = (role) => {
         token = token.split(" ")[1];
         try {
             const payload = decodeToken(token);
-            // console.log(payload);
-            // if (role && payload._doc.role !== role) return res.sendStatus(401);
-            res.locals.user_id = payload._doc._id;
-            // console.log(payload._doc.id);
+            console.log(payload);
+
+            res.locals.user_id = payload.id;
+
             next();
         } catch (error) {
             next(error);
@@ -33,4 +33,8 @@ exports.authNoPermistion = async (req, res, next) => {
     } catch (error) {
         next(error);
     }
+}
+
+exports.authCurrentSpace = async (req, res, next) => {
+    
 }
