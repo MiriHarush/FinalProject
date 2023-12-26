@@ -21,10 +21,33 @@ const LogIn = () => {
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Add your login logic here using formData
-    console.log('Login Form Data:', formData);
+  
+    try {
+      const response = await fetch('http://localhost:3000/users/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+  
+      if (!response.ok) {
+        // Handle non-successful response (e.g., show an error message)
+        console.error('Login failed:', response.statusText);
+        return;
+      }
+  
+      const data = await response.json();
+      if (data) {
+        console.log('Login successful',data);
+      } else {
+        console.log('Login failed:', data);
+      }
+    } catch (error) {
+      console.error('Error during login:', error.message);
+    }
   };
 
   return (
