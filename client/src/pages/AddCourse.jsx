@@ -11,28 +11,40 @@
 // import PeopleIcon from '@mui/icons-material/People';
 // import MailOutlineIcon from '@mui/icons-material/MailOutline';
 // import AccessibilityNewIcon from '@mui/icons-material/AccessibilityNew';
-// import Zoom from '@mui/material/Zoom';
 
-// const AddCourse = () => {
+// const AddCourse = ({ spaceId }) => {
 //   const [course, setCourse] = useState({
-//     name: '', // שדה השם קיים מהתחלה
+//     name: '',
 //     type: '',
 //     permission: '',
 //     inviteUsers: false,
-//     userToAdd: '',
+//     usersToAdd: [],
+//     userToAdd: '', // מייל של משתמש להזמנה
 //   });
 
 //   const [animated, setAnimated] = useState(false);
 
 //   const handleAddCourse = () => {
 //     setAnimated(true);
-//     // כאן תוכל להוסיף לוגיקה להוספת הקורס למערכת
-//     // וגם להוספת משתמשים אם inviteUsers הוא true
-//     console.log('Adding course:', course);
+//     console.log('Adding course to space:', spaceId, course);
 //   };
 
 //   const handleChange = (field, value) => {
 //     setCourse((prevCourse) => ({ ...prevCourse, [field]: value }));
+//   };
+
+//   const handleAddUser = () => {
+//     if (course.userToAdd && course.permission === 'פרטי') {
+//       // כאן תוכלי לבצע בדיקה אם המשתמש כבר קיים במערכת או להוסיף אותו ל-course.usersToAdd
+//       // לדוג', יש לבצע בדיקה של קיומו במערכת ואז להוסיף אותו ל-course.usersToAdd
+//       // או לקבל אותו מה-DB ולהוסיף אותו ל-course.usersToAdd
+//       const newUser = course.userToAdd;
+//       setCourse((prevCourse) => ({
+//         ...prevCourse,
+//         usersToAdd: [...prevCourse.usersToAdd, newUser],
+//         userToAdd: '', // אפס את המייל לאחר הוספה
+//       }));
+//     }
 //   };
 
 //   return (
@@ -101,37 +113,32 @@
 //         </Select>
 //       </FormControl>
 //       {course.permission === 'פרטי' && (
-//         <FormControl sx={{ marginBottom: '20px', width: '300px' }}>
-//           <InputLabel>הזמן משתמשים לקורס</InputLabel>
-//           <Select
-//             value={course.inviteUsers}
-//             onChange={(e) => handleChange('inviteUsers', e.target.value)}
-//             label="הזמן משתמשים לקורס"
-//             sx={{ color: '#FFA000' }}
-//             inputProps={{
+//         <>
+//           {course.usersToAdd.map((user, index) => (
+//             <Typography key={index} sx={{ color: '#2196F3', marginTop: '10px' }}>
+//               {user}
+//             </Typography>
+//           ))}
+//           <TextField
+//             label="מייל משתמש להזמנה"
+//             variant="outlined"
+//             value={course.userToAdd}
+//             onChange={(e) => handleChange('userToAdd', e.target.value)}
+//             sx={{ marginBottom: '20px', width: '300px' }}
+//             InputProps={{
 //               startAdornment: (
-//                 <MailOutlineIcon sx={{ color: '#FFA000' }} />
+//                 <MailOutlineIcon sx={{ color: '#2196F3' }} />
 //               ),
 //             }}
+//           />
+//           <Button
+//             variant="contained"
+//             onClick={handleAddUser}
+//             sx={{ backgroundColor: '#2196F3', color: '#fff', marginBottom: '20px' }}
 //           >
-//             <MenuItem value={true}>כן</MenuItem>
-//             <MenuItem value={false}>לא</MenuItem>
-//           </Select>
-//         </FormControl>
-//       )}
-//       {course.inviteUsers && (
-//         <TextField
-//           label="שם משתמש להזמנה"
-//           variant="outlined"
-//           value={course.userToAdd}
-//           onChange={(e) => handleChange('userToAdd', e.target.value)}
-//           sx={{ marginBottom: '20px', width: '300px' }}
-//           InputProps={{
-//             startAdornment: (
-//               <PeopleIcon sx={{ color: '#8BC34A' }} />
-//             ),
-//           }}
-//         />
+//             הוסף משתמש
+//           </Button>
+//         </>
 //       )}
 //       <Button
 //         variant="contained"
@@ -141,24 +148,6 @@
 //       >
 //         הוסף קורס
 //       </Button>
-//       {course.inviteUsers && (
-//         <Button
-//           variant="contained"
-//           sx={{ backgroundColor: '#81C784', color: '#fff', width: '300px' }}
-//           startIcon={<PeopleIcon />}
-//         >
-//           הזמן משתמשים
-//         </Button>
-//       )}
-//       {course.inviteUsers && (
-//         <Button
-//           variant="contained"
-//           sx={{ backgroundColor: '#4CAF50', color: '#fff', width: '300px', marginTop: '20px' }}
-//           startIcon={<MailOutlineIcon />}
-//         >
-//           שלח מייל
-//         </Button>
-//       )}
 //     </Box>
 //   );
 // };
@@ -178,7 +167,28 @@ import AddIcon from '@mui/icons-material/Add';
 import PeopleIcon from '@mui/icons-material/People';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import AccessibilityNewIcon from '@mui/icons-material/AccessibilityNew';
-import Zoom from '@mui/material/Zoom';
+import Avatar from '@mui/material/Avatar';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
+import BusinessIcon from '@mui/icons-material/Business';
+import PublicIcon from '@mui/icons-material/Public';
+import LockIcon from '@mui/icons-material/Lock';
+
+// קריאת דמה לשרת, שנמצאת בהנחה שיש לך פונקציה כזו
+const checkUserExistence = async (userEmail) => {
+  // את פה יש לממש את בדיקת קיומו של המשתמש בשרת
+  // לדוג', לעבור על רשימת המשתמשים בשרת ולבדוק האם יש משתמש עם המייל
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      // במקרה הזה, יש לך משתמש דמי שנכנס לתוך הפונקציה
+      const fakeUser = {
+        email: userEmail,
+        name: 'John Doe',
+      };
+      resolve(fakeUser);
+    }, 1000);
+  });
+};
 
 const AddCourse = ({ spaceId }) => {
   const [course, setCourse] = useState({
@@ -186,20 +196,49 @@ const AddCourse = ({ spaceId }) => {
     type: '',
     permission: '',
     inviteUsers: false,
-    userToAdd: '',
+    usersToAdd: [],
+    userToAdd: '', // מייל של משתמש להזמנה
   });
 
   const [animated, setAnimated] = useState(false);
 
-  const handleAddCourse = () => {
+  const handleAddCourse = async () => {
     setAnimated(true);
-    // כאן תוכלי להשתמש ב-mutation להוספת הקורס למערכת
-    // וגם להוספת משתמשים אם inviteUsers הוא true
     console.log('Adding course to space:', spaceId, course);
+
+    // כאשר לוחצים על "הוסף קורס", כאן אפשר להוסיף לוגיקה נוספת לשמירה בבסיס הנתונים
   };
 
   const handleChange = (field, value) => {
     setCourse((prevCourse) => ({ ...prevCourse, [field]: value }));
+  };
+
+  const handleAddUser = async () => {
+    if (course.userToAdd && course.permission === 'פרטי') {
+      // בודקים אם המשתמש קיים בשרת
+      const existingUser = await checkUserExistence(course.userToAdd);
+
+      if (existingUser) {
+        // המשתמש קיים - נוסיף אותו לרשימת המשתמשים
+        setCourse((prevCourse) => ({
+          ...prevCourse,
+          usersToAdd: [...prevCourse.usersToAdd, existingUser],
+          userToAdd: '', // אפס את המייל לאחר הוספה
+        }));
+      } else {
+        // המשתמש לא קיים - כאן נוכל להוסיף לוגיקה נוספת או להציג הודעה למשתמש
+        console.log('User does not exist');
+      }
+    }
+  };
+
+  const handleRemoveUser = (index) => {
+    const newUsers = [...course.usersToAdd];
+    newUsers.splice(index, 1);
+    setCourse((prevCourse) => ({
+      ...prevCourse,
+      usersToAdd: newUsers,
+    }));
   };
 
   return (
@@ -241,13 +280,27 @@ const AddCourse = ({ spaceId }) => {
           sx={{ color: '#2196F3' }}
           inputProps={{
             startAdornment: (
-              <PeopleIcon sx={{ color: '#2196F3' }} />
+              <>
+                <PeopleIcon sx={{ color: '#2196F3' }} />
+                {course.type === 'חוויתי' && <BusinessIcon sx={{ marginLeft: '5px' }} />}
+                {course.type === 'לימודי' && <PublicIcon sx={{ marginLeft: '5px' }} />}
+                {course.type === 'העשרה' && <LockIcon sx={{ marginLeft: '5px' }} />}
+              </>
             ),
           }}
         >
-          <MenuItem value="חוויתי">חוויתי</MenuItem>
-          <MenuItem value="לימודי">לימודי</MenuItem>
-          <MenuItem value="העשרה">העשרה</MenuItem>
+          <MenuItem value="חוויתי">
+            <BusinessIcon sx={{ marginRight: '5px' }} />
+            חוויתי
+          </MenuItem>
+          <MenuItem value="לימודי">
+            <PublicIcon sx={{ marginRight: '5px' }} />
+            לימודי
+          </MenuItem>
+          <MenuItem value="העשרה">
+            <LockIcon sx={{ marginRight: '5px' }} />
+            העשרה
+          </MenuItem>
         </Select>
       </FormControl>
       <FormControl variant="outlined" sx={{ marginBottom: '20px', width: '300px' }}>
@@ -259,75 +312,84 @@ const AddCourse = ({ spaceId }) => {
           sx={{ color: '#4CAF50' }}
           inputProps={{
             startAdornment: (
-              <MailOutlineIcon sx={{ color: '#4CAF50' }} />
+              <>
+                <MailOutlineIcon sx={{ color: '#4CAF50' }} />
+                {course.permission === 'פרטי' && <LockIcon sx={{ marginLeft: '5px' }} />}
+                {course.permission === 'ציבורי' && <PublicIcon sx={{ marginLeft: '5px' }} />}
+              </>
             ),
           }}
         >
-          <MenuItem value="פרטי">פרטי</MenuItem>
-          <MenuItem value="ציבורי">ציבורי</MenuItem>
+          <MenuItem value="פרטי">
+            <LockIcon sx={{ marginRight: '5px' }} />
+            פרטי
+          </MenuItem>
+          <MenuItem value="ציבורי">
+            <PublicIcon sx={{ marginRight: '5px' }} />
+            ציבורי
+          </MenuItem>
         </Select>
       </FormControl>
       {course.permission === 'פרטי' && (
-        <FormControl sx={{ marginBottom: '20px', width: '300px' }}>
-          <InputLabel>הזמן משתמשים לקורס</InputLabel>
-          <Select
-            value={course.inviteUsers}
-            onChange={(e) => handleChange('inviteUsers', e.target.value)}
-            label="הזמן משתמשים לקורס"
-            sx={{ color: '#FFA000' }}
-            inputProps={{
+        <>
+          {course.usersToAdd.map((user, index) => (
+            <Box
+              key={index}
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                marginBottom: '10px',
+              }}
+            >
+              <Avatar sx={{ marginRight: '10px' }}>{user.name[0]}</Avatar>
+              <Typography sx={{ color: '#2196F3' }}>
+                {user.name} ({user.email})
+              </Typography>
+              <IconButton
+                aria-label="remove"
+                size="small"
+                onClick={() => handleRemoveUser(index)}
+                sx={{ marginLeft: 'auto', color: 'red' }}
+              >
+                <CloseIcon />
+              </IconButton>
+            </Box>
+          ))}
+          <TextField
+            label="מייל משתמש להזמנה"
+            variant="outlined"
+            value={course.userToAdd}
+            onChange={(e) => handleChange('userToAdd', e.target.value)}
+            sx={{ marginBottom: '20px', width: '300px' }}
+            InputProps={{
               startAdornment: (
-                <MailOutlineIcon sx={{ color: '#FFA000' }} />
+                <MailOutlineIcon sx={{ color: '#2196F3' }} />
               ),
             }}
+          />
+          <Button
+            variant="contained"
+            onClick={handleAddUser}
+            sx={{ backgroundColor: '#2196F3', color: '#fff', marginBottom: '20px' }}
           >
-            <MenuItem value={true}>כן</MenuItem>
-            <MenuItem value={false}>לא</MenuItem>
-          </Select>
-        </FormControl>
-      )}
-      {course.inviteUsers && (
-        <TextField
-          label="שם משתמש להזמנה"
-          variant="outlined"
-          value={course.userToAdd}
-          onChange={(e) => handleChange('userToAdd', e.target.value)}
-          sx={{ marginBottom: '20px', width: '300px' }}
-          InputProps={{
-            startAdornment: (
-              <PeopleIcon sx={{ color: '#8BC34A' }} />
-            ),
-          }}
-        />
+            הוסף משתמש
+          </Button>
+        </>
       )}
       <Button
         variant="contained"
         onClick={handleAddCourse}
-        sx={{ backgroundColor: '#FF4081', color: '#fff', marginBottom: '20px' }}
+        sx={{ backgroundColor: '#FF4081', color: '#fff' }}
         startIcon={<AccessibilityNewIcon />}
       >
         הוסף קורס
       </Button>
-      {course.inviteUsers && (
-        <Button
-          variant="contained"
-          sx={{ backgroundColor: '#81C784', color: '#fff', width: '300px' }}
-          startIcon={<PeopleIcon />}
-        >
-          הזמן משתמשים
-        </Button>
-      )}
-      {course.inviteUsers && (
-        <Button
-          variant="contained"
-          sx={{ backgroundColor: '#4CAF50', color: '#fff', width: '300px', marginTop: '20px' }}
-          startIcon={<MailOutlineIcon />}
-        >
-          שלח מייל
-        </Button>
-      )}
     </Box>
   );
 };
 
 export default AddCourse;
+
+
+
+
