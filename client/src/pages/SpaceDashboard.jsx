@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+import AddCourse from './AddCourse';
 
 const SpaceDashboard = () => {
   const { spaceId } = useParams();
+  const [isAddCourseModalOpen, setIsAddCourseModalOpen] = useState(false);
 
   // Assuming you have a list of courses related to the space
   const courseList = [
@@ -15,6 +16,14 @@ const SpaceDashboard = () => {
     { id: '2', name: 'Course 2' },
     // Add more courses as needed
   ];
+
+  const openAddCourseModal = () => {
+    setIsAddCourseModalOpen(true);
+  };
+
+  const closeAddCourseModal = () => {
+    setIsAddCourseModalOpen(false);
+  };
 
   return (
     <div style={{ padding: '20px' }}>
@@ -30,8 +39,7 @@ const SpaceDashboard = () => {
               <Button
                 variant="outlined"
                 color="primary"
-                component={Link}
-                to={`/space/${spaceId}/course/${course.id}`}
+                onClick={openAddCourseModal}
                 style={{ marginTop: '10px' }}
               >
                 View Course
@@ -40,6 +48,13 @@ const SpaceDashboard = () => {
           </Card>
         ))}
       </div>
+      <Button variant="outlined" color="primary" onClick={openAddCourseModal}>
+        Add Course
+      </Button>
+
+      {isAddCourseModalOpen && 
+        <AddCourse onClose={closeAddCourseModal} />
+      }
     </div>
   );
 };

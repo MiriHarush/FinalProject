@@ -8,18 +8,11 @@ import CourseManagerDashboard from './pages/CourseManagerDashboard'
 import UserInvitations from './components/UserInvitations'
 import AddCourse from './pages/AddCourse'
 import SpaceDashboard from './pages/SpaceDashboard';
+
 function App() {
   return (
     <div>
-      <RoutesNavBar />
-      <Home/>
-      <SignUp/>
-      <LogIn/>
-      <UserPersonalArea/>
-      <CourseManagerDashboard/>
-      <UserInvitations/>
-      <AddCourse/>
-      <SpaceDashboard/>
+      <CourseManagerDashboard />
     </div>
   );
 }

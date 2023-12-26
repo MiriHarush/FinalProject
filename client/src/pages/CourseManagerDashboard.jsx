@@ -1,50 +1,50 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import Lesson from '../components/Lesson';
-import LessonModal from '../components/LessonModal';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+import LessonModal from '../components/LessonModal'; // Import the LessonModal component
 
 const CourseManagerDashboard = () => {
   const { courseId } = useParams();
 
-  const courseData = {
+  const [courseData, setCourseData] = useState({
     name: 'Course Name',
     type: 'Course Type',
     permission: 'Public',
     lessons: [
       { id: '1', title: 'Lesson 1', content: 'Lesson 1 content...' },
       { id: '2', title: 'Lesson 2', content: 'Lesson 2 content...' },
-      // ניתן להוסיף שאר השיעורים עם תוכן
+      // Add more lessons as needed
     ],
+  });
+
+  const [newLesson, setNewLesson] = useState({ title: '', content: '' });
+  const [lessonModalOpen, setLessonModalOpen] = useState(false);
+  const [selectedLesson, setSelectedLesson] = useState(null);
+
+  const addLesson = () => {
+    const lessonId = (courseData.lessons.length + 1).toString();
+    const updatedLessons = [...courseData.lessons, { ...newLesson, id: lessonId }];
+
+    setCourseData((prevData) => ({
+      ...prevData,
+      lessons: updatedLessons,
+    }));
+
+    setNewLesson({ title: '', content: '' });
   };
-    const [selectedLesson, setSelectedLesson] = useState(null);
-  
-    const displayLesson = (lesson) => {
-      setSelectedLesson(lesson);
-    };
-  
-    if (selectedLesson) {
-      return (
-        <LessonModal
-          open={true}
-          onClose={() => setSelectedLesson(null)}
-          lesson={selectedLesson}
-        />
-      );
-    }
-  if (selectedLesson) {
-    return (
-      <div style={{ padding: '20px' }}>
-        <Lesson courseId={courseId} lesson={selectedLesson} />
-        <Button variant="outlined" color="primary" onClick={() => setSelectedLesson(null)}>
-          Back to Lessons
-        </Button>
-      </div>
-    );
-  }
+
+  const openLessonModal = (lesson) => {
+    setSelectedLesson(lesson);
+    setLessonModalOpen(true);
+  };
+
+  const closeLessonModal = () => {
+    setSelectedLesson(null);
+    setLessonModalOpen(false);
+  };
 
   return (
     <div style={{ padding: '20px' }}>
@@ -60,10 +60,13 @@ const CourseManagerDashboard = () => {
               <Typography variant="h6" component="div">
                 {lesson.title}
               </Typography>
+              <Typography variant="body2" color="textSecondary">
+                {lesson.content}
+              </Typography>
               <Button
                 variant="outlined"
                 color="primary"
-                onClick={() => displayLesson(lesson)}
+                onClick={() => openLessonModal(lesson)}
                 style={{ marginTop: '10px' }}
               >
                 View Lesson
@@ -71,7 +74,43 @@ const CourseManagerDashboard = () => {
             </CardContent>
           </Card>
         ))}
+        <Card style={{ margin: '10px', minWidth: '250px' }}>
+          <CardContent>
+            <Typography variant="h6" component="div">
+              New Lesson
+            </Typography>
+            <input
+              type="text"
+              placeholder="Lesson Title"
+              value={newLesson.title}
+              onChange={(e) => setNewLesson({ ...newLesson, title: e.target.value })}
+              style={{ marginBottom: '10px', width: '100%' }}
+            />
+            <textarea
+              placeholder="Lesson Content"
+              value={newLesson.content}
+              onChange={(e) => setNewLesson({ ...newLesson, content: e.target.value })}
+              style={{ marginBottom: '10px', width: '100%' }}
+            />
+            <Button
+              variant="outlined"
+              color="primary"
+              onClick={addLesson}
+              style={{ marginTop: '10px' }}
+            >
+              Add Lesson
+            </Button>
+          </CardContent>
+        </Card>
       </div>
+      {/* Lesson Modal */}
+      {lessonModalOpen && (
+        <LessonModal
+          open={lessonModalOpen}
+          onClose={closeLessonModal}
+          lesson={selectedLesson}
+        />
+      )}
     </div>
   );
 };
