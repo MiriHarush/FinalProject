@@ -9,28 +9,29 @@ import Button from '@mui/material/Button';
 import PersonIcon from '@mui/icons-material/Person';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 
-const AddSpace = ({ onAddSpace }) => {
+const AddSpace = ({ onAddSpace, onConfirmAdd, open }) => {
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleToggle = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = () => {
-    setAnchorEl(null);
-    onAddSpace(); // Callback to parent component to close the AddSpace form
+  const handleConfirmAdd = () => {
+    handleClose();
+    onConfirmAdd(); // Notify the parent component about the confirmation
   };
 
-  const open = Boolean(anchorEl);
-  const id = open ? 'simple-popover' : undefined;
+  const handleClose = () => {
+    // setAnchorEl(null);
+    onAddSpace();
+  };
+
+  // const open = Boolean(anchorEl);
 
   const handleAddCourse = () => {
-    // You can add any logic related to adding a course here
-    // For now, just close the Popover
     handleClose();
   };
 
-  // Example user data (replace this with actual user data)
   const user = {
     name: 'John Doe',
     email: 'john.doe@example.com',
@@ -38,11 +39,10 @@ const AddSpace = ({ onAddSpace }) => {
 
   return (
     <div>
-      <Fab color="primary" aria-label="add" onClick={handleToggle}>
+      {/* <Fab color="primary" aria-label="add" onClick={handleToggle} style={{ margin: '20px' }}>
         <AddIcon />
-      </Fab>
+      </Fab> */}
       <Popover
-        id={id}
         open={open}
         anchorEl={anchorEl}
         onClose={handleClose}
@@ -83,13 +83,19 @@ const AddSpace = ({ onAddSpace }) => {
               ),
             }}
           />
-          {/* Add more fields as needed */}
-          <Button
+          {/* <Button
             variant="contained"
             onClick={handleAddCourse}
             sx={{ backgroundColor: '#FF4081', color: '#fff', marginTop: '20px', width: '100%' }}
           >
             Add Course
+          </Button> */}
+          <Button
+            variant="contained"
+            onClick={handleConfirmAdd}
+            sx={{ backgroundColor: '#4CAF50', color: '#fff', marginTop: '20px', width: '100%' }}
+          >
+            Confirm Add
           </Button>
         </Box>
       </Popover>
@@ -98,3 +104,4 @@ const AddSpace = ({ onAddSpace }) => {
 };
 
 export default AddSpace;
+
