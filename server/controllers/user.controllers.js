@@ -56,3 +56,17 @@ exports.login = async (req, res, next) => {
     }
 }
 
+exports.getUserSpaces = async (req, res, next) => {
+    try {
+        console.log(req);
+        const userId = req.user._id; 
+
+        const user = await User.findById(userId);
+        const spaces = user.spaces;
+
+        return res.status(200).send(spaces);
+    } catch (error) {
+        next(error)
+    }
+}
+
