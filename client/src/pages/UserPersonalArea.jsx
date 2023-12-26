@@ -1,14 +1,8 @@
-import React, { useState } from 'react';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
+import React from 'react';
+import UserAsideTabs from '../components/UserAsideTabs';
 import Box from '@mui/material/Box';
 
 const UserPersonalArea = () => {
-  const [value, setValue] = useState(0);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
 
   const userDetails = {
     name: 'שם משתמש',
@@ -40,64 +34,7 @@ const UserPersonalArea = () => {
         <p style={{ color: '#666' }}>Email: {userDetails.email}</p>
         <p style={{ color: '#666' }}>{userDetails.otherDetails}</p>
       </Box>
-      <Tabs
-        value={value}
-        onChange={handleChange}
-        aria-label="user tabs"
-        sx={{
-          width: '70%',
-          backgroundColor: '#fff',
-          borderRadius: '15px',
-          boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
-          alignSelf: 'center',
-        }}
-      >
-        <Tab label="הזמנות" />
-        <Tab label="יצירת מרחבים" />
-        <Tab label="מרחבים משותפים" />
-      </Tabs>
-      <TabPanel value={value} index={0}>
-        <div
-          style={{
-            backgroundColor: '#f8f8f8',
-            borderRadius: '0 0 15px 15px',
-            marginTop: '5px',
-            padding: '20px',
-            boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
-            color: '#333',
-          }}
-        >
-          תוכן מסך הזמנות
-        </div>
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        <div
-          style={{
-            backgroundColor: '#f8f8f8',
-            borderRadius: '0 0 15px 15px',
-            marginTop: '5px',
-            padding: '20px',
-            boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
-            color: '#333',
-          }}
-        >
-          תוכן מסך יצירת מרחבים
-        </div>
-      </TabPanel>
-      <TabPanel value={value} index={2}>
-        <div
-          style={{
-            backgroundColor: '#f8f8f8',
-            borderRadius: '0 0 15px 15px',
-            marginTop: '5px',
-            padding: '20px',
-            boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
-            color: '#333',
-          }}
-        >
-          תוכן מסך מרחבים משותפים
-        </div>
-      </TabPanel>
+      <UserAsideTabs/>
     </Box>
   );
 };

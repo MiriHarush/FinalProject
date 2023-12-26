@@ -5,14 +5,18 @@ const { validCreateUser, validLogIn } = require("../validation/user.validation")
 
 exports.createUser = async (req, res, next) => {
     const body = req.body;
+    console.log(body);
     try {
+        console.log("JOI");
         const validate = validCreateUser(body)
         if (validate.error)
             throw Error(validate.error);
-
+        console.log("RDFCVGBHNMKL;,'.");
         if (await checkIfUserExsist(body.email)) {
             throw new Error("This email alredy in this system")
         }
+
+        console.log("ATTTTTT");
 
         const hash = await bcrypt.hash(body.password, 10);
         body.password = hash;
@@ -23,6 +27,7 @@ exports.createUser = async (req, res, next) => {
         return res.status(201).send(newUser);
     }
     catch (err) {
+        console.log(err);
         next(err);
     }
 }
@@ -48,7 +53,7 @@ exports.login = async (req, res, next) => {
             throw new Error("password is incorrect");
 
         // res.status(200).send(user)
-        const token = generateToken(user);
+        const token = generateToken({email:user.email, name:user.name ,userName:user.userName });
         return res.send({ user, token })
     }
     catch (err) {

@@ -14,6 +14,7 @@ exports.validCreateUser = (userBody) => {
                     'string.pattern.base': 'Password must contain at least one uppercase letter, one lowercase letter, and one number.'
                 }),
             email: Joi.string().email({ tlds: { allow: ['com', 'net', 'org'] } }).error(() => Error('Email is not valid')).required(),
+            contact: Joi.string()
         })
     return signUpSchema.validate(userBody);
 }
