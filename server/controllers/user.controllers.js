@@ -93,3 +93,18 @@ exports.getUserSpaces = async (req, res, next) => {
     }
 }
 
+exports.patchUser = async (req, res, next) => {
+    const id = req.params.idEdit;
+    const userId = res.locals.user_id;
+    const data = req.body;
+    
+    try {
+        if(userId !== id) {
+            throw new Error("you are not the auther")
+        }
+        const patchUser = await User.findByIdAndUpdate(userId, data, { new: true });
+        res.send(patchUser)
+    } catch (error) {
+        next(error)
+    }
+}
