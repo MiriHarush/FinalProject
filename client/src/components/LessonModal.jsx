@@ -16,16 +16,47 @@ const LessonModal = ({ open, onClose, lesson }) => {
   const [contentType, setContentType] = useState('');
   const [uploadedFile, setUploadedFile] = useState(null);
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    setUploadedFile(file);
+  // Allowed content types for each option
+  const allowedContentTypes = {
+    image: ['image/jpeg', 'image/png', 'image/gif'],
+    video: ['video/mp4', 'video/mpeg', 'video/ogg'],
+    pdf: ['application/pdf'],
+    zip: ['application/zip'],
+    link: [], // No file for link
   };
 
+  const [fileError, setFileError] = useState('');
+  const [filePreview, setFilePreview] = useState(null);
+
+  const handleFileChange = (e) => {
+  const file = e.target.files[0];
+
+  // Check the file format
+  const validFormats = allowedContentTypes[contentType] || [];
+  if (file && !validFormats.includes(file.type)) {
+    // Display an error message
+    setFileError('Invalid file format. Please choose a valid file.');
+    setFilePreview(null);
+    setUploadedFile(null);
+  } else {
+    setFileError(''); // Clear the error message
+    setFilePreview(file ? URL.createObjectURL(file) : null);
+    setUploadedFile(file);
+  }
+};
+
+
+
+
   const handleUpload = () => {
-    // Handle the file upload logic based on the selected content type
-    console.log('Content Type:', contentType);
-    console.log('File uploaded:', uploadedFile);
-    // You can add additional logic to handle the uploaded file and content type
+    // Check if the uploaded file type is allowed for the selected content type
+    if (allowedContentTypes[contentType].includes(uploadedFile.type)) {
+      console.log('Content Type:', contentType);
+      console.log('File uploaded:', uploadedFile);
+      // Add additional logic to handle the uploaded file and content type
+    } else {
+      alert('Invalid file type for the selected content type.');
+    }
   };
 
   const getIcon = (value) => {
@@ -86,6 +117,7 @@ const LessonModal = ({ open, onClose, lesson }) => {
                 >
                   Upload {contentType.toUpperCase()}
                 </Button>
+                {fileError && <p style={{ color: 'red', marginTop: '10px' }}>{fileError}</p>}
               </>
             )}
             {contentType === 'link' && (
@@ -107,6 +139,15 @@ const LessonModal = ({ open, onClose, lesson }) => {
             )}
           </>
         )}
+        {filePreview && (
+          <div style={{ marginTop: '10px' }}>
+            <Typography variant="body2" color="textSecondary">
+              File Preview:
+            </Typography>
+            <img src={filePreview} alt="File Preview" style={{ maxWidth: '100%', maxHeight: '200px' }} />
+          </div>
+        )}
+
         {/* Close button */}
         <Button onClick={onClose} color="primary" variant="contained" style={{ marginTop: '10px' }}>
           Close
