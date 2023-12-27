@@ -488,7 +488,7 @@ const SignUp = () => {
   const [passwordError, setPasswordError] = useState(false);
   const [nameError, setNameError] = useState(false);
   const [emailError, setEmailError] = useState(false);
-  const { currentUser, signup, login, logout } = useContext(UserContext);
+  const { signup } = useContext(UserContext);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -531,7 +531,7 @@ const SignUp = () => {
     e.preventDefault();
     const { confirmPassword, ...formDataWithoutConfirmPassword } = formData;
     signup(formDataWithoutConfirmPassword);
-    
+
   };
 
   return (

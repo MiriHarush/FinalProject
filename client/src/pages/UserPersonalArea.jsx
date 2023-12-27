@@ -2,15 +2,12 @@ import React, { useContext } from 'react';
 import UserAsideTabs from '../components/UserAsideTabs';
 import Box from '@mui/material/Box';
 import { UserContext } from '../context/users.context';
+
+
 const UserPersonalArea = () => {
-
-  const userDetails = {
-    name: 'שם משתמש',
-    email: 'user@example.com',
-    otherDetails: 'פרטים נוספים כגון תפקיד, עיר, וכדומה',
-  };
-
-  const {currentUser} = useContext(UserContext);
+  const { currentUser } = useContext(UserContext);
+  
+  console.log('in current', currentUser);
 
   return (
     <Box
@@ -35,26 +32,15 @@ const UserPersonalArea = () => {
         <h2 style={{ color: '#333' }}>WELCOME, {currentUser.name}!</h2>
         <p style={{ color: '#666' }}>Email: {currentUser.email}</p>
         <p style={{ color: '#666' }}>User Name: {currentUser.userName}</p>
+        <p style={{ color: '#666' }}>Phone: {currentUser.phone}</p>
+        <p style={{ color: '#666' }}>How to contact? {currentUser.contact}</p>
+
       </Box>
       <UserAsideTabs/>
     </Box>
   );
 };
 
-const TabPanel = (props) => {
-  const { children, value, index, ...other } = props;
 
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`user-tabpanel-${index}`}
-      aria-labelledby={`user-tab-${index}`}
-      {...other}
-    >
-      {value === index && <Box>{children}</Box>}
-    </div>
-  );
-}
 
 export default UserPersonalArea;
