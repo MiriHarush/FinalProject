@@ -8,12 +8,12 @@ import CourseManagerDashboard from './pages/CourseManagerDashboard'
 import UserInvitations from './components/UserInvitations'
 import AddCourse from './pages/AddCourse'
 import SpacesDashboard from './pages/SpacesDashboard'
+import { UserProvider } from './context/users.context';
 function App() {
   return (
-    <div>
-      <RoutesNavBar />
-      <SpacesDashboard/>
-      </div>
+      <UserProvider>
+             <RoutesNavBar />
+      </UserProvider>
   );
 }
 

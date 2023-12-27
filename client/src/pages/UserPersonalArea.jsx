@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import UserAsideTabs from '../components/UserAsideTabs';
 import Box from '@mui/material/Box';
-
+import { UserContext } from '../context/users.context';
 const UserPersonalArea = () => {
 
   const userDetails = {
@@ -9,6 +9,8 @@ const UserPersonalArea = () => {
     email: 'user@example.com',
     otherDetails: 'פרטים נוספים כגון תפקיד, עיר, וכדומה',
   };
+
+  const {currentUser} = useContext(UserContext);
 
   return (
     <Box
@@ -30,9 +32,9 @@ const UserPersonalArea = () => {
           textAlign: 'center',
         }}
       >
-        <h2 style={{ color: '#333' }}>ברוכים הבאים, {userDetails.name}!</h2>
-        <p style={{ color: '#666' }}>Email: {userDetails.email}</p>
-        <p style={{ color: '#666' }}>{userDetails.otherDetails}</p>
+        <h2 style={{ color: '#333' }}>WELCOME, {currentUser.name}!</h2>
+        <p style={{ color: '#666' }}>Email: {currentUser.email}</p>
+        <p style={{ color: '#666' }}>User Name: {currentUser.userName}</p>
       </Box>
       <UserAsideTabs/>
     </Box>
