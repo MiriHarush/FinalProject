@@ -15,20 +15,25 @@ const courseSchema = new mongoose.Schema({
     permission: {
         type: String, 
         enum: ['public', 'private'],
+        default:'private',
         required: true
     },
     lessons: [{
         type: mongoose.Types.ObjectId,
         ref: 'Lesson'
     }],
-    descerption:{
-        type:String,
-        required:false
+    description:{
+        type: String,
+        required: false
     },
     //הרשאות כמו מחיקה עדכון אז קשרנו לבעלים של הספייס
     ownerCourse: {
         type: mongoose.Types.ObjectId,
         ref: 'Space'
+    },
+    ownerUser: {
+        type: mongoose.Types.ObjectId,
+        ref: 'User'
     }
 
 })
