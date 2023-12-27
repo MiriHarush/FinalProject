@@ -7,12 +7,21 @@ import UserPersonalArea from './pages/UserPersonalArea'
 import CourseManagerDashboard from './pages/CourseManagerDashboard'
 import UserInvitations from './components/UserInvitations'
 import AddCourse from './pages/AddCourse'
-import CourseUserDashboard from './pages/CourseUserDashboard';
+<<<<<<<<< Temporary merge branch 1
+import SpaceDashboard from './pages/SpaceDashboard';
 
 function App() {
   return (
     <div>
-      <CourseUserDashboard/>
+      <CourseManagerDashboard />
+=========
+import SpacesDashboard from './pages/SpacesDashboard';
+function App() {
+  return (
+    <div>
+      <RoutesNavBar />
+      <SpacesDashboard/>
+>>>>>>>>> Temporary merge branch 2
     </div>
   );
 }
