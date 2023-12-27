@@ -3,7 +3,8 @@ const { Space } = require("../model/space.model");
 
 exports.getAllCourses = async (req, res, next) => {
     try {
-        const courses = await Course.find({});
+        const { ownerCourse } = req.body;
+        const courses = await Course.find({ownerCourse: ownerCourse});
         res.send(courses);
     } catch (error) {
         next(error)
