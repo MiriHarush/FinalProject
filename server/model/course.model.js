@@ -22,14 +22,18 @@ const courseSchema = new mongoose.Schema({
         type: mongoose.Types.ObjectId,
         ref: 'Lesson'
     }],
-    descerption:{
-        type:String,
-        required:false
+    description:{
+        type: String,
+        required: false
     },
     //הרשאות כמו מחיקה עדכון אז קשרנו לבעלים של הספייס
     ownerCourse: {
         type: mongoose.Types.ObjectId,
         ref: 'Space'
+    },
+    ownerUser: {
+        type: mongoose.Types.ObjectId,
+        ref: 'User'
     }
 
 })
