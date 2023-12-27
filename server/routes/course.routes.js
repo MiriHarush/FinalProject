@@ -7,7 +7,7 @@ const { addCourse } = require("../controllers/course.controller");
 const router = express.Router();
 
 
-router.post("/addCourse", addCourse);
+router.post("/addCourse", auth(), addCourse);
 
 
 module.exports=router;
