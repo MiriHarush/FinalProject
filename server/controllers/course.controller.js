@@ -18,7 +18,7 @@ exports.addCourse = async (req, res, next) => {
         // Save the new course to the database
         const savedCourse = await newCourse.save();
 
-        await Space.updateOne(
+        await Space.findByIdAndUpdate(
             { _id: ownerCourse },  
             { $push: { courses: savedCourse._id } }
         );

@@ -27,7 +27,7 @@ exports.addSpace = async (req, res, next) => {
         await User.findByIdAndUpdate(
             res.locals.user_id,
             { $push: { spaces: savedSpace._id } },
-            { new: true } // This option returns the modified document
+            { new: true } 
         );
 
         res.status(201).json(savedSpace);

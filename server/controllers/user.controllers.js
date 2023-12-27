@@ -30,12 +30,10 @@ exports.createUser = async (req, res, next) => {
         const validate = validCreateUser(body)
         if (validate.error)
             throw Error(validate.error);
-        console.log("RDFCVGBHNMKL;,'.");
         if (await checkIfUserExsist(body.email)) {
             throw new Error("This email alredy in this system")
         }
 
-        console.log("ATTTTTT");
 
         const hash = await bcrypt.hash(body.password, 10);
         body.password = hash;
