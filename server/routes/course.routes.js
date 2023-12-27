@@ -6,15 +6,12 @@ const { addCourse, deleteCourse, patchCourse, getAllCourses, getInfoCourse } = r
 
 const router = express.Router();
 
-router.get("/getAllCourses", getAllCourses);
+router.get("/getAllCourses", auth(), getAllCourses);
 
 router.post("/addCourse", auth(), addCourse);
-router.delete("/deleteCourse/:idDelete", auth(), deleteCourse);
 router.patch("/updateCourse/:idEdit", auth(), patchCourse);
 router.get("/getInfoCourse/:id", auth(), getInfoCourse);
-
-
-
+router.delete("/deleteCourse/:delId",auth(),deleteCourse)
 
 
 module.exports=router;

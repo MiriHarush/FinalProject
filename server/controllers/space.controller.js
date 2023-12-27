@@ -67,3 +67,32 @@ exports.deleteSpace = async (req, res, next) => {
 }
 
 
+exports.updateSpace = async (req, res, next) => {
+    const { editId } = req.params;
+    const update = req.body;
+    const userId = res.locals.user_id;
+    try {
+
+        // const validate = joiSchema.update.validate(update);
+        // if (validate.error)
+        //     throw Error(validate.error);
+
+        let space = await Space.findOne({ _id: editId });
+
+        if (!space) {
+            return res.status(404).send({ msg: "space not exsist" });
+        }
+
+        if (String(space.ownerSpace) !== String(userId))
+            return res.status(404).send({ msg: "You cannot update this space beacouse you are not auther" });
+        space = await Space.findByIdAndUpdate(editId, update, { new: true });
+        // res.send(toy);
+        res.send({ message: 'The space update successfully' });
+
+
+    }
+    catch (error) {
+        next(error);
+    }
+};
+
