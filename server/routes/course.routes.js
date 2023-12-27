@@ -8,6 +8,6 @@ const router = express.Router();
 
 
 router.post("/addCourse", auth(), addCourse);
-router.delete("/deleteCourse/:delId",deleteCourse)
+router.delete("/deleteCourse/:delId",auth(),deleteCourse)
 
 module.exports=router;
