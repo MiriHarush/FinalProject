@@ -15,6 +15,7 @@ const courseSchema = new mongoose.Schema({
     permission: {
         type: String, 
         enum: ['public', 'private'],
+        default:'private',
         required: true
     },
     lessons: [{

@@ -1,7 +1,7 @@
 const { Space } = require("../model/space.model");
 const { User } = require("../model/user.model");
 
-exports.getSpaces = async (req, res, next) => {
+exports.getAllSpaces = async (req, res, next) => {
     try {
         const spaces = await Space.find({});
         res.send(spaces);
