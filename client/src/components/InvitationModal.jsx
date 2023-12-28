@@ -60,7 +60,7 @@ const InvitationModal = ({ invite }) => {
                         {`Invitation from ${instructorName}`}
                     </Typography>
                     <Typography variant="body2" color="textSecondary">
-                        {`Course: ${courseName}`}
+                        {`To Course: ${courseName}`}
                     </Typography>
                     <Button
                         variant="contained"

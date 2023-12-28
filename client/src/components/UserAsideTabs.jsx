@@ -5,8 +5,11 @@ import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import TabPanel from '@mui/lab/TabPanel';
 import Typography from '@mui/material/Typography';
+import InvitationModal from '../components/InvitationModal';
 
 const UserAsideTabs = () => {
+  const inviteData = { instructorName:"aaa", courseName:"bbb" };
+
   const [value, setValue] = useState('0');
 
   const handleChange = (event, newValue) => {
@@ -38,8 +41,10 @@ const UserAsideTabs = () => {
 
         {/* Panel for the first tab */}
         <TabPanel value="0">
-          <Typography variant="h6">תוכן מסך הזמנות</Typography>
-          <p>Additional content goes here...</p>
+          {/* <Typography variant="h6">תוכן מסך הזמנות</Typography>
+          <p>Additional content goes here...</p> */}
+                <InvitationModal invite={inviteData}/>
+
         </TabPanel>
 
         {/* Additional TabPanel components for other tabs... */}
