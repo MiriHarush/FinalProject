@@ -31,11 +31,9 @@ const UserAsideTabs = () => {
             overflowX: 'auto',  // Allow horizontal scrolling
           }}
         >
-          {/* Add more tabs as needed */}
-          <Tab label="הזמנות" value="0" />
-          <Tab label="יצירת מרחבים" value="1" />
-          <Tab label="מרחבים משותפים" value="2" />
-          {/* Add more tabs as needed */}
+          <Tab label="Invitations" value="0" />
+          <Tab label="My spaces" value="1" />
+          <Tab label="Spaces I In" value="2" />
         </Tabs>
 
         {/* Panel for the first tab */}
