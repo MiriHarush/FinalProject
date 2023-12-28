@@ -10,13 +10,19 @@ import AddCourse from './pages/AddCourse'
 import SpaceDashboard from './pages/SpaceDashboard';
 import SpacesDashboard from './pages/SpacesDashboard';
 import { SpaceProvider } from './context/spaces.context';
-
+import { UserProvider } from './context/users.context';
+import InvitationModal from './components/InvitationModal';
 
 function App() {
+  
+
   return (
-    <SpaceProvider>
-      <SpacesDashboard />
-    </SpaceProvider>
+    <UserProvider>
+      <RoutesNavBar />
+      <SpaceProvider>
+      </SpaceProvider>
+    </UserProvider>
+
   );
 }
 

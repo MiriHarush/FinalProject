@@ -20,10 +20,14 @@ const SpacesDashboard = () => {
 
   useEffect(() => {
     setSpaces(getAllSpaces());
-    console.log({spaces});
   }, [])
 
-  
+
+  useEffect(() => {
+    console.log(spaces);
+  }, [spaces])
+
+
   const [selectedSpace, setSelectedSpace] = useState(null);
   const [isAddingSpace, setIsAddingSpace] = useState(false);
   const [isConfirmingAdd, setIsConfirmingAdd] = useState(false);
@@ -51,6 +55,7 @@ const SpacesDashboard = () => {
     setIsConfirmingAdd(false);
   };
 
+  
   return (
     <Container maxWidth="lg" style={{ marginTop: '20px', position: 'relative' }}>
       <Typography variant="h3" align="center" gutterBottom>
@@ -104,3 +109,6 @@ const SpacesDashboard = () => {
 };
 
 export default SpacesDashboard;
+
+
+
