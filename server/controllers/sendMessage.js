@@ -73,4 +73,4 @@ const mail = async (mail) => {
 
 
 
-module.exports = { mail , sendSMS};
+module.exports = { mail};
