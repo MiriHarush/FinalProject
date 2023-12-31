@@ -1,8 +1,5 @@
 const express = require("express");
-
-const { addSpace, getInfoSpace, deleteSpace, getAllSpaces, updateSpace } = require("../controllers/space.controller");
-
-
+const { addSpace, getInfoSpace, deleteSpace, getSpaces, updateSpace, getAllSpaces } = require("../controllers/space.controller");
 const { auth } = require("../middleWare/auth");
 
 
