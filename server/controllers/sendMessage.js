@@ -92,4 +92,6 @@ const forgotPasswordEmail = async (recipientEmail, resetToken) => {
 
 
 
-module.exports = { mail, forgotPasswordEmail };
+
+module.exports = { mail};
+
