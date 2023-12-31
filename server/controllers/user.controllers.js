@@ -1,9 +1,18 @@
+// const bcrypt = require("bcryptjs");
+// const { User } = require("../model/user.model");
+// const { generateToken } = require("../utils/jwt");
+// const { validCreateUser, validLogIn } = require("../validation/user.validation");\
+// const jwt = require('jsonwebtoken');
+
+// const { mail, sendSMS, forgotPasswordEmail } = require("./sendMessage");
+
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken"); // Add this line
 const { User } = require("../model/user.model");
 const { generateToken } = require("../utils/jwt");
 const { validCreateUser, validLogIn } = require("../validation/user.validation");
-
 const { mail, sendSMS } = require("./sendMessage");
+const { forgotPasswordEmail } = require("./sendMessage");
 
 exports.getUsers = async (req, res, next) => {
     try {
@@ -143,3 +152,96 @@ exports.updateLoginMethod = (req, res) => {
     );
     res.json({ message: 'Login method updated successfully.' });
 }
+
+
+// exports.forgotPassword = async (req, res, next) => {
+//     try {
+//       const { email } = req.body;
+
+//       const user = await User.findOne({ email });
+//       if (!user) {
+//         throw new Error("User not found");
+//       }
+  
+//       const resetToken = jwt.sign({ userId: user._id }, "123@@", {
+//         expiresIn: "1h",
+//       });
+
+//       user.resetToken = resetToken;
+//       await user.save();
+
+//       await User.findByIdAndUpdate(user._id, { resetToken });
+
+//       await forgotPasswordEmail(user.email, resetToken);
+  
+//       res.status(200).json({ message: "Reset password email sent successfully" });
+//     } catch (error) {
+//       next(error);
+//     }
+//   };
+
+exports.resetPassword = async (req, res, next) => {
+    try {
+        const { resetToken  } = req.query;
+        const {  newPassword } = req.body;
+
+        console.log("resetToken" + resetToken);
+        // Decode and verify the reset token
+        const decodedToken = jwt.verify(resetToken, "123@@");
+        console.log(decodedToken);
+        const userId = decodedToken.userId;
+
+        // Find the user in the database
+        const user = await User.findById(userId);
+        if (!user) {
+            throw new Error("User not found");
+        }
+        console.log(user.resetToken);
+
+        // Check if the token matches the user's reset token
+        if (user.resetToken !== resetToken) {
+            throw new Error("Invalid reset token");
+        }
+
+        // Validate and hash the new password
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+        // Update the user's password in the database
+        user.password = hashedPassword;
+        user.resetToken = undefined; // Clear the reset token
+        await user.save();
+
+        res.status(200).json({ message: "Password reset successfully" });
+    } catch (error) {
+        next(error);
+    }
+};
+
+  exports.forgotPassword = async (req, res, next) => {
+    try {
+        const { email } = req.body;
+
+        // Check if the user exists
+        const user = await User.findOne({ email });
+        if (!user) {
+            throw new Error("User not found");
+        }
+
+        // Generate a reset token
+        const resetToken = jwt.sign({ userId: user._id }, "123@@", {
+            expiresIn: "1h",
+        });
+
+        // Save the reset token in the database
+        user.resetToken = resetToken;
+        console.log(user.resetToken);
+        await user.save();
+
+        // Send the reset password email
+        await forgotPasswordEmail(user.email, resetToken);
+
+        res.status(200).json({ message: "Reset password email sent successfully" });
+    } catch (error) {
+        next(error);
+    }
+};
