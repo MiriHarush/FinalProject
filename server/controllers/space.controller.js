@@ -8,9 +8,10 @@ exports.getAllSpaces = async (req, res, next) => {
         const spaces = await Space.find({ownerSpace: userId});
         res.send(spaces);
     } catch (error) {
-        next(error)
+        next(error);
     }
 }
+
 
 exports.getInfoSpace = async (req, res, next) => {
     try {
