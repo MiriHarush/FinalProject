@@ -1,7 +1,7 @@
 const nodemailer = require('nodemailer');
 const { User } = require("../model/user.model");
 
-const sendEmail = (to, subject, text) => {
+const sendEmail = async (to, subject, text) => {
     try {
         const transporter = nodemailer.createTransport({
             service: 'gmail',
@@ -12,15 +12,15 @@ const sendEmail = (to, subject, text) => {
         });
 
         const mailOptions = {
-            from: 'donotrplay08@gmail.com',
+            from: 'donotreplay08@gmail.com',
             to: to,
             subject: subject,
-            text: text
+            html: text
         };
 
-        const result = transporter.sendMail(mailOptions);
+        const result = await transporter.sendMail(mailOptions);
 
-        console.log('Email sent:', result);
+        // console.log('Email sent:', result);
 
         return true;
     } catch (error) {
@@ -71,6 +71,27 @@ const mail = async (mail) => {
 //     .catch(error => console.error('Error sending SMS:', error));
 // }
 
+const forgotPasswordEmail = async (recipientEmail, resetToken) => {
+    try {
+        const subject = 'Password Reset';
+        const message = `
+        You have requested a password reset. Click the following link to reset your password:
+        <a href="http://localhost:5173/reset-password?token=${resetToken}">Reset Password</a>
+        `;
+
+        await sendEmail(recipientEmail, subject, message);
+
+        console.log('Reset password email sent successfully');
+    } catch (error) {
+        console.error('Error sending reset password email:', error);
+        throw new Error('Failed to send reset password email');
+    }
+};
+
+  
+
+
 
 
 module.exports = { mail};
+
