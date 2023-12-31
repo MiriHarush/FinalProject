@@ -3,7 +3,9 @@ const { User } = require("../model/user.model");
 
 exports.getAllSpaces = async (req, res, next) => {
     try {
-        const spaces = await Space.find({});
+    const userId = res.locals.user_id;
+
+        const spaces = await Space.find({ownerSpace: userId});
         res.send(spaces);
     } catch (error) {
         next(error)
