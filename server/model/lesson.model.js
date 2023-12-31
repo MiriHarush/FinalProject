@@ -35,9 +35,7 @@ const lessonSchema = new mongoose.Schema({
             type: String,
             url: String
         }],
-
     }
-
 })
 
 const Lesson = mongoose.model("Lesson", lessonSchema);
