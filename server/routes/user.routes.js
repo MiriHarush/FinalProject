@@ -1,6 +1,6 @@
 const express = require("express");
 const { sendEmail, mail } = require("../controllers/sendMessage");
-const { createUser, login, getUserSpaces, getInfoUser, getUsers, patchUser } = require("../controllers/user.controllers");
+const { createUser, login, getUserSpaces, getInfoUser, getUsers, patchUser, forgotPassword, resetPassword } = require("../controllers/user.controllers");
 const { auth } = require("../middleWare/auth");
 
 
@@ -9,6 +9,8 @@ const router = express.Router();
 
 router.post("/createUser", createUser);
 router.post("/login", login);
+router.post("/forgotPassword", forgotPassword);
+router.post("/resetPassword", resetPassword);
 router.get("/getAllUsers", getUsers);
 router.get("/getUserSpaces/",auth(), getUserSpaces);
 router.get("/getInfoUser/:id", getInfoUser);

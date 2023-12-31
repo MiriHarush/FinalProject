@@ -33,7 +33,8 @@ const userSchema = new mongoose.Schema({
         type: mongoose.Types.ObjectId,
         ref: 'Space'
         
-    }]
+    }], 
+    resetToken: String
 })
 
 const User = mongoose.model("User", userSchema);
