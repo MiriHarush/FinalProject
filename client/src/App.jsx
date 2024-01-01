@@ -14,12 +14,12 @@ import { UserProvider } from './context/users.context';
 import InvitationModal from './components/InvitationModal';
 
 function App() {
-  
+
 
   return (
     <UserProvider>
-      <RoutesNavBar />
       <SpaceProvider>
+        <RoutesNavBar />
       </SpaceProvider>
     </UserProvider>
 

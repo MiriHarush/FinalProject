@@ -5,21 +5,22 @@ import SpaceModel from '../components/SpaceModal';
 import SpaceDashboard from './SpaceDashboard';
 import AddSpace from './AddSpace';
 import { SpaceContext } from '../context/spaces.context';
+import { useNavigate } from 'react-router-dom';
 
 
 const SpacesDashboard = () => {
-  // const [spaces, setSpaces] = useState([
-  // { id: 1, name: 'Space 1', manager: 'Manager 1' },
-  // { id: 2, name: 'Space 2', manager: 'Manager 2' },
-  // ]);
   console.log("spacesss");
 
-  const { getAllSpaces, getSpace, addSpace, updateSpace, deleteSpace } = useContext(SpaceContext);
+  const { getAllSpaces } = useContext(SpaceContext);
   const [spaces, setSpaces] = useState([]);
-
+  const navigate = useNavigate();
 
   useEffect(() => {
-    setSpaces(getAllSpaces());
+    const fetchData = async () => {
+      const spacesData = await getAllSpaces();
+      setSpaces(spacesData.result);
+      }
+      fetchData();
   }, [])
 
 
@@ -35,6 +36,7 @@ const SpacesDashboard = () => {
   const handleSpaceClick = (space) => {
     setSelectedSpace(space);
     setIsAddingSpace(false);
+    navigate('/spaceDashboard')
   };
 
   const handleAddSpaceClick = () => {
@@ -55,18 +57,18 @@ const SpacesDashboard = () => {
     setIsConfirmingAdd(false);
   };
 
-  
+
   return (
     <Container maxWidth="lg" style={{ marginTop: '20px', position: 'relative' }}>
       <Typography variant="h3" align="center" gutterBottom>
         Spaces Dashboard
       </Typography>
       <Grid container spacing={3}>
-        {/* {spaces.map((space) => (
+        {spaces?.map((space) => (
           <Grid key={space.id} item xs={12} sm={6} md={4} lg={3}>
             <SpaceModel {...space} onClick={() => handleSpaceClick(space)} />
           </Grid>
-        ))} */}
+        ))}
         <Grid container item xs={12} alignItems="center" justifyContent="center" spacing={1}>
           <Grid item>
             <Tooltip title="Add New Space" placement="right">
@@ -90,7 +92,7 @@ const SpacesDashboard = () => {
           )}
         </Grid>
         <Grid item xs={12}>
-          {selectedSpace && <SpaceDashboard space={selectedSpace} />}
+          {/* {selectedSpace && <SpaceDashboard space={selectedSpace} />} */}
           {isAddingSpace && !isConfirmingAdd && (
             <AddSpace
               onAddSpace={() => setIsAddingSpace(false)}
