@@ -85,13 +85,35 @@ export const UserProvider = ({ children }) => {
     }
   };
 
+  const forgotPassword = async (email) => {
+    try {
+      console.log(email);
+      const config = {
+        method: 'post',
+        url: 'http://localhost:3000/users/forgotPassword',
+        data: email,
+      };
+
+      const message = await axiosRequest(config);
+      return message;
+     
+    } catch (error) {
+      // Handle login errors
+      if (error.response && error.response.data && error.response.data.message) {
+        setLoginError(error.response.data.message);
+      } else {
+        setLoginError('An error occurred during forgot password.');
+      }
+    }
+  };
+  
   const logout = () => {
     console.log('logout');
     setCurrentUser(null);
   };
 
   return (
-    <UserContext.Provider value={{ currentUser, signup, login, logout, loginError }}>
+    <UserContext.Provider value={{ currentUser, signup, login, logout, forgotPassword ,loginError }}>
       {children}
     </UserContext.Provider>
   );
