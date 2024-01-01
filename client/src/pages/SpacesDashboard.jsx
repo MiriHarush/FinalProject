@@ -8,12 +8,7 @@ import { SpaceContext } from '../context/spaces.context';
 
 
 const SpacesDashboard = () => {
-  // const [spaces, setSpaces] = useState([
-  // { id: 1, name: 'Space 1', manager: 'Manager 1' },
-  // { id: 2, name: 'Space 2', manager: 'Manager 2' },
-  // ]);
-  console.log("spacesss");
-
+ 
   const { getAllSpaces, getSpace, addSpace, updateSpace, deleteSpace } = useContext(SpaceContext);
   const [spaces, setSpaces] = useState([]);
 
