@@ -6,6 +6,7 @@ import SignUp from '../pages/SignUp';
 import NavBar from './NavBar';
 import AddCourse from '../pages/AddCourse';
 import UserPersonalArea from '../pages/UserPersonalArea'
+import SpaceDashboard from '../pages/SpaceDashboard';
 
 const RoutesNavBar = () => {
   return (
@@ -15,6 +16,7 @@ const RoutesNavBar = () => {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/" element={<Home />} />
         <Route path="/userPersonalArea" element={<UserPersonalArea />} />
+        <Route path="/spaceDashboard" element={<SpaceDashboard />} />
 
         <Route path="/addCourse" element={<AddCourse />} />
 

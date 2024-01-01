@@ -156,6 +156,7 @@ const LogIn = () => {
 
     // Call login function if email is valid
     await login(formData);
+
     navigate('/userPersonalArea');
   };
 

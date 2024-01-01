@@ -6,9 +6,11 @@ import Box from '@mui/material/Box';
 import TabPanel from '@mui/lab/TabPanel';
 import Typography from '@mui/material/Typography';
 import InvitationModal from '../components/InvitationModal';
+import SpacesDashboard from '../pages/SpacesDashboard';
 
 const UserAsideTabs = () => {
-  const inviteData = { instructorName:"aaa", courseName:"bbb" };
+
+  const inviteData = { instructorName: "aaa", courseName: "bbb" };
 
   const [value, setValue] = useState('0');
 
@@ -36,18 +38,17 @@ const UserAsideTabs = () => {
         >
           <Tab label="Invitations" value="0" />
           <Tab label="My spaces" value="1" />
-          <Tab label="Spaces I In" value="2" />
         </Tabs>
 
         {/* Panel for the first tab */}
         <TabPanel value="0">
-          {/* <Typography variant="h6">תוכן מסך הזמנות</Typography>
-          <p>Additional content goes here...</p> */}
-                <InvitationModal invite={inviteData}/>
-
+          <InvitationModal invite={inviteData} />
         </TabPanel>
 
-        {/* Additional TabPanel components for other tabs... */}
+        <TabPanel value="1">
+          <SpacesDashboard />
+        </TabPanel>
+
       </Box>
     </TabContext>
   );
