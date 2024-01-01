@@ -1,6 +1,7 @@
 const { Course } = require("../model/course.model");
 const { Space } = require("../model/space.model");
 
+//לקחת ממיכל את הפונקציה הזאת אחרי שתעשי COMMIT
 exports.getAllCourses = async (req, res, next) => {
     try {
         const { ownerCourse } = req.body;
@@ -10,6 +11,8 @@ exports.getAllCourses = async (req, res, next) => {
         next(error)
     }
 }
+
+
 
 exports.getInfoCourse = async (req, res, next) => {
     try {
