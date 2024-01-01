@@ -30,7 +30,7 @@ const sendEmail = async (to, subject, text) => {
 };
 
 
-const mail = async (mail) => {
+const createUserMail = async (mail) => {
     
     const userEmail = mail; 
     console.log(userEmail)
@@ -46,6 +46,48 @@ const mail = async (mail) => {
     }
     
 }
+
+
+const sendInvitation = async (mail, courseName, inviteMail) => {
+    
+    const acceptMail = mail; 
+    console.log(acceptMail)
+    const subject = 'Course invitation';
+    const message = `Hello, ${inviteMail}\n invited you to join the course "${courseName}".\nRegards,\nOur team`;
+    
+    const emailSent = await sendEmail(acceptMail, subject, message);
+    
+    if (emailSent) {
+        console.log('Email sent successfully.');
+    } else {
+        console.log('Failed to send email.');
+    }
+    
+}
+
+
+
+
+const forgotPasswordEmail = async (recipientEmail, resetToken) => {
+    try {
+        const subject = 'Password Reset';
+        const message = `
+        You have requested a password reset. Click the following link to reset your password:
+        <a href="http://localhost:5173/reset-password?token=${resetToken}">Reset Password</a>
+        `;
+
+        await sendEmail(recipientEmail, subject, message);
+
+        console.log('Reset password email sent successfully');
+    } catch (error) {
+        console.error('Error sending reset password email:', error);
+        throw new Error('Failed to send reset password email');
+    }
+};
+
+
+
+module.exports = { createUserMail, sendInvitation, forgotPasswordEmail};
 
 
 // const sendSMS = (phone) => {
@@ -71,27 +113,4 @@ const mail = async (mail) => {
 //     .catch(error => console.error('Error sending SMS:', error));
 // }
 
-const forgotPasswordEmail = async (recipientEmail, resetToken) => {
-    try {
-        const subject = 'Password Reset';
-        const message = `
-        You have requested a password reset. Click the following link to reset your password:
-        <a href="http://localhost:5173/reset-password?token=${resetToken}">Reset Password</a>
-        `;
-
-        await sendEmail(recipientEmail, subject, message);
-
-        console.log('Reset password email sent successfully');
-    } catch (error) {
-        console.error('Error sending reset password email:', error);
-        throw new Error('Failed to send reset password email');
-    }
-};
-
-  
-
-
-
-
-module.exports = { mail};
 

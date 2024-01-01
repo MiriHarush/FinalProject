@@ -1,5 +1,8 @@
 const { Course } = require("../model/course.model");
+const { Invite } = require("../model/invatations.model");
 const { Space } = require("../model/space.model");
+const { User } = require("../model/user.model");
+const { sendInvitation } = require("./sendMessage");
 
 //לקחת ממיכל את הפונקציה הזאת אחרי שתעשי COMMIT
 exports.getAllCourses = async (req, res, next) => {
@@ -30,10 +33,8 @@ exports.addCourse = async (req, res, next) => {
     try {
         req.body.ownerUser = res.locals.user_id;
 
-        const { courseName, typeCourse, permission, lessons, description, ownerCourse, ownerUser} = req.body;
+        const { courseName, typeCourse, permission, lessons, description, ownerCourse, ownerUser, invitations} = req.body;
 
-
-        // Create a new course instance
         const newCourse = new Course({
             ownerUser,
             courseName,
@@ -41,11 +42,26 @@ exports.addCourse = async (req, res, next) => {
             permission,
             lessons,
             description,
-            ownerCourse
+            ownerCourse,
+            invitations
         });
 
+        const user = await User.findOne({ _id: ownerUser });
         // Save the new course to the database
         const savedCourse = await newCourse.save();
+        await saveInvitations(savedCourse._id,user.email, invitations);
+
+        const emailPromises = invitations.map(async (invitation) => {
+            try {
+                await sendInvitation(invitation, newCourse.courseName, user.email);
+            } catch (err) {
+                console.error(`Failed to send invitation for ${invitation}: ${err}`);
+                // Handle error as needed
+            }
+        });
+    
+        // חכה להשלמת כל ה-promises שנוצרו על ידי ה-map
+        await Promise.all(emailPromises);
 
         await Space.findByIdAndUpdate(
             { _id: ownerCourse },
@@ -57,6 +73,8 @@ exports.addCourse = async (req, res, next) => {
         next(error)
     }
 }
+
+
 
 exports.deleteCourse = async (req, res, next) => {
     const { delId } = req.params;
@@ -99,5 +117,15 @@ exports.patchCourse = async (req, res, next) => {
         next(error)
     }
 
+}
+
+function saveInvitations(courseId, inviteEmail, acceptsMail) {
+    const newInvite = new Invite({
+        courseId: courseId,
+        inviteMail: inviteEmail,
+        acceptMail: acceptsMail
+    });
+    
+    return newInvite.save();
 }
     
