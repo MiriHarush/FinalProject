@@ -5,9 +5,14 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import AddCourse from './AddCourse';
+import { useContext } from 'react';
+import { SpaceContext } from '../context/spaces.context';
+
 
 const SpaceDashboard = () => {
   const { spaceId } = useParams();
+  const { currentSpace, getSpace } = useContext(SpaceContext);
+
   const [isAddCourseModalOpen, setIsAddCourseModalOpen] = useState(false);
 
   // Assuming you have a list of courses related to the space
@@ -52,7 +57,7 @@ const SpaceDashboard = () => {
         Add Course
       </Button>
 
-      {isAddCourseModalOpen && 
+      {isAddCourseModalOpen &&
         <AddCourse onClose={closeAddCourseModal} />
       }
     </div>
