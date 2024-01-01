@@ -1,3 +1,4 @@
+// App.jsx
 import React from 'react';
 import RoutesNavBar from './components/RoutesNavBar';
 import Home from './pages/Home';
@@ -11,7 +12,9 @@ import SpaceDashboard from './pages/SpaceDashboard';
 import SpacesDashboard from './pages/SpacesDashboard';
 import { SpaceProvider } from './context/spaces.context';
 import { UserProvider } from './context/users.context';
-import InvitationModal from './components/InvitationModal';
+import { BrowserRouter as Router } from 'react-router-dom'; 
+
+import './App.css'
 
 function App() {
 
@@ -27,4 +30,3 @@ function App() {
 }
 
 export default App;
-
