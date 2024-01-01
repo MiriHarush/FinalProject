@@ -1,6 +1,7 @@
 // App.jsx
 import React from 'react';
 import RoutesNavBar from './components/RoutesNavBar';
+import RoutesPages from './components/RoutesPages';
 import Home from './pages/Home';
 import SignUp from './pages/SignUp';
 import LogIn from './pages/LogIn';
@@ -12,7 +13,7 @@ import SpaceDashboard from './pages/SpaceDashboard';
 import SpacesDashboard from './pages/SpacesDashboard';
 import { SpaceProvider } from './context/spaces.context';
 import { UserProvider } from './context/users.context';
-import { BrowserRouter as Router } from 'react-router-dom'; 
+import { BrowserRouter as Router } from 'react-router-dom';
 
 import './App.css'
 
@@ -22,7 +23,10 @@ function App() {
   return (
     <UserProvider>
       <SpaceProvider>
-        <RoutesNavBar />
+        <Router>
+          <RoutesNavBar />
+          <RoutesPages />
+        </Router>
       </SpaceProvider>
     </UserProvider>
 
