@@ -34,7 +34,11 @@ const courseSchema = new mongoose.Schema({
     ownerUser: {
         type: mongoose.Types.ObjectId,
         ref: 'User'
-    }
+    },
+    invitations: [{
+        type: String,
+        required: false
+    }]
 
 })
 

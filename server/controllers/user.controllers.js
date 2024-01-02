@@ -1,18 +1,12 @@
-// const bcrypt = require("bcryptjs");
-// const { User } = require("../model/user.model");
-// const { generateToken } = require("../utils/jwt");
-// const { validCreateUser, validLogIn } = require("../validation/user.validation");\
-// const jwt = require('jsonwebtoken');
-
-// const { mail, sendSMS, forgotPasswordEmail } = require("./sendMessage");
 
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken"); // Add this line
 const { User } = require("../model/user.model");
 const { generateToken } = require("../utils/jwt");
 const { validCreateUser, validLogIn } = require("../validation/user.validation");
-const { mail, sendSMS } = require("./sendMessage");
+const { createUserMail, sendSMS } = require("./sendMessage");
 const { forgotPasswordEmail } = require("./sendMessage");
+const { Invite } = require("../model/invatations.model");
 
 exports.getUsers = async (req, res, next) => {
     try {
@@ -27,6 +21,7 @@ exports.getInfoUser = async (req, res, next) => {
     try {
         const { id } = req.params;
         const userInfo = await User.findOne({ _id: id });
+        // getUserInvitationsByEmail(userInfo.email)
         res.send(userInfo);
     } catch (error) {
         next(error)
@@ -45,7 +40,6 @@ exports.createUser = async (req, res, next) => {
             throw new Error("This email alredy in this system")
         }
 
-
         const { contact } = body;
         const allowedContact = ['Email', 'SMS', 'Phone'];
 
@@ -59,18 +53,18 @@ exports.createUser = async (req, res, next) => {
         body.password = hash;
         const newUser = await User.create(body);
         if (!newUser) return next(new Error('problem creating user'))
-       
-        
+
+
         try {
-             await mail(newUser.email);
+            await createUserMail(newUser.email);
             // await sendSMS(newUser.phone);
             // console.log('SMS sent successfully.');
         } catch (err) {
             // console.error('Error sending SMS:', err);
             return next(err);
         }
-        const user = { password:'********'}
-      return  res.status(201).json({
+        const user = { password: '********' }
+        return res.status(201).json({
             status: 'sucsess',
             user
         }
@@ -154,36 +148,11 @@ exports.updateLoginMethod = (req, res) => {
 }
 
 
-// exports.forgotPassword = async (req, res, next) => {
-//     try {
-//       const { email } = req.body;
-
-//       const user = await User.findOne({ email });
-//       if (!user) {
-//         throw new Error("User not found");
-//       }
-  
-//       const resetToken = jwt.sign({ userId: user._id }, "123@@", {
-//         expiresIn: "1h",
-//       });
-
-//       user.resetToken = resetToken;
-//       await user.save();
-
-//       await User.findByIdAndUpdate(user._id, { resetToken });
-
-//       await forgotPasswordEmail(user.email, resetToken);
-  
-//       res.status(200).json({ message: "Reset password email sent successfully" });
-//     } catch (error) {
-//       next(error);
-//     }
-//   };
 
 exports.resetPassword = async (req, res, next) => {
     try {
-        const { resetToken  } = req.query;
-        const {  newPassword } = req.body;
+        const { resetToken } = req.query;
+        const { newPassword } = req.body;
 
         console.log("resetToken" + resetToken);
         // Decode and verify the reset token
@@ -217,12 +186,13 @@ exports.resetPassword = async (req, res, next) => {
     }
 };
 
-  exports.forgotPassword = async (req, res, next) => {
+exports.forgotPassword = async (req, res, next) => {
     try {
         const { email } = req.body;
 
         // Check if the user exists
-        const user = await User.findOne({ email });
+        const user = await User.findOne({ email: email });
+        console.log(user);
         if (!user) {
             throw new Error("User not found");
         }
@@ -245,3 +215,20 @@ exports.resetPassword = async (req, res, next) => {
         next(error);
     }
 };
+
+exports.getUserInvitationsByEmail = async (req, res, next) => {
+
+    const { userEmail } = req.body
+    console.log(userEmail);
+    try {
+        // מצא את כל ההזמנות במסד הנתונים ששייכות למייל מסוים
+        const userInvitations = await Invite.find({ acceptMail: userEmail });
+        console.log(userInvitations);
+
+        // return userInvitations;
+        res.send(userInvitations);
+    } catch (error) {
+        // throw new Error(s`Failed to get user invitations: ${error}`);
+        next(error)
+    }
+}

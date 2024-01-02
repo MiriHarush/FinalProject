@@ -34,7 +34,11 @@ const userSchema = new mongoose.Schema({
         ref: 'Space'
         
     }], 
-    resetToken: String
+    resetToken: String,
+    // profilImage: {
+    //     type: String,
+    //     required: true
+    // }
 })
 
 const User = mongoose.model("User", userSchema);
