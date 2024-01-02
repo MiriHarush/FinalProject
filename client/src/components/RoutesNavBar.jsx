@@ -4,9 +4,17 @@ import Home from '../pages/Home';
 import Login from '../pages/LogIn'; 
 import SignUp from '../pages/SignUp';
 import NavBar from './NavBar';
+import AddCourse from '../pages/AddCourse';
+import UserPersonalArea from '../pages/UserPersonalArea'
+import SpaceDashboard from '../pages/SpaceDashboard';
 import Contact from '../pages/Contact';
+<<<<<<< HEAD
 import AboutUs from '../pages/AboutUs';
 import Comments from '../pages/Comments';
+=======
+
+
+>>>>>>> origin/miri2
 const RoutesNavBar = () => {
   return (
     <div>
@@ -18,6 +26,11 @@ const RoutesNavBar = () => {
         <Route path="/about" element={<AboutUs />} />
         <Route path="/comments" element={<Comments />} />
         <Route path="/" element={<Home />} />
+        <Route path="/userPersonalArea" element={<UserPersonalArea />} />
+        <Route path="/spaceDashboard" element={<SpaceDashboard />} />
+
+        <Route path="/addCourse" element={<AddCourse />} />
+
       </Routes>
     </div>
   );

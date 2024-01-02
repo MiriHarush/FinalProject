@@ -55,7 +55,7 @@ exports.updateInvite = async(req, res, next) => {
 
 exports.getUserInvitationsByEmail = async (req, res, next) => {
 
-    const { userEmail } = req.body
+    const { userEmail } = req.params
     console.log(userEmail);
     try {
         // מצא את כל ההזמנות במסד הנתונים ששייכות למייל מסוים

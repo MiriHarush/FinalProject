@@ -113,4 +113,3 @@ module.exports = { createUserMail, sendInvitation, forgotPasswordEmail};
 //     .catch(error => console.error('Error sending SMS:', error));
 // }
 
-

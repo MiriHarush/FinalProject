@@ -7,6 +7,8 @@ const { validCreateUser, validLogIn } = require("../validation/user.validation")
 const { createUserMail, sendSMS } = require("./sendMessage");
 const { forgotPasswordEmail } = require("./sendMessage");
 const { Invite } = require("../model/invatations.model");
+const cloudinary = require("../utils/cloudinary");
+const { Types } = require("mongoose");
 
 exports.getUsers = async (req, res, next) => {
     try {
@@ -43,11 +45,14 @@ exports.createUser = async (req, res, next) => {
         const { contact } = body;
         const allowedContact = ['Email', 'SMS', 'Phone'];
 
+        const file = req.file.path
+        const result = await cloudinary.uploader.upload(file, { resource_type: "image" })
+        body.profileImage = result.url ;
+
+
         if (contact && allowedContact.includes(contact)) {
             body.contact = contact;
         }
-
-
 
         const hash = await bcrypt.hash(body.password, 10);
         body.password = hash;

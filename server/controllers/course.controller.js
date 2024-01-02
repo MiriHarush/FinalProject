@@ -102,7 +102,7 @@ exports.deleteCourse = async (req, res, next) => {
 
     try {
         let course = await Course.findOne({ _id: delId })
-
+console.log(course)
 
         if (String(course.ownerUser) !== String(userId)) {
             throw new Error("you are not auther")
