@@ -8,6 +8,7 @@ const { sendInvitation } = require("./sendMessage");
 exports.getAllCourses = async (req, res, next) => {
     try {
         const { ownerCourse } = req.body;
+        console.log(ownerCourse);
         const courses = await Course.find({ownerCourse: ownerCourse});
         res.send(courses);
     } catch (error) {

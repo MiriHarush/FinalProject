@@ -1,10 +1,3 @@
-// const bcrypt = require("bcryptjs");
-// const { User } = require("../model/user.model");
-// const { generateToken } = require("../utils/jwt");
-// const { validCreateUser, validLogIn } = require("../validation/user.validation");\
-// const jwt = require('jsonwebtoken');
-
-// const { mail, sendSMS, forgotPasswordEmail } = require("./sendMessage");
 
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken"); // Add this line
@@ -198,7 +191,8 @@ exports.forgotPassword = async (req, res, next) => {
         const { email } = req.body;
 
         // Check if the user exists
-        const user = await User.findOne({ email });
+        const user = await User.findOne({ email: email });
+        console.log(user);
         if (!user) {
             throw new Error("User not found");
         }
