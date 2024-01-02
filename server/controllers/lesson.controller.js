@@ -7,6 +7,7 @@ exports.getAllLesson = async (req, res, next) => {
   try {
     const { idLesson } = req.params;
     const lesones = await Lesson.find({ ownerLesson: idLesson });
+    
     res.send(lesones);
   } catch (error) {
     next(error)
