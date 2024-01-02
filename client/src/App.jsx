@@ -13,8 +13,9 @@ import { SpaceProvider } from './context/spaces.context';
 import RoutesPages from './components/RoutesPages';
 import { UserProvider } from './context/users.context';
 import { BrowserRouter as Router } from 'react-router-dom'; // הוסף זאת
-
+import { CourseProvider } from './context/courses.context';
 import './App.css'
+import { LessonProvider } from './context/lessons.context';
 
 function App() {
 
@@ -22,7 +23,13 @@ function App() {
   return (
     <UserProvider>
       <SpaceProvider>
-        <RoutesNavBar />
+        <CourseProvider>
+          <LessonProvider>
+            <Router>
+              <RoutesNavBar />
+            </Router>
+          </LessonProvider>
+        </CourseProvider>
       </SpaceProvider>
     </UserProvider>
   );

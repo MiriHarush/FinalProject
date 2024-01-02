@@ -4,13 +4,14 @@ import Home from '../pages/Home';
 import Login from '../pages/LogIn'; 
 import SignUp from '../pages/SignUp';
 import NavBar from './NavBar';
-<<<<<<<<< Temporary merge branch 1
 import AddCourse from '../pages/AddCourse';
 import UserPersonalArea from '../pages/UserPersonalArea'
 import SpaceDashboard from '../pages/SpaceDashboard';
-=========
 import Contact from '../pages/Contact';
->>>>>>>>> Temporary merge branch 2
+import AboutUs from '../pages/AboutUs';
+import Comments from '../pages/Comments';
+import CourseUserDashboard from '../pages/CourseUserDashboard';
+
 
 const RoutesNavBar = () => {
   return (
@@ -26,6 +27,7 @@ const RoutesNavBar = () => {
 
         <Route path="/userPersonalArea" element={<UserPersonalArea />} />
         <Route path="/spaceDashboard" element={<SpaceDashboard />} />
+        <Route path="/courseUserDashboard" element={<CourseUserDashboard />} />
 
         <Route path="/addCourse" element={<AddCourse />} />
 

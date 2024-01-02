@@ -5,7 +5,7 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { CourseContext } from '../context/courses.context';
-import { LessonContext } from '../context/lessons.context';
+// import { LessonContext } from '../context/lessons.context';
 
 const CourseUserDashboard = () => {
 

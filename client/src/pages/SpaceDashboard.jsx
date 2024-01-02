@@ -9,12 +9,13 @@ import { useContext, useEffect } from 'react';
 import { SpaceContext } from '../context/spaces.context';
 import { CourseContext } from '../context/courses.context';
 
+
 const SpaceDashboard = () => {
   const { currentSpace } = useContext(SpaceContext);
-  const { getAllCourses, updateCurrentCourse } = useContext(CourseContext);
+  const { updateCurrentCourse, getAllCourses } = useContext(CourseContext);
   const [isAddCourseModalOpen, setIsAddCourseModalOpen] = useState(false);
   const [courses, setCourses] = useState([]);
-const navigate = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,6 +42,7 @@ const navigate = useNavigate();
 
   const openCourseDashboard = (course) => {
     updateCurrentCourse(course);
+    
     navigate('/courseUserDashboard');
   };
 
@@ -63,10 +65,10 @@ const navigate = useNavigate();
                 {course?.typeCourse}
               </Typography>
               <Button
-              {...course}
+                {...course}
                 variant="outlined"
                 color="primary"
-                onClick={openCourseDashboard}
+                onClick={()=>openCourseDashboard(course)}
                 style={{ marginTop: '10px' }}
               >
                 View Course

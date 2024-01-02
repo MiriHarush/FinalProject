@@ -58,8 +58,8 @@ export const LessonProvider = ({ children }) => {
   };
 
   return (
-    <Lesson.Provider value={{ currentLesson , getAllLessons , addLesson , updateLesson , deleteLesson}}>
+    <LessonContext.Provider value={{ currentLesson , getAllLessons , addLesson , updateLesson , deleteLesson}}>
       {children}
-    </Lesson.Provider>
+    </LessonContext.Provider>
   );
 };
