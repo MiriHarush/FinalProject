@@ -29,7 +29,10 @@ import AddCourse from '../pages/AddCourse';
 import UserPersonalArea from '../pages/UserPersonalArea';
 import ForgotPassword from './ForgotPassword';
 import ResetPassword from './ResetPassword';
+
+
 const RoutesPages = () => {
+
   return (
     <Routes>
       <Route path="/Anonymous" element={<Anonymous />} />

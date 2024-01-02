@@ -4,8 +4,10 @@ const cloudinary = require("../utils/cloudinary");
 
 exports.getAllLesson = async (req, res, next) => {
   try {
-    const { ownerLesson } = req.body;
-    const lesones = await Lesson.find({ownerLesson: ownerLesson});
+    const { idLesson } = req.params;
+    console.log(idLesson);
+    const lesones = await Lesson.find({ownerLesson: idLesson});
+    console.log(lesones);
     res.send(lesones);
 } catch (error) {
     next(error)

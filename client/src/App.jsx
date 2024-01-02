@@ -17,6 +17,7 @@ import { CourseProvider } from './context/courses.context';
 import './App.css'
 import { LessonProvider } from './context/lessons.context';
 
+
 function App() {
 
 
@@ -32,14 +33,7 @@ function App() {
         </CourseProvider>
       </SpaceProvider>
     </UserProvider>
-=======
-          <RoutesNavBar />
-          <RoutesPages />
-        </Router>
-      </SpaceProvider>
-    </UserProvider>
 
->>>>>>> origin/miri2
   );
 }
 
