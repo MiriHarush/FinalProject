@@ -4,8 +4,8 @@ const { Space } = require("../model/space.model");
 //לקחת ממיכל את הפונקציה הזאת אחרי שתעשי COMMIT
 exports.getAllCourses = async (req, res, next) => {
     try {
-        const { ownerCourse } = req.body;
-        const courses = await Course.find({ownerCourse: ownerCourse});
+        const { id } = req.params;
+        const courses = await Course.find({ownerCourse: id});
         res.send(courses);
     } catch (error) {
         next(error)

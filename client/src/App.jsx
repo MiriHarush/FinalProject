@@ -12,6 +12,7 @@ import AddCourse from './pages/AddCourse'
 import SpaceDashboard from './pages/SpaceDashboard';
 import SpacesDashboard from './pages/SpacesDashboard';
 import { SpaceProvider } from './context/spaces.context';
+import { CourseProvider } from './context/courses.context';
 import { UserProvider } from './context/users.context';
 import { BrowserRouter as Router } from 'react-router-dom';
 
@@ -23,10 +24,11 @@ function App() {
   return (
     <UserProvider>
       <SpaceProvider>
-        <Router>
-          <RoutesNavBar />
-          <RoutesPages />
-        </Router>
+        <CourseProvider>
+          <Router>
+            <RoutesNavBar />
+          </Router>
+        </CourseProvider>
       </SpaceProvider>
     </UserProvider>
 

@@ -33,6 +33,7 @@ import AddCourse from '../pages/AddCourse';
 import UserPersonalArea from '../pages/UserPersonalArea'
 import SpaceDashboard from '../pages/SpaceDashboard';
 import Contact from '../pages/Contact';
+import CourseUserDashboard from '../pages/CourseUserDashboard';
 
 
 const RoutesNavBar = () => {
@@ -48,7 +49,7 @@ const RoutesNavBar = () => {
         <Route path="/" element={<Home />} />
         <Route path="/userPersonalArea" element={<UserPersonalArea />} />
         <Route path="/spaceDashboard" element={<SpaceDashboard />} />
-
+        <Route path="/courseUserDashboard" element={<CourseUserDashboard />} />
         <Route path="/addCourse" element={<AddCourse />} />
 
       </Routes>

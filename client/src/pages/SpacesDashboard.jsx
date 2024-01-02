@@ -9,9 +9,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 const SpacesDashboard = () => {
-  console.log("spacesss");
-
-  const { getAllSpaces } = useContext(SpaceContext);
+  const { getAllSpaces, updateCurrentSpace } = useContext(SpaceContext);
   const [spaces, setSpaces] = useState([]);
   const navigate = useNavigate();
 
@@ -19,8 +17,8 @@ const SpacesDashboard = () => {
     const fetchData = async () => {
       const spacesData = await getAllSpaces();
       setSpaces(spacesData.result);
-      }
-      fetchData();
+    }
+    fetchData();
   }, [])
 
 
@@ -33,9 +31,10 @@ const SpacesDashboard = () => {
   const [isAddingSpace, setIsAddingSpace] = useState(false);
   const [isConfirmingAdd, setIsConfirmingAdd] = useState(false);
 
-  const handleSpaceClick = (space) => {
+  const handleSpaceClick =async (space) => {
     setSelectedSpace(space);
     setIsAddingSpace(false);
+    updateCurrentSpace(space);
     navigate('/spaceDashboard')
   };
 

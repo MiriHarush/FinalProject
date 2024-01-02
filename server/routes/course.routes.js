@@ -6,7 +6,7 @@ const { addCourse, deleteCourse, patchCourse, getAllCourses, getInfoCourse } = r
 
 const router = express.Router();
 
-router.get("/getAllCourses",auth(), getAllCourses);
+router.get("/getAllCourses/:id",auth(), getAllCourses);
 router.get("/getInfoCourse/:id", auth(), getInfoCourse);
 router.post("/addCourse", auth(), addCourse);
 router.delete("/deleteCourse/:delId",auth(),deleteCourse)
