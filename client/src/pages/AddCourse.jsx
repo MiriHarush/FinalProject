@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
@@ -17,6 +17,8 @@ import CloseIcon from '@mui/icons-material/Close';
 import BusinessIcon from '@mui/icons-material/Business';
 import PublicIcon from '@mui/icons-material/Public';
 import LockIcon from '@mui/icons-material/Lock';
+import { CourseContext } from '../context/courses.context';
+import { UserContext } from '../context/users.context';
 
 const checkUserExistence = async (userEmail) => {
   return new Promise((resolve) => {
@@ -31,18 +33,39 @@ const checkUserExistence = async (userEmail) => {
 };
 
 const AddCourse = ({ spaceId }) => {
+  // const [course, setCourse] = useState({
+  //   courseName: '',
+  //   typeCourse: '',
+  //   permission: '',
+  //   inviteUsers: false,
+  //   usersToAdd: [],
+  //   userToAdd: '',
+  // });
+  const { addCourse } = useContext(CourseContext);
+  const { currentUser } = useContext(UserContext);
+
+
   const [course, setCourse] = useState({
-    name: '',
-    type: '',
+    courseName: '',
+    typeCourse: '',
     permission: '',
-    inviteUsers: false,
-    usersToAdd: [],
-    userToAdd: '',
+    lessons: [],
+    description: '',
+    ownerCourse: spaceId,
+    ownerUser: currentUser.email
   });
+
+  // inviteUsers: false,
+  // usersToAdd: [],
+  // userToAdd: '',
+
+  //lessons description ownerCourse-(space) ownerUser
+
 
   const handleAddCourse = async () => {
     console.log('Adding course to space:', spaceId, course);
     // Additional logic for saving to the database can be added here
+    addCourse(course);
   };
 
   const handleChange = (field, value) => {
@@ -105,7 +128,7 @@ const AddCourse = ({ spaceId }) => {
       <TextField
         label="שם קורס"
         variant="outlined"
-        value={course.name}
+        value={course.courseName}
         onChange={(e) => handleChange('name', e.target.value)}
         sx={{ marginBottom: '20px', width: '300px' }}
         InputProps={{
@@ -117,7 +140,7 @@ const AddCourse = ({ spaceId }) => {
       <FormControl variant="outlined" sx={{ marginBottom: '20px', width: '300px' }}>
         <InputLabel>אופי הקורס</InputLabel>
         <Select
-          value={course.type}
+          value={course.typeCourse}
           onChange={(e) => handleChange('type', e.target.value)}
           label="אופי הקורס"
           sx={{ color: '#2196F3' }}
@@ -125,9 +148,9 @@ const AddCourse = ({ spaceId }) => {
             startAdornment: (
               <>
                 <PeopleIcon sx={{ color: '#2196F3' }} />
-                {course.type === 'חוויתי' && <BusinessIcon sx={{ marginLeft: '5px' }} />}
-                {course.type === 'לימודי' && <PublicIcon sx={{ marginLeft: '5px' }} />}
-                {course.type === 'העשרה' && <LockIcon sx={{ marginLeft: '5px' }} />}
+                {course.typeCourse === 'חוויתי' && <BusinessIcon sx={{ marginLeft: '5px' }} />}
+                {course.typeCourse === 'לימודי' && <PublicIcon sx={{ marginLeft: '5px' }} />}
+                {course.typeCourse === 'העשרה' && <LockIcon sx={{ marginLeft: '5px' }} />}
               </>
             ),
           }}

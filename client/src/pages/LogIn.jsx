@@ -1,6 +1,17 @@
-import React, { useState } from 'react';
-import { Container, Typography, TextField, Button, Grid, Paper } from '@mui/material';
+import React, { useContext, useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import {
+  Container,
+  Typography,
+  TextField,
+  Button,
+  Grid,
+  Paper,
+  FormHelperText,
+  Link as MuiLink,
+} from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { UserContext } from '../context/users.context';
 
 const theme = createTheme({
   palette: {
@@ -15,39 +26,42 @@ const LogIn = () => {
     email: '',
     password: '',
   });
+  const [emailError, setEmailError] = useState('');
+
+  const { login } = useContext(UserContext);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
+    // Clear email error when user types
+    setEmailError('');
+  };
+
+  const validateEmail = () => {
+    const emailRegex = /\.(com|net|org)$/;
+
+    if (!emailRegex.test(formData.email)) {
+      setEmailError('Invalid email format. Must end with .com, .net, or .org');
+      return false;
+    }
+
+    return true;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
-    try {
-      const response = await fetch('http://localhost:3000/users/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-  
-      if (!response.ok) {
-        // Handle non-successful response (e.g., show an error message)
-        console.error('Login failed:', response.statusText);
-        return;
-      }
-  
-      const data = await response.json();
-      if (data) {
-        console.log('Login successful',data);
-      } else {
-        console.log('Login failed:', data);
-      }
-    } catch (error) {
-      console.error('Error during login:', error.message);
+
+    // Validate email before attempting login
+    if (!validateEmail()) {
+      // Set emailError to display the error message
+      return;
     }
+
+    // Call login function if email is valid
+    await login(formData);
+
+    navigate('/userPersonalArea');
   };
 
   return (
@@ -68,7 +82,9 @@ const LogIn = () => {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
+                  error={Boolean(emailError)}
                 />
+                {emailError && <FormHelperText style={{ color: 'red' }}>{emailError}</FormHelperText>}
               </Grid>
               <Grid item xs={12}>
                 <TextField
@@ -85,6 +101,12 @@ const LogIn = () => {
             <Button type="submit" variant="contained" color="primary" fullWidth style={{ marginTop: 20 }}>
               Log In
             </Button>
+            <Typography variant="body2" style={{ marginTop: 10 }}>
+              Don't have an account?{' '}
+              <MuiLink component={Link} to="/signup" style={{ color: '#3f51b5' }}>
+                Sign Up
+              </MuiLink>
+            </Typography>
           </form>
         </Paper>
       </Container>

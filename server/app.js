@@ -5,6 +5,7 @@ const userRoutes= require("./routes/user.routes")
 const spaceRoutes= require("./routes/space.routes")
 const courseRoutes= require("./routes/course.routes")
 const lessonRoutes= require("./routes/lesson.routes")
+const invitationRoutes= require("./routes/invitation.routes")
 
 const app = express();
 app.use(express.json());
@@ -16,6 +17,7 @@ app.use("/users", userRoutes);
 app.use("/spaces", spaceRoutes);
 app.use("/courses", courseRoutes);
 app.use("/lesson", lessonRoutes);
+app.use("/invitations", invitationRoutes);
 
 app.use((err,req,res,next)=>{
     res.status(400).json({

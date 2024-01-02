@@ -7,15 +7,13 @@ const { sendInvitation } = require("./sendMessage");
 //לקחת ממיכל את הפונקציה הזאת אחרי שתעשי COMMIT
 exports.getAllCourses = async (req, res, next) => {
     try {
-        const { ownerCourse } = req.body;
-        console.log(ownerCourse);
-        const courses = await Course.find({ownerCourse: ownerCourse});
+        const { id } = req.params;
+        const courses = await Course.find({ownerCourse: id});
         res.send(courses);
     } catch (error) {
         next(error)
     }
 }
-
 
 
 exports.getInfoCourse = async (req, res, next) => {
@@ -34,6 +32,7 @@ exports.addCourse = async (req, res, next) => {
     try {
         req.body.ownerUser = res.locals.user_id;
 
+
         const { courseName, typeCourse, permission, lessons, description, ownerCourse, ownerUser, invitations} = req.body;
 
         const newCourse = new Course({
@@ -50,7 +49,16 @@ exports.addCourse = async (req, res, next) => {
         const user = await User.findOne({ _id: ownerUser });
         // Save the new course to the database
         const savedCourse = await newCourse.save();
-        await saveInvitations(savedCourse._id,user.email, invitations);
+        const saveInvitationsPromises = invitations.map(async (invitation) => {
+            try {
+                await saveInvitations(savedCourse._id, user.email, invitation);
+            } catch (err) {
+                console.error(`Failed to save invitation for ${invitation}: ${err}`);
+                // Handle error as needed
+            }
+        });
+
+        await Promise.all(saveInvitationsPromises);
 
         const emailPromises = invitations.map(async (invitation) => {
             try {
@@ -73,6 +81,16 @@ exports.addCourse = async (req, res, next) => {
     } catch (error) {
         next(error)
     }
+}
+
+function saveInvitations(courseId, inviteEmail, acceptsMail) {
+    const newInvite = new Invite({
+        courseId: courseId,
+        inviteMail: inviteEmail,
+        acceptMail: acceptsMail
+    });
+
+    return newInvite.save();
 }
 
 
@@ -119,14 +137,27 @@ exports.patchCourse = async (req, res, next) => {
     }
 
 }
+    
 
-function saveInvitations(courseId, inviteEmail, acceptsMail) {
-    const newInvite = new Invite({
-        courseId: courseId,
-        inviteMail: inviteEmail,
-        acceptMail: acceptsMail
-    });
+    exports.patchCourse = async (req, res, next) => {
     
-    return newInvite.save();
-}
+        const { idEdit } = req.params;
+        const userId = res.locals.user_id;
+        const body = req.body;
+        try {
+            let patchCourse = await Course.findOne({_id: idEdit});
+            if(!patchCourse){
+                throw new Error("the course is not exist")
+            }
     
+            if (String(patchCourse.ownerUser) !== String(userId)) {
+                throw new Error("you are not the auther")
+            }
+            patchCourse = await Course.findByIdAndUpdate(idEdit, body, { new: true });
+            res.send(patchCourse)
+        } catch (error) {
+            next(error)
+        }
+    
+    }
+

@@ -7,6 +7,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 
 const CourseUserDashboard = () => {
+
   const { courseId } = useParams();
   const [lessons, setLessons] = useState([]);
   // const [invitations, setInvitations] = useState([]);
@@ -22,6 +23,7 @@ const CourseUserDashboard = () => {
     // כאן יש להוסיף את הלוגיקה לשליפת השיעורים מהשרת ולעדכן את המשתנה lessons
     // כמו לדוגמא fetch לשרת
     // fetchLessonsFromServer(courseId).then((lessonsData) => setLessons(lessonsData));
+  
   }, [courseId]);
 
   return (
