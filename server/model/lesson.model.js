@@ -14,27 +14,13 @@ const lessonSchema = new mongoose.Schema({
         type: String,
         required: false
     },
-    content: {
-        images: [{
+    content: [{
             type: String,
             url: String
-        }],
-        pdf: [{
-            type: String,
-            url: String
-        }],
-        youTube: [{
-            type: String,
-            url: String
-        }],
-        zip: [{
-            type: String,
-            url: String
-        }],
-        links: [{
-            type: String,
-            url: String
-        }],
+    }],
+    ownerUser: {
+        type: mongoose.Types.ObjectId,
+        ref: 'User'
     }
 })
 
