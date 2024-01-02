@@ -1,3 +1,4 @@
+// controllers/lessonController.js
 const { Lesson } = require("../model/lesson.model");
 const cloudinary = require("../utils/cloudinary");
 
