@@ -1,6 +1,6 @@
 const express = require("express");
 const { sendEmail, mail } = require("../controllers/sendMessage");
-const { createUser, login, getUserSpaces, getInfoUser, getUsers, patchUser, forgotPassword, resetPassword } = require("../controllers/user.controllers");
+const { createUser, login, getUserSpaces, getInfoUser, getUsers, patchUser, forgotPassword, resetPassword, getUserInvitationsByEmail } = require("../controllers/user.controllers");
 const { auth } = require("../middleWare/auth");
 
 
@@ -15,6 +15,7 @@ router.get("/getAllUsers", getUsers);
 router.get("/getUserSpaces/",auth(), getUserSpaces);
 router.get("/getInfoUser/:id", getInfoUser);
 router.patch("/editUser/:idEdit", auth(), patchUser);
+router.post("/invitation", getUserInvitationsByEmail);
 
 // router.post("/sendEmail", mail);
 

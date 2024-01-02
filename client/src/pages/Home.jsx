@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Container, Typography, Grid, Card, CardContent, Button, Snackbar } from '@mui/material';
 import MuiAlert from '@mui/material/Alert';
 import { Link } from 'react-router-dom';
+import ForumIcon from '@mui/icons-material/Forum';
 
 const Home = () => {
   const [popularCourses, setPopularCourses] = useState([
@@ -59,14 +60,8 @@ const Home = () => {
       </Grid>
 
       <Link to="/chat" style={{ textDecoration: 'none', color: 'inherit' }}>
-        <Button variant="outlined" color="primary">
-          Go to Forum
-        </Button>
-      </Link>
-
-      <Link to="/anonymous" style={{ textDecoration: 'none', color: 'inherit' }}>
-        <Button variant="outlined" color="primary">
-          Continue as Guest
+        <Button variant="contained" color="primary" startIcon={<ForumIcon />}>
+          לך לפורום
         </Button>
       </Link>
 
