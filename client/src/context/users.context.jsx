@@ -86,12 +86,12 @@ export const UserProvider = ({ children }) => {
   };
 
   const forgotPassword = async (email) => {
+    console.log({email});
     try {
-      console.log(email);
       const config = {
         method: 'post',
         url: 'http://localhost:3000/users/forgotPassword',
-        data: email,
+        data: { email },
       };
 
       const message = await axiosRequest(config);

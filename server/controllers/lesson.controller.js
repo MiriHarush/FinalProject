@@ -1,64 +1,28 @@
+// controllers/lessonController.js
 const { Lesson } = require("../model/lesson.model");
 
+exports.createLesson = async (req, res) => {
+    try {
+        const lessonData = {
+            ownerLesson: req.body.ownerLesson,
+            lessonName: req.body.lessonName,
+            descerption: req.body.descerption,
+            content: {
+                pdf: req.files.pdf[0].path,
+                zip: req.files.zip[0].path,
+                images: req.files.images.map((image) => image.path),
+                youTube: req.body.youTube,
+                links: req.body.links,
+            },
+        };
 
-// Controller function to add a lesson
-const addLesson = async (req, res) => {
-  try {
-    // Extract lesson data from the request body
-    const { ownerLesson, lessonName, description, content } = req.body;
+        const newLesson = new Lesson(lessonData);
+        const savedLesson = await newLesson.save();
 
-    // Create arrays to store different file types
-    const images = [];
-    const pdf = [];
-    const youTube = [];
-    const zip = [];
-    const links = [];
-
-    // Iterate over content and categorize files
-    content.forEach(file => {
-      switch (file.type) {
-        case 'image':
-          images.push(file);
-          break;
-        case 'pdf':
-          pdf.push(file);
-          break;
-        case 'youTube':
-          youTube.push(file);
-          break;
-        case 'zip':
-          zip.push(file);
-          break;
-        case 'link':
-          links.push(file);
-          break;
-      }
-    });
-
-    // Create a new lesson instance
-    const newLesson = new Lesson({
-      ownerLesson,
-      lessonName,
-      description,
-      content: {
-        images,
-        pdf,
-        youTube,
-        zip,
-        links,
-      },
-    });
-
-    // Save the lesson to the database
-    const savedLesson = await newLesson.save();
-
-    // Respond with the saved lesson
-    res.status(201).json(savedLesson);
-  } catch (error) {
-    // Handle errors
-    console.error('Error adding lesson:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
+        res.status(201).json(savedLesson);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
 };
 
-module.exports = { addLesson };

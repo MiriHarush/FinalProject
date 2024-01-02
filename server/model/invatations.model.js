@@ -7,11 +7,15 @@ const inviteSchema = new mongoose.Schema({
     acceptMail: [{
         type: String
     }],
+    statusInvite: {
+        type: String,
+        enum: ['accept', 'reject', 'waiting'],
+        default: "waiting"
+    },
     courseId: {
         type: mongoose.Types.ObjectId,
         ref: 'Course'
     }
-    
 })
 
 const Invite = mongoose.model("Invite", inviteSchema);
