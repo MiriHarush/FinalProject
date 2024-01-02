@@ -1,5 +1,7 @@
+// App.jsx
 import React from 'react';
 import RoutesNavBar from './components/RoutesNavBar';
+import RoutesPages from './components/RoutesPages';
 import Home from './pages/Home';
 import SignUp from './pages/SignUp';
 import LogIn from './pages/LogIn';
@@ -7,24 +9,28 @@ import UserPersonalArea from './pages/UserPersonalArea'
 import CourseManagerDashboard from './pages/CourseManagerDashboard'
 import UserInvitations from './components/UserInvitations'
 import AddCourse from './pages/AddCourse'
-<<<<<<<<< Temporary merge branch 1
 import SpaceDashboard from './pages/SpaceDashboard';
+import SpacesDashboard from './pages/SpacesDashboard';
+import { SpaceProvider } from './context/spaces.context';
+import { UserProvider } from './context/users.context';
+import { BrowserRouter as Router } from 'react-router-dom';
+
+import './App.css'
 
 function App() {
+
+
   return (
-    <div>
-      <CourseManagerDashboard />
-=========
-import SpacesDashboard from './pages/SpacesDashboard';
-function App() {
-  return (
-    <div>
-      <RoutesNavBar />
-      <SpacesDashboard/>
->>>>>>>>> Temporary merge branch 2
-    </div>
+    <UserProvider>
+      <SpaceProvider>
+        <Router>
+          <RoutesNavBar />
+          <RoutesPages />
+        </Router>
+      </SpaceProvider>
+    </UserProvider>
+
   );
 }
 
 export default App;
-
