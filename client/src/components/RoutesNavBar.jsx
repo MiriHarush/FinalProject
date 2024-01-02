@@ -23,14 +23,12 @@ const RoutesNavBar = () => {
         <Route path="/about" element={<AboutUs />} />
         <Route path="/comments" element={<Comments />} />
         <Route path="/" element={<Home />} />
-<<<<<<<<< Temporary merge branch 1
+
         <Route path="/userPersonalArea" element={<UserPersonalArea />} />
         <Route path="/spaceDashboard" element={<SpaceDashboard />} />
 
         <Route path="/addCourse" element={<AddCourse />} />
 
-=========
->>>>>>>>> Temporary merge branch 2
       </Routes>
     </div>
   );
