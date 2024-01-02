@@ -8,11 +8,9 @@ import AddCourse from '../pages/AddCourse';
 import UserPersonalArea from '../pages/UserPersonalArea'
 import SpaceDashboard from '../pages/SpaceDashboard';
 import Contact from '../pages/Contact';
+<<<<<<< HEAD
 import AboutUs from '../pages/AboutUs';
 import Comments from '../pages/Comments';
-import CourseUserDashboard from '../pages/CourseUserDashboard';
-
-
 const RoutesNavBar = () => {
   return (
     <div>
@@ -24,13 +22,6 @@ const RoutesNavBar = () => {
         <Route path="/about" element={<AboutUs />} />
         <Route path="/comments" element={<Comments />} />
         <Route path="/" element={<Home />} />
-
-        <Route path="/userPersonalArea" element={<UserPersonalArea />} />
-        <Route path="/spaceDashboard" element={<SpaceDashboard />} />
-        <Route path="/courseUserDashboard" element={<CourseUserDashboard />} />
-
-        <Route path="/addCourse" element={<AddCourse />} />
-
       </Routes>
     </div>
   );

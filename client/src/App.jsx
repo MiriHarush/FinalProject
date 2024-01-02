@@ -32,6 +32,14 @@ function App() {
         </CourseProvider>
       </SpaceProvider>
     </UserProvider>
+=======
+          <RoutesNavBar />
+          <RoutesPages />
+        </Router>
+      </SpaceProvider>
+    </UserProvider>
+
+>>>>>>> origin/miri2
   );
 }
 

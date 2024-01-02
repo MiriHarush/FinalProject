@@ -13,7 +13,4 @@ router.delete("/deleteCourse/:delId",auth(),deleteCourse)
 router.patch("/updateCourse/:idEdit", auth(), patchCourse);
 
 
-
-
-
 module.exports=router;
