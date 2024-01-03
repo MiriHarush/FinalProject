@@ -1,10 +1,3 @@
-// const bcrypt = require("bcryptjs");
-// const { User } = require("../model/user.model");
-// const { generateToken } = require("../utils/jwt");
-// const { validCreateUser, validLogIn } = require("../validation/user.validation");\
-// const jwt = require('jsonwebtoken');
-
-// const { mail, sendSMS, forgotPasswordEmail } = require("./sendMessage");
 
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken"); // Add this line
@@ -14,6 +7,8 @@ const { validCreateUser, validLogIn } = require("../validation/user.validation")
 const { createUserMail, sendSMS } = require("./sendMessage");
 const { forgotPasswordEmail } = require("./sendMessage");
 const { Invite } = require("../model/invatations.model");
+const cloudinary = require("../utils/cloudinary");
+const { Types } = require("mongoose");
 
 exports.getUsers = async (req, res, next) => {
     try {
@@ -50,11 +45,14 @@ exports.createUser = async (req, res, next) => {
         const { contact } = body;
         const allowedContact = ['Email', 'SMS', 'Phone'];
 
+        const file = req.file.path
+        const result = await cloudinary.uploader.upload(file, { resource_type: "image" })
+        body.profileImage = result.url ;
+
+
         if (contact && allowedContact.includes(contact)) {
             body.contact = contact;
         }
-
-
 
         const hash = await bcrypt.hash(body.password, 10);
         body.password = hash;
@@ -222,19 +220,3 @@ exports.forgotPassword = async (req, res, next) => {
     }
 };
 
-exports.getUserInvitationsByEmail = async (req, res, next) => {
-
-    const { userEmail } = req.body
-    console.log(userEmail);
-    try {
-        // מצא את כל ההזמנות במסד הנתונים ששייכות למייל מסוים
-        const userInvitations = await Invite.find({ acceptMail: userEmail });
-        console.log(userInvitations);
-
-        // return userInvitations;
-        res.send(userInvitations);
-    } catch (error) {
-        // throw new Error(s`Failed to get user invitations: ${error}`);
-        next(error)
-    }
-}

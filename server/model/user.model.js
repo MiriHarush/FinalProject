@@ -35,10 +35,10 @@ const userSchema = new mongoose.Schema({
         
     }], 
     resetToken: String,
-    // profilImage: {
-    //     type: String,
-    //     required: true
-    // }
+    profileImage: {
+        type: String,
+        url: String
+    }
 })
 
 const User = mongoose.model("User", userSchema);

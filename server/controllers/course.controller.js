@@ -16,7 +16,6 @@ exports.getAllCourses = async (req, res, next) => {
 }
 
 
-
 exports.getInfoCourse = async (req, res, next) => {
     try {
         const { id } = req.params;
@@ -34,7 +33,7 @@ exports.addCourse = async (req, res, next) => {
         req.body.ownerUser = res.locals.user_id;
 
 
-        const { courseName, typeCourse, permission, lessons, description, ownerCourse, ownerUser} = req.body;
+        const { courseName, typeCourse, permission, lessons, description, ownerCourse, ownerUser, invitations} = req.body;
 
         const newCourse = new Course({
             ownerUser,
@@ -50,7 +49,16 @@ exports.addCourse = async (req, res, next) => {
         const user = await User.findOne({ _id: ownerUser });
         // Save the new course to the database
         const savedCourse = await newCourse.save();
-        await saveInvitations(savedCourse._id,user.email, invitations);
+        const saveInvitationsPromises = invitations.map(async (invitation) => {
+            try {
+                await saveInvitations(savedCourse._id, user.email, invitation);
+            } catch (err) {
+                console.error(`Failed to save invitation for ${invitation}: ${err}`);
+                // Handle error as needed
+            }
+        });
+
+        await Promise.all(saveInvitationsPromises);
 
         const emailPromises = invitations.map(async (invitation) => {
             try {
@@ -75,6 +83,16 @@ exports.addCourse = async (req, res, next) => {
     }
 }
 
+function saveInvitations(courseId, inviteEmail, acceptsMail) {
+    const newInvite = new Invite({
+        courseId: courseId,
+        inviteMail: inviteEmail,
+        acceptMail: acceptsMail
+    });
+
+    return newInvite.save();
+}
+
 
 
 exports.deleteCourse = async (req, res, next) => {
@@ -84,7 +102,7 @@ exports.deleteCourse = async (req, res, next) => {
 
     try {
         let course = await Course.findOne({ _id: delId })
-
+console.log(course)
 
         if (String(course.ownerUser) !== String(userId)) {
             throw new Error("you are not auther")
