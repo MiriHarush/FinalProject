@@ -1,26 +1,35 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import AddCourse from './AddCourse';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { SpaceContext } from '../context/spaces.context';
-
+import { CourseContext } from '../context/courses.context';
 
 const SpaceDashboard = () => {
-  const { spaceId } = useParams();
-  const { currentSpace, getSpace } = useContext(SpaceContext);
-
+  const { currentSpace } = useContext(SpaceContext);
+  const { getAllCourses, updateCurrentCourse } = useContext(CourseContext);
   const [isAddCourseModalOpen, setIsAddCourseModalOpen] = useState(false);
+  const [courses, setCourses] = useState([]);
+const navigate = useNavigate();
 
-  // Assuming you have a list of courses related to the space
-  const courseList = [
-    { id: '1', name: 'Course 1' },
-    { id: '2', name: 'Course 2' },
-    // Add more courses as needed
-  ];
+  useEffect(() => {
+    const fetchData = async () => {
+      const coursesData = await getAllCourses(currentSpace._id);
+      setCourses(coursesData.result);
+    }
+    fetchData();
+
+  }, [])
+
+
+  useEffect(() => {
+    console.log("courses", courses);
+  }, [courses])
+
 
   const openAddCourseModal = () => {
     setIsAddCourseModalOpen(true);
@@ -30,21 +39,34 @@ const SpaceDashboard = () => {
     setIsAddCourseModalOpen(false);
   };
 
+  const openCourseDashboard = (course) => {
+    updateCurrentCourse(course);
+    navigate('/courseUserDashboard');
+  };
+
+
   return (
     <div style={{ padding: '20px' }}>
-      <h2>Space Dashboard - Space ID: {spaceId}</h2>
+      <h2>Space Dashboard : {currentSpace.nameSpace}</h2>
       <h3>Courses in this Space:</h3>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
-        {courseList.map((course) => (
-          <Card key={course.id} style={{ margin: '10px', minWidth: '250px' }}>
+        {courses?.map((course) => (
+          <Card key={course?._id} style={{ margin: '10px', minWidth: '250px' }}>
             <CardContent>
               <Typography variant="h6" component="div">
-                {course.name}
+                {course?.courseName}
+              </Typography>
+              <Typography variant="h6" component="div">
+                {course?.description}
+              </Typography>
+              <Typography variant="h6" component="div">
+                {course?.typeCourse}
               </Typography>
               <Button
+              {...course}
                 variant="outlined"
                 color="primary"
-                onClick={openAddCourseModal}
+                onClick={openCourseDashboard}
                 style={{ marginTop: '10px' }}
               >
                 View Course

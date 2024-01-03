@@ -9,7 +9,7 @@ export const axiosRequest = async (config) => {
   try {
     const response = await axios(config);
     console.log('Data from server:', response.data);
-    localStorage.setItem('userToken', response.data.token);
+    // localStorage.setItem('userToken', response.data.token);
 
     return { success: true, result: response.data };
   } catch (error) {

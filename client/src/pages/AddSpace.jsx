@@ -9,6 +9,7 @@ import MailOutlineIcon from '@mui/icons-material/MailOutline';
 
 const AddSpace = ({ onAddSpace, onConfirmAdd, open, anchorEl }) => {
   const handleConfirmAdd = () => {
+    
     handleClose();
     onConfirmAdd(); // Notify the parent component about the confirmation
   };

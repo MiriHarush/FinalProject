@@ -1,15 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useState, useEffect, useContext } from 'react';
 import InvitationModal from '../components/InvitationModal';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+import { CourseContext } from '../context/courses.context';
+import { LessonContext } from '../context/lessons.context';
 
 const CourseUserDashboard = () => {
 
-  const { courseId } = useParams();
+  const { currentCourse } = useContext(CourseContext);
+  // const { getAllLessons } = useContext(LessonContext);
   const [lessons, setLessons] = useState([]);
+
   // const [invitations, setInvitations] = useState([]);
 
   const invitations = [
@@ -18,18 +21,26 @@ const CourseUserDashboard = () => {
     { id: 3, instructorName: "c", courseName: "cc" }
   ]
 
-  useEffect(() => {
-    // כאשר העמוד נטען, קרא לשרת לקבלת השיעורים הקיימים בקורס
-    // כאן יש להוסיף את הלוגיקה לשליפת השיעורים מהשרת ולעדכן את המשתנה lessons
-    // כמו לדוגמא fetch לשרת
-    // fetchLessonsFromServer(courseId).then((lessonsData) => setLessons(lessonsData));
-  
-  }, [courseId]);
+ 
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const lessonsData = await getAllLessons(currentCourse._id);
+  //     setLessons(lessonsData.result);
+  //   }
+  //   fetchData();
+
+  // }, [])
+
+
+  // useEffect(() => {
+  //   console.log("lessons", lessons);
+  // }, [lessons])
+
 
   return (
     <>
       <div>
-        <h1>lessons in course {courseId}</h1>
+        <h1>lessons in course </h1>
         {lessons.length === 0 ? (
           <p>no lessons</p>
         ) : (
