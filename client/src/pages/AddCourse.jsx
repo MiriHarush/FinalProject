@@ -128,7 +128,7 @@ const AddCourse = ({ spaceId }) => {
       <TextField
         label="שם קורס"
         variant="outlined"
-        value={course.courseName}
+        // value={course.courseName}
         onChange={(e) => handleChange('name', e.target.value)}
         sx={{ marginBottom: '20px', width: '300px' }}
         InputProps={{

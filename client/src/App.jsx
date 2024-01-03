@@ -1,16 +1,5 @@
 import React from 'react';
 import RoutesNavBar from './components/RoutesNavBar';
-import RoutesPages from './components/RoutesPages';
-<<<<<<< HEAD
-import ForgotPassword from './pages/forgotPassword';
-import { UserProvider } from './context/users.context';
-import { SpaceProvider } from'./context/spaces.context';
-import { BrowserRouter as Router } from 'react-router-dom';
-import './App.css'
-
-function App() {
-  
-=======
 import Home from './pages/Home';
 import SignUp from './pages/SignUp';
 import LogIn from './pages/LogIn';
@@ -21,34 +10,30 @@ import AddCourse from './pages/AddCourse'
 import SpaceDashboard from './pages/SpaceDashboard';
 import SpacesDashboard from './pages/SpacesDashboard';
 import { SpaceProvider } from './context/spaces.context';
+import RoutesPages from './components/RoutesPages';
 import { UserProvider } from './context/users.context';
-import { BrowserRouter as Router } from 'react-router-dom';
-
+import { BrowserRouter as Router } from 'react-router-dom'; // הוסף זאת
+import { CourseProvider } from './context/courses.context';
 import './App.css'
+import { LessonProvider } from './context/lessons.context';
+
 
 function App() {
 
->>>>>>> origin/miri2
 
   return (
     <UserProvider>
       <SpaceProvider>
-        <Router>
-<<<<<<< HEAD
-           <RoutesNavBar />
-           <RoutesPages/>
-           <ForgotPassword/>
-      </Router>
-      </SpaceProvider>
-    </UserProvider>
-=======
-          <RoutesNavBar />
-          <RoutesPages />
-        </Router>
+        <CourseProvider>
+          <LessonProvider>
+            <Router>
+              <RoutesNavBar />
+            </Router>
+          </LessonProvider>
+        </CourseProvider>
       </SpaceProvider>
     </UserProvider>
 
->>>>>>> origin/miri2
   );
 }
 

@@ -70,9 +70,10 @@ export const UserProvider = ({ children }) => {
         url: 'http://localhost:3000/users/login',
         data: userData,
       };
-
+      
       const loggedUser = await axiosRequest(config);
       setCurrentUser({ ...loggedUser.result.user });
+      localStorage.setItem('userToken', loggedUser.result.token);
       // Clear any previous login errors
       setLoginError('');
     } catch (error) {

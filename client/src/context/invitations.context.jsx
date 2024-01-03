@@ -10,13 +10,13 @@ import { axiosRequest } from '../utils/serverConnection';
 export const InvitationContext = createContext();
 
 export const InvitationProvider = ({ children }) => {
+
   const [currentInvitation, setCurrentInvitation] = useState(null);
 
   const getAllMyInvitations = async (userEmail) => {
     const config = {
       method: 'get',
-      url: 'http://localhost:3000/invitations',
-      data: userEmail
+      url: `http://localhost:3000/invitations/getInvitations/${userEmail}`,
     };
 
     const allMyInvitations = await axiosRequest(config);
@@ -24,43 +24,33 @@ export const InvitationProvider = ({ children }) => {
     return allMyInvitations;
   };
 
-  const addInvitation = async (invitation) => {
-    const config = {
-      method: 'post',
-      url: 'http://localhost:3000/invitations',
-      data: lessonData,
-    };
+  // const addInvitation = async (invitation) => {
+  //   const config = {
+  //     method: 'post',
+  //     url: 'http://localhost:3000/invitations',
+  //     data: lessonData,
+  //   };
 
-    const newLesson = await axiosRequest(config);
-    console.log('added lesson:', newLesson);
-    return newLesson;
-  };
+  //   const newLesson = await axiosRequest(config);
+  //   console.log('added lesson:', newLesson);
+  //   return newLesson;
+  // };
 
-  const updateLesson = async (lessonData) => {
+  const updateInviteStatus = async (id, lessonData) => {
     const config = {
       method: 'patch',
-      url: 'http://localhost:3000/lessons',
+      url: `http://localhost:3000/invitations/updateInviteStatus/${id}`,
       data: lessonData,
     };
 
-    const updatedLesson = await axiosRequest(config);
-    console.log('updated lesson:', updatedLesson);
-    return updatedLesson;
+    const updatedStatus = await axiosRequest(config);
+    console.log('updated status:', updatedStatus);
+    return updatedStatus;
   };
-  const deleteLesson = async (lessonData) => {
-    const config = {
-      method: 'post',
-      url: 'http://localhost:3000/lessons',
-      data: lessonData,
-    };
 
-    const deletedLesson = await axiosRequest(config);
-    console.log('deleted lesson:', deletedLesson);
-    return deletedLesson;
-  };
 
   return (
-    <Lesson.Provider value={{ currentLesson , getAllLessons , addLesson , updateLesson , deleteLesson}}>
+    <Lesson.Provider value={{ currentInvitation , getAllMyInvitations , updateInviteStatus }}>
       {children}
     </Lesson.Provider>
   );
