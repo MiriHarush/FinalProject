@@ -156,7 +156,7 @@
 // };
 
 // export default Comments;
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState , useEffect} from 'react';
 import { Container, Typography, TextField, Button, Avatar, Grid, Paper, IconButton } from '@mui/material';
 import Comment from '../components/Comment';
 import { UserContext } from '../context/users.context';
@@ -165,8 +165,12 @@ import { CommentContext } from '../context/comments.context';
 
 const Comments = () => {
   const { currentUser } = useContext(UserContext);
-  const { comments, addComment, addReply, likeComment, dislikeComment } = useContext(CommentContext);
+ // const { comments, addComment, addReply, likeComment, dislikeComment } = useContext(CommentContext);
+
+  const { comments , getAllComments } = useContext(CommentContext);
   const [newCommentText, setNewCommentText] = React.useState('');
+
+
 
   const handleCommentSubmit = () => {
     addComment(newCommentText, currentUser ? currentUser.name : 'Anonymous');
@@ -192,7 +196,8 @@ const Comments = () => {
         תגובות משתמשים
       </Typography>
 
-      {comments.map((comment) => (
+    
+      {/* {comments.map((comment) => (
         <Comment
           key={comment.id}
           id={comment.id}
@@ -205,9 +210,9 @@ const Comments = () => {
           onLike={handleLikeComment}
           onDislike={handleDislikeComment}
         />
-      ))}
+      ))} */}
 
-      {currentUser && (
+      {/* {currentUser && (
         <Paper elevation={3} style={{ padding: '20px', marginTop: '30px' }}>
           <Typography variant="h4" gutterBottom>
             הוספת תגובה
@@ -243,7 +248,7 @@ const Comments = () => {
             </Grid>
           </Grid>
         </Paper>
-      )}
+      )} */}
     </Container>
   );
 };

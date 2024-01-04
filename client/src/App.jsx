@@ -22,7 +22,7 @@ function App() {
               <RoutesPages />
             </Router>
             </ContactProvider>
-        </CommentProvider>
+            </CommentProvider>
       </SpaceProvider>
     </UserProvider>
   );

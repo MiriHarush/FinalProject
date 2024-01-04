@@ -203,6 +203,10 @@ import { UserContext } from '../context/users.context';
 import { CommentContext } from '../context/comments.context';
 import UserAsideTabs from '../components/UserAsideTabs';
 import Comment from '../components/Comment';
+import ZoomIcon from '@mui/icons-material/VideoCall';
+import SkypeIcon from '@mui/icons-material/Call';
+import ZoomButton from '../components/ZoomButton';
+import SkypeButton from '../components/SkypeButton';
 
 const UserPersonalArea = () => {
   const { currentUser } = useContext(UserContext);
@@ -235,12 +239,62 @@ const UserPersonalArea = () => {
     setGeneralReplying(false);
   };
 
+  // return (
+  //   <Container style={{ paddingTop: '50px' }}>
+  //     <Typography variant="h2" align="center" gutterBottom>
+  //       אזור אישי
+  //     </Typography>
+
+  //     {currentUser ? (
+  //       <>
+  //         <Box
+  //           sx={{
+  //             backgroundColor: '#f8f8f8',
+  //             padding: '20px',
+  //             borderRadius: '15px',
+  //             boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
+  //             marginBottom: '20px',
+  //             textAlign: 'center',
+  //           }}
+  //         >
+  //           <h2 style={{ color: '#333' }}>WELCOME, {currentUser.name}!</h2>
+  //           <p style={{ color: '#666' }}>Email: {currentUser.email}</p>
+  //           <p style={{ color: '#666' }}>User Name: {currentUser.userName}</p>
+  //           <p style={{ color: '#666' }}>Phone: {currentUser.phone}</p>
+  //         </Box>
+
+  //         <UserAsideTabs />
+
+  //         <IconButton onClick={() => setGeneralReplying(!isGeneralReplying)}>
+  //           ✍️ הוסף תגובה 
+  //         </IconButton>
+
+  //         {isGeneralReplying && (
+  //           <div>
+  //             <TextField
+  //               label="תגובה"
+  //               multiline
+  //               rows={4}
+  //               fullWidth
+  //               value={generalReplyText}
+  //               onChange={(e) => setGeneralReplyText(e.target.value)}
+  //             />
+  //             <Button variant="contained" color="primary" onClick={handleGeneralReply}>
+  //               שלח תגובה 
+  //             </Button>
+  //           </div>
+  //         )}
+
+  //       </>
+  //     ) : <div>No such a user</div>}
+  //   </Container>
+  // );
   return (
     <Container style={{ paddingTop: '50px' }}>
       <Typography variant="h2" align="center" gutterBottom>
         אזור אישי
       </Typography>
-
+  
       {currentUser ? (
         <>
           <Box
@@ -258,13 +312,26 @@ const UserPersonalArea = () => {
             <p style={{ color: '#666' }}>User Name: {currentUser.userName}</p>
             <p style={{ color: '#666' }}>Phone: {currentUser.phone}</p>
           </Box>
-
+  
           <UserAsideTabs />
+  
+          
+        {/* Zoom Button */}
+        <IconButton onClick={handleZoomMeeting}>
+          <ZoomIcon />
+          התקשרות ב-Zoom
+        </IconButton>
+
+        {/* Skype Button */}
+        <IconButton onClick={handleSkypeCall}>
+          <SkypeIcon />
+          התקשרות ב-Skype
+        </IconButton>
 
           <IconButton onClick={() => setGeneralReplying(!isGeneralReplying)}>
             ✍️ הוסף תגובה 
           </IconButton>
-
+  
           {isGeneralReplying && (
             <div>
               <TextField
@@ -280,7 +347,7 @@ const UserPersonalArea = () => {
               </Button>
             </div>
           )}
-
+  
         </>
       ) : <div>No such a user</div>}
     </Container>
