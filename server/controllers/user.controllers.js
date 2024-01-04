@@ -46,9 +46,6 @@ exports.createUser = async (req, res, next) => {
         if (contact && allowedContact.includes(contact)) {
             body.contact = contact;
         }
-
-
-
         const hash = await bcrypt.hash(body.password, 10);
         body.password = hash;
         const newUser = await User.create(body);
@@ -189,9 +186,8 @@ exports.resetPassword = async (req, res, next) => {
 exports.forgotPassword = async (req, res, next) => {
     try {
         const { email } = req.body;
-
         // Check if the user exists
-        const user = await User.findOne({ email: email });
+        const user = await User.findOne({ email });
         console.log(user);
         if (!user) {
             throw new Error("User not found");
@@ -216,19 +212,3 @@ exports.forgotPassword = async (req, res, next) => {
     }
 };
 
-exports.getUserInvitationsByEmail = async (req, res, next) => {
-
-    const { userEmail } = req.body
-    console.log(userEmail);
-    try {
-        // מצא את כל ההזמנות במסד הנתונים ששייכות למייל מסוים
-        const userInvitations = await Invite.find({ acceptMail: userEmail });
-        console.log(userInvitations);
-
-        // return userInvitations;
-        res.send(userInvitations);
-    } catch (error) {
-        // throw new Error(s`Failed to get user invitations: ${error}`);
-        next(error)
-    }
-}

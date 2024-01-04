@@ -1,12 +1,12 @@
 const mongoose = require("mongoose");
 
 const inviteSchema = new mongoose.Schema({
-    inviteMail: [{
+    inviteMail: {
         type: String
-    }],
-    acceptMail: [{
+    },
+    acceptMail: {
         type: String
-    }],
+    },
     statusInvite: {
         type: String,
         enum: ['accept', 'reject', 'waiting'],

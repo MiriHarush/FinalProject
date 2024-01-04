@@ -15,7 +15,6 @@ router.get("/getAllUsers", getUsers);
 router.get("/getUserSpaces/",auth(), getUserSpaces);
 router.get("/getInfoUser/:id", getInfoUser);
 router.patch("/editUser/:idEdit", auth(), patchUser);
-router.post("/invitation", getUserInvitationsByEmail);
 
 // router.post("/sendEmail", mail);
 
