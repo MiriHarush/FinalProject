@@ -102,7 +102,7 @@ exports.deleteFile = async (req, res, next) => {
 
   await cloudinary.uploader.destroy(fileName)
 
-
+ 
   res.status(200).json({ message: 'sucsses' })
 
 
