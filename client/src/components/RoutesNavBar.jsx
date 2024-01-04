@@ -7,10 +7,6 @@ import NavBar from './NavBar';
 import Contact from '../pages/Contact';
 import AboutUs from '../pages/AboutUs';
 import Comments from '../pages/Comments';
-import AddCourse from '../pages/AddCourse';
-import UserPersonalArea from '../pages/UserPersonalArea'
-import SpaceDashboard from '../pages/SpaceDashboard';
-import CourseUserDashboard from '../pages/CourseUserDashboard'
 
 
 const RoutesNavBar = () => {

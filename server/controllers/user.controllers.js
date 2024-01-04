@@ -53,7 +53,6 @@ exports.createUser = async (req, res, next) => {
         if (contact && allowedContact.includes(contact)) {
             body.contact = contact;
         }
-
         const hash = await bcrypt.hash(body.password, 10);
         body.password = hash;
         const newUser = await User.create(body);
