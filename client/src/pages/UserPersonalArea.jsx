@@ -317,16 +317,16 @@ const UserPersonalArea = () => {
   
           
         {/* Zoom Button */}
-        <IconButton onClick={handleZoomMeeting}>
+        {/* <IconButton onClick={handleZoomMeeting}>
           <ZoomIcon />
           התקשרות ב-Zoom
-        </IconButton>
+        </IconButton> */}
 
         {/* Skype Button */}
-        <IconButton onClick={handleSkypeCall}>
+        {/* <IconButton onClick={handleSkypeCall}>
           <SkypeIcon />
           התקשרות ב-Skype
-        </IconButton>
+        </IconButton> */}
 
           <IconButton onClick={() => setGeneralReplying(!isGeneralReplying)}>
             ✍️ הוסף תגובה 
