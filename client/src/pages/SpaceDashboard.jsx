@@ -23,8 +23,7 @@ const SpaceDashboard = () => {
       setCourses(coursesData.result);
     }
     fetchData();
-
-  }, [])
+  }, [isAddCourseModalOpen])
 
 
   useEffect(() => {

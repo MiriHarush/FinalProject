@@ -16,6 +16,7 @@ import { BrowserRouter as Router } from 'react-router-dom'; // הוסף זאת
 import { CourseProvider } from './context/courses.context';
 import './App.css'
 import { LessonProvider } from './context/lessons.context';
+import { InvitationProvider } from './context/invitations.context';
 
 
 function App() {
@@ -26,9 +27,11 @@ function App() {
       <SpaceProvider>
         <CourseProvider>
           <LessonProvider>
-            <Router>
-              <RoutesNavBar />
-            </Router>
+            <InvitationProvider>
+              <Router>
+                <RoutesNavBar />
+              </Router>
+            </InvitationProvider>
           </LessonProvider>
         </CourseProvider>
       </SpaceProvider>

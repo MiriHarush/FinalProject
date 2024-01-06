@@ -6,7 +6,7 @@ import { UserContext } from '../context/users.context';
 const UserPersonalArea = () => {
   const { currentUser } = useContext(UserContext);
   
-  console.log('in current', currentUser);
+  // console.log('in current', currentUser);
 
   return (
     <Box

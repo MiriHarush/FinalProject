@@ -9,8 +9,12 @@ import { useNavigate } from 'react-router-dom';
 
 
 const SpacesDashboard = () => {
-  const { getAllSpaces, updateCurrentSpace } = useContext(SpaceContext);
+  const { getAllSpaces, updateCurrentSpace, addSpace } = useContext(SpaceContext);
   const [spaces, setSpaces] = useState([]);
+  const [selectedSpace, setSelectedSpace] = useState(null);
+  const [isAddingSpace, setIsAddingSpace] = useState(false);
+  const [isConfirmingAdd, setIsConfirmingAdd] = useState(false);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -19,19 +23,10 @@ const SpacesDashboard = () => {
       setSpaces(spacesData.result);
     }
     fetchData();
-  }, [])
+  }, [isAddingSpace])
 
 
-  useEffect(() => {
-    console.log(spaces);
-  }, [spaces])
-
-
-  const [selectedSpace, setSelectedSpace] = useState(null);
-  const [isAddingSpace, setIsAddingSpace] = useState(false);
-  const [isConfirmingAdd, setIsConfirmingAdd] = useState(false);
-
-  const handleSpaceClick =async (space) => {
+  const handleSpaceClick = async (space) => {
     setSelectedSpace(space);
     setIsAddingSpace(false);
     updateCurrentSpace(space);
@@ -44,15 +39,16 @@ const SpacesDashboard = () => {
     setIsAddingSpace(!isAddingSpace);
   };
 
-  const handleConfirmAdd = () => {
-    const newSpace = {
-      id: spaces.length + 1,
-      name: 'New Space',
-      manager: 'New Manager',
-    };
+  const handleConfirmAdd = async (name) => {
+    console.log(name);
 
-    setSpaces((prevSpaces) => [...prevSpaces, newSpace]);
+    const space = await addSpace(name);
+    console.log("space", space);
+    if (space.success === 'true')
+    {
+      setSpaces((prevSpaces) => [...prevSpaces, space]);
 
+    }
     setIsConfirmingAdd(false);
   };
 

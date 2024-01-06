@@ -11,6 +11,8 @@ import CourseUserDashboard from '../pages/CourseUserDashboard';
 import Contact from '../pages/Contact';
 import AboutUs from '../pages/AboutUs';
 import Comments from '../pages/Comments';
+import LessonModal from './LessonModal';
+import CourseManagerDashboard from '../pages/CourseManagerDashboard';
 
 const RoutesNavBar = () => {
   return (
@@ -28,6 +30,8 @@ const RoutesNavBar = () => {
         <Route path="/userPersonalArea" element={<UserPersonalArea />} />
         <Route path="/spaceDashboard" element={<SpaceDashboard />} />
         <Route path="/courseUserDashboard" element={<CourseUserDashboard />} />
+        <Route path="/courseManagerDashboard" element={<CourseManagerDashboard />} />
+        <Route path="/lessonModal" element={<LessonModal />} />
       </Routes>
     </div>
   );
