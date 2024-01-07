@@ -32,7 +32,9 @@ exports.getInfoUser = async (req, res, next) => {
 
 exports.createUser = async (req, res, next) => {
     const body = req.body;
-    console.log(body);
+    console.log('body:',req.body);
+
+    console.log('file:',req.file);
     try {
         console.log("JOI");
         const validate = validCreateUser(body)

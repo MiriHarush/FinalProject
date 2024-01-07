@@ -8,10 +8,14 @@ export const UserProvider = ({ children }) => {
   const [loginError, setLoginError] = useState('');
 
   const signup = async (userData) => {
+    console.log('ctx',userData);
     const config = {
       method: 'post',
       url: 'http://localhost:3000/users/createUser',
       data: userData,
+      headers: {
+        // 'Content-Type': 'multipart/form-data',
+      }
     };
 
     const signedUser = await axiosRequest(config);
