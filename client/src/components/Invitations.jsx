@@ -5,25 +5,25 @@ import { UserContext } from '../context/users.context';
 
 
 const Invitations = () => {
-const {currentUser} = useContext(UserContext);
-    const { currentInvitation, getAllMyInvitations, updateInviteStatus } = useContext(InvitationContext);
+    const { currentUser } = useContext(UserContext);
+    const { getAllMyInvitations } = useContext(InvitationContext);
     const [invitations, setInvitations] = useState([]);
-const [confirmOrder, setConfirmOrder] = useState(false)
+    const [confirmOrder, setConfirmOrder] = useState(false)
 
     useEffect(() => {
         const fetchData = async () => {
-            const invitatiosData = await getAllMyInvitations(currentUser.email);
-            setInvitations(invitatiosData.result);
+            const invitationsData = await getAllMyInvitations(currentUser.email);
+            setInvitations(invitationsData.result);
         }
         fetchData();
     }, [confirmOrder])
 
-    
+
 
     return (
         <>
             {invitations.map((invite) => {
-              return <InvitationModal invite={invite} onConfirmOrder = {()=> setConfirmOrder(true)}/>
+                return <InvitationModal invite={invite} onConfirmOrder={() => setConfirmOrder(true)} />
             })}
         </>
     )

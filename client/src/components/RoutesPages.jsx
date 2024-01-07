@@ -29,6 +29,8 @@ import AddCourse from '../pages/AddCourse';
 import UserPersonalArea from '../pages/UserPersonalArea';
 import ForgotPassword from './ForgotPassword';
 import ResetPassword from './ResetPassword';
+import CourseManagerDashboard from '../pages/CourseManagerDashboard';
+import CourseUserDashboard from '../pages/CourseUserDashboard';
 
 
 const RoutesPages = () => {
