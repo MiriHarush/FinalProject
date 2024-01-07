@@ -4,9 +4,10 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv")
 const { app } = require("./app")
 const message = require("./model/message.model")
-
+const cors  = require("cors")
 
 dotenv.config();
+app.use(cors({origin:"*", methods:"*"}));
 
 const server= http.createServer(app)
 const io= socketIo(server)

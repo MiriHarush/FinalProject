@@ -12,23 +12,32 @@ import SpaceDashboard from './pages/SpaceDashboard';
 import SpacesDashboard from './pages/SpacesDashboard';
 import { SpaceProvider } from './context/spaces.context';
 import { UserProvider } from './context/users.context';
-import { BrowserRouter as Router } from 'react-router-dom';
-
+import { BrowserRouter as Router } from 'react-router-dom'; // הוסף זאת
+import { CourseProvider } from './context/courses.context';
 import './App.css'
+import { LessonProvider } from './context/lessons.context';
+import { InvitationProvider } from './context/invitations.context';
+
+
+
 
 function App() {
-
+  
 
   return (
     <UserProvider>
       <SpaceProvider>
-        <Router>
-          <RoutesNavBar />
-          <RoutesPages />
-        </Router>
+        <CourseProvider>
+          <LessonProvider>
+            <InvitationProvider>
+              <Router>
+                <RoutesNavBar />
+              </Router>
+            </InvitationProvider>
+          </LessonProvider>
+        </CourseProvider>
       </SpaceProvider>
     </UserProvider>
-
   );
 }
 

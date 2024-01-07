@@ -1,11 +1,12 @@
+const { log } = require("console");
 const { Space } = require("../model/space.model");
 const { User } = require("../model/user.model");
 
 exports.getAllSpaces = async (req, res, next) => {
     try {
-    const userId = res.locals.user_id;
+        const userId = res.locals.user_id;
 
-        const spaces = await Space.find({ownerSpace: userId});
+        const spaces = await Space.find({ ownerSpace: userId });
         res.send(spaces);
     } catch (error) {
         next(error);
@@ -27,7 +28,6 @@ exports.addSpace = async (req, res, next) => {
     try {
         req.body.ownerSpace = res.locals.user_id;
         const { nameSpace, courses, ownerSpace } = req.body;
-
         const newSpace = new Space({
             nameSpace,
             courses,
@@ -56,7 +56,7 @@ exports.deleteSpace = async (req, res, next) => {
         if (!deleteSpace) {
             throw new Error("the space is not exist")
         }
-        
+
         if (String(deleteSpace.ownerSpace) !== String(userId)) {
             throw new Error("you are not the auther")
         }

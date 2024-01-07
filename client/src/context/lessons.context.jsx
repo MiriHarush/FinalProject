@@ -8,13 +8,26 @@ import { axiosRequest } from '../utils/serverConnection';
 export const LessonContext = createContext();
 
 export const LessonProvider = ({ children }) => {
+  
   const [currentLesson, setCurrentLesson] = useState(null);
 
-  const getAllLessons = async (courseID) => {
+
+  const token = localStorage.getItem('userToken');
+  const authorization = `Bearer ${token}`;  // הכנסת ה-Token ל-headers
+
+  const updateCurrentLesson = (lesson) => {
+    setCurrentLesson(lesson);
+  };
+
+  
+  const getAllLessons = async (idLesson) => {
     const config = {
+      headers: {
+        'Authorization': authorization,  // הכנסת ה-Token ל-headers
+        'Content-Type': 'application/json',  // תלוי בסוג הבקשה שאת מבצעת
+      },
       method: 'get',
-      url: 'http://localhost:3000/lessons',
-      data: courseID
+      url: `http://localhost:3000/lesson/getAllLessones/${idLesson}`
     };
 
     const allLessons = await axiosRequest(config);
@@ -22,10 +35,31 @@ export const LessonProvider = ({ children }) => {
     return allLessons;
   };
 
+
+  const getLesson = async (courseID) => {
+    const config = {
+      headers: {
+        'Authorization': authorization,  // הכנסת ה-Token ל-headers
+        'Content-Type': 'application/json',  // תלוי בסוג הבקשה שאת מבצעת
+      },
+      method: 'get',
+      url: `http://localhost:3000/lesson/getOneLessones/${courseID}`
+    };
+
+    const allLessons = await axiosRequest(config);
+    console.log('all lessons:', allLessons);
+    return allLessons;
+  };
+
+
   const addLesson = async (lessonData) => {
     const config = {
+      headers: {
+        'Authorization': authorization,  // הכנסת ה-Token ל-headers
+        'Content-Type': 'application/json',  // תלוי בסוג הבקשה שאת מבצעת
+      },
       method: 'post',
-      url: 'http://localhost:3000/lessons',
+      url: 'http://localhost:3000/lesson/createLesson',
       data: lessonData,
     };
 
@@ -34,10 +68,15 @@ export const LessonProvider = ({ children }) => {
     return newLesson;
   };
 
-  const updateLesson = async (lessonData) => {
+
+  const updateLesson = async (id, lessonData) => {
     const config = {
+      headers: {
+        'Authorization': authorization,  // הכנסת ה-Token ל-headers
+        'Content-Type': 'application/json',  // תלוי בסוג הבקשה שאת מבצעת
+      },
       method: 'patch',
-      url: 'http://localhost:3000/lessons',
+      url: `http://localhost:3000/lesson/updateLesson/${id}`,
       data: lessonData,
     };
 
@@ -45,10 +84,16 @@ export const LessonProvider = ({ children }) => {
     console.log('updated lesson:', updatedLesson);
     return updatedLesson;
   };
-  const deleteLesson = async (lessonData) => {
+
+
+  const deleteLesson = async (id) => {
     const config = {
-      method: 'post',
-      url: 'http://localhost:3000/lessons',
+      headers: {
+        'Authorization': authorization,  // הכנסת ה-Token ל-headers
+        'Content-Type': 'application/json',  // תלוי בסוג הבקשה שאת מבצעת
+      },
+      method: 'delete',
+      url: `http://localhost:3000/lesson/deleteLesson/${id}`,
       data: lessonData,
     };
 
@@ -57,9 +102,27 @@ export const LessonProvider = ({ children }) => {
     return deletedLesson;
   };
 
+
+  const uploadFile = async (id,url) => {
+    const config = {
+      headers: {
+        'Authorization': authorization,  // הכנסת ה-Token ל-headers
+        'Content-Type': 'application/json',  // תלוי בסוג הבקשה שאת מבצעת
+      },
+      method: 'post',
+      url: `http://localhost:3000/lesson/uploadFile/${id}`,
+      data:url
+    };
+
+    const newFile = await axiosRequest(config);
+    console.log('added file:', newFile);
+    return newFile;
+  };
+
+
   return (
-    <Lesson.Provider value={{ currentLesson , getAllLessons , addLesson , updateLesson , deleteLesson}}>
+    <LessonContext.Provider value={{ currentLesson, updateCurrentLesson, getAllLessons, getLesson, addLesson, updateLesson, deleteLesson, uploadFile }}>
       {children}
-    </Lesson.Provider>
+    </LessonContext.Provider>
   );
 };

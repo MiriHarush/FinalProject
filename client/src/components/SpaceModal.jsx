@@ -8,8 +8,9 @@ const SpaceModel = ({ nameSpace, ownerSpace, onClick }) => {
       elevation={3}
       style={{ cursor: 'pointer', padding: '20px', margin: '20px', backgroundColor: '#f0f0f0' }}
     >
-      <Typography variant="h5">Name Space: {nameSpace}</Typography>
-      <Typography variant="body1">Manager: {ownerSpace}</Typography>
+      <Typography variant="h5">{nameSpace}</Typography>
+      {/* <Typography variant="h5">Name Space: {nameSpace}</Typography> */}
+      {/* <Typography variant="body1">Manager: {ownerSpace}</Typography> */}
     </Paper>
   );
 };

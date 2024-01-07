@@ -15,7 +15,7 @@ exports.validCreateUser = (userBody) => {
                 }),
             email: Joi.string().email({ tlds: { allow: ['com', 'net', 'org'] } }).error(() => Error('Email is not valid')).required(),
             contact: Joi.string(),
-            // profilImage: Joi.string().required(),
+            profileImage: Joi.string()
         })
     return signUpSchema.validate(userBody);
 }

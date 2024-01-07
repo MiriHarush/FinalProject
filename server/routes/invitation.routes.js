@@ -8,7 +8,7 @@ const router = express.Router();
 
 
 router.patch("/updateInviteStatus/:idInvite", auth(), updateInvite);
-router.post("/getInvitations", auth(), getUserInvitationsByEmail);
+router.get("/getInvitations/:userEmail", auth(), getUserInvitationsByEmail);
 
 
 
