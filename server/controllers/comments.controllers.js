@@ -5,6 +5,7 @@ const { User } = require("../model/user.model");
 exports.getAllComments = async (req, res, next) => {
     try {
         const allComments = await Comments.find({})
+        console.log(allComments);
         res.send(allComments)
     }
     catch (error) {
@@ -80,6 +81,7 @@ exports.updateLike = async (req, res, next) => {
 exports.updateDisLike = async (req, res, next) => {
     const { id } = req.params;
     const { disLike } = req.body;
+
     try {
 
         let likeComments = await Comments.findByIdAndUpdate({ _id: id }, { disLike })

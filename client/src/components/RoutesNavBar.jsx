@@ -4,10 +4,6 @@ import Home from '../pages/Home';
 import Login from '../pages/LogIn';
 import SignUp from '../pages/SignUp';
 import NavBar from './NavBar';
-import AddCourse from '../pages/AddCourse';
-import UserPersonalArea from '../pages/UserPersonalArea'
-import SpaceDashboard from '../pages/SpaceDashboard';
-import CourseUserDashboard from '../pages/CourseUserDashboard';
 import Contact from '../pages/Contact';
 import AboutUs from '../pages/AboutUs';
 import Comments from '../pages/Comments';

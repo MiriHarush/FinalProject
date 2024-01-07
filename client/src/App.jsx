@@ -11,12 +11,13 @@ import AddCourse from './pages/AddCourse'
 import SpaceDashboard from './pages/SpaceDashboard';
 import SpacesDashboard from './pages/SpacesDashboard';
 import { SpaceProvider } from './context/spaces.context';
+import RoutesPages from './components/RoutesPages';
 import { UserProvider } from './context/users.context';
-import { BrowserRouter as Router } from 'react-router-dom'; // הוסף זאת
+import { SpaceProvider } from './context/spaces.context';
 import { CourseProvider } from './context/courses.context';
-import './App.css'
 import { LessonProvider } from './context/lessons.context';
 import { InvitationProvider } from './context/invitations.context';
+
 
 
 
@@ -36,8 +37,19 @@ function App() {
             </InvitationProvider>
           </LessonProvider>
         </CourseProvider>
+          <CommentProvider>
+            <ContactProvider>
+            <Router>
+              <RoutesNavBar />
+              <RoutesPages />
+            </Router>
+            </ContactProvider>
+            </CommentProvider>
+            </LessonProvider>
+            </CourseProvider>
       </SpaceProvider>
     </UserProvider>
+
   );
 }
 
