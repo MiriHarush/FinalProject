@@ -8,9 +8,10 @@ import AddCourse from './AddCourse';
 import { useContext, useEffect } from 'react';
 import { SpaceContext } from '../context/spaces.context';
 import { CourseContext } from '../context/courses.context';
-
+import { UserContext } from '../context/users.context';
 
 const SpaceDashboard = () => {
+  const { currentUser } = useContext(UserContext);
   const { currentSpace } = useContext(SpaceContext);
   const { updateCurrentCourse, getAllCourses } = useContext(CourseContext);
   const [isAddCourseModalOpen, setIsAddCourseModalOpen] = useState(false);
@@ -23,8 +24,7 @@ const SpaceDashboard = () => {
       setCourses(coursesData.result);
     }
     fetchData();
-
-  }, [])
+  }, [isAddCourseModalOpen])
 
 
   useEffect(() => {
@@ -42,8 +42,19 @@ const SpaceDashboard = () => {
 
   const openCourseDashboard = (course) => {
     updateCurrentCourse(course);
-    
-    navigate('/courseUserDashboard');
+
+    console.log(currentUser._id);
+    console.log(course.ownerUser);
+    if (currentUser._id == course.ownerUser)
+    {
+      console.log("manager");
+      navigate('/courseManagerDashboard');
+    }
+    else
+    {
+      console.log("user");
+      navigate('/courseUserDashboard');
+    }
   };
 
 
@@ -56,19 +67,19 @@ const SpaceDashboard = () => {
           <Card key={course?._id} style={{ margin: '10px', minWidth: '250px' }}>
             <CardContent>
               <Typography variant="h6" component="div">
-                {course?.courseName}
+              Course name: {course?.courseName}
               </Typography>
               <Typography variant="h6" component="div">
-                {course?.description}
+              Description:  {course?.description}
               </Typography>
               <Typography variant="h6" component="div">
-                {course?.typeCourse}
+               Course type: {course?.typeCourse}
               </Typography>
               <Button
                 {...course}
                 variant="outlined"
                 color="primary"
-                onClick={()=>openCourseDashboard(course)}
+                onClick={() => openCourseDashboard(course)}
                 style={{ marginTop: '10px' }}
               >
                 View Course

@@ -13,8 +13,20 @@ export const InvitationProvider = ({ children }) => {
 
   const [currentInvitation, setCurrentInvitation] = useState(null);
 
+  const token = localStorage.getItem('userToken');
+  const authorization = `Bearer ${token}`;  // הכנסת ה-Token ל-headers
+
+  const updateCurrentInvite = (invite) => {
+    setCurrentInvitation(invite);
+};
+
+
   const getAllMyInvitations = async (userEmail) => {
     const config = {
+      headers: {
+        'Authorization': authorization,  // הכנסת ה-Token ל-headers
+        'Content-Type': 'application/json',  // תלוי בסוג הבקשה שאת מבצעת
+      },
       method: 'get',
       url: `http://localhost:3000/invitations/getInvitations/${userEmail}`,
     };
@@ -36,11 +48,15 @@ export const InvitationProvider = ({ children }) => {
   //   return newLesson;
   // };
 
-  const updateInviteStatus = async (id, lessonData) => {
+  const updateInviteStatus = async (idInvite, status) => {
     const config = {
+      headers: {
+        'Authorization': authorization,  // הכנסת ה-Token ל-headers
+        'Content-Type': 'application/json',  // תלוי בסוג הבקשה שאת מבצעת
+      },
       method: 'patch',
-      url: `http://localhost:3000/invitations/updateInviteStatus/${id}`,
-      data: lessonData,
+      url: `http://localhost:3000/invitations/updateInviteStatus/${idInvite}`,
+      data: {newStatus:status},
     };
 
     const updatedStatus = await axiosRequest(config);
@@ -50,8 +66,8 @@ export const InvitationProvider = ({ children }) => {
 
 
   return (
-    <Lesson.Provider value={{ currentInvitation , getAllMyInvitations , updateInviteStatus }}>
+    <InvitationContext.Provider value={{ currentInvitation , updateCurrentInvite , getAllMyInvitations , updateInviteStatus }}>
       {children}
-    </Lesson.Provider>
+    </InvitationContext.Provider>
   );
 };

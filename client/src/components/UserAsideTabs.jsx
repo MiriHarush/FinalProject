@@ -7,6 +7,8 @@ import TabPanel from '@mui/lab/TabPanel';
 import Typography from '@mui/material/Typography';
 import InvitationModal from '../components/InvitationModal';
 import SpacesDashboard from '../pages/SpacesDashboard';
+import Invitations from './Invitations';
+
 
 const UserAsideTabs = () => {
 
@@ -42,7 +44,7 @@ const UserAsideTabs = () => {
 
         {/* Panel for the first tab */}
         <TabPanel value="0">
-          <InvitationModal invite={inviteData} />
+          <Invitations/>
         </TabPanel>
 
         <TabPanel value="1">

@@ -4,6 +4,7 @@ import RoutesPages from './components/RoutesPages';
 import { UserProvider } from './context/users.context';
 import { SpaceProvider } from './context/spaces.context';
 import { CourseProvider } from './context/courses.context';
+import { InvitationProvider } from './context/invitations.context';
 import { LessonProvider } from './context/lessons.context';
 import { CommentProvider } from './context/comments.context';
 import { ContactProvider } from './context/contact.context';
@@ -17,7 +18,9 @@ function App() {
     <UserProvider>
       <SpaceProvider>
         <CourseProvider>
+          <InvitationProvider>
           <LessonProvider>
+            
           <CommentProvider>
             <ContactProvider>
             <Router>
@@ -27,6 +30,7 @@ function App() {
             </ContactProvider>
             </CommentProvider>
             </LessonProvider>
+            </InvitationProvider>
             </CourseProvider>
       </SpaceProvider>
     </UserProvider>

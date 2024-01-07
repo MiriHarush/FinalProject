@@ -149,7 +149,7 @@
 //   const { currentUser } = useContext(UserContext);
 //   const [generalReplyText, setGeneralReplyText] = useState('');
 //   const [isGeneralReplying, setGeneralReplying] = useState(false);
-  
+
 //   const handleGeneralReply = () => {
 //     // לטפל בהוספת תגובה כללית כאן
 //     // השתמש בפונקציה המתאימה מההקשר שלך
@@ -157,7 +157,7 @@
 //     setGeneralReplyText('');
 //     setGeneralReplying(false);
 //   };
-  
+
 //   return (
 //     <Box
 //       sx={{
@@ -198,7 +198,8 @@
 
 // export default UserPersonalArea;
 import React, { useContext, useState } from 'react';
-import { Container, Typography, TextField, Button, Box, IconButton , Paper } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import { Container, Typography, TextField, Button, Box, IconButton, Paper , Avatar } from '@mui/material';
 import { UserContext } from '../context/users.context';
 import { CommentContext } from '../context/comments.context';
 import UserAsideTabs from '../components/UserAsideTabs';
@@ -209,11 +210,11 @@ import ZoomButton from '../components/ZoomButton';
 import SkypeButton from '../components/SkypeButton';
 
 const UserPersonalArea = () => {
-  const { currentUser } = useContext(UserContext);
-  const { comments, addComment, addReply, likeComment, dislikeComment, addGeneralReply } = useContext(CommentContext);
-  const [newCommentText, setNewCommentText] = useState('');
+  const { currentUser , logout} = useContext(UserContext);
   const [generalReplyText, setGeneralReplyText] = useState('');
   const [isGeneralReplying, setGeneralReplying] = useState(false);
+  const navigate = useNavigate();
+  // console.log('in current', currentUser);
 
   const handleCommentSubmit = () => {
     addComment(newCommentText, currentUser ? currentUser.name : 'Anonymous');
@@ -239,62 +240,22 @@ const UserPersonalArea = () => {
     setGeneralReplying(false);
   };
 
-  // return (
-  //   <Container style={{ paddingTop: '50px' }}>
-  //     <Typography variant="h2" align="center" gutterBottom>
-  //       אזור אישי
-  //     </Typography>
+  const handleLogout = () => {
+   logout();
+   navigate('/')
+  };
 
-  //     {currentUser ? (
-  //       <>
-  //         <Box
-  //           sx={{
-  //             backgroundColor: '#f8f8f8',
-  //             padding: '20px',
-  //             borderRadius: '15px',
-  //             boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
-  //             marginBottom: '20px',
-  //             textAlign: 'center',
-  //           }}
-  //         >
-  //           <h2 style={{ color: '#333' }}>WELCOME, {currentUser.name}!</h2>
-  //           <p style={{ color: '#666' }}>Email: {currentUser.email}</p>
-  //           <p style={{ color: '#666' }}>User Name: {currentUser.userName}</p>
-  //           <p style={{ color: '#666' }}>Phone: {currentUser.phone}</p>
-  //         </Box>
-
-  //         <UserAsideTabs />
-
-  //         <IconButton onClick={() => setGeneralReplying(!isGeneralReplying)}>
-  //           ✍️ הוסף תגובה 
-  //         </IconButton>
-
-  //         {isGeneralReplying && (
-  //           <div>
-  //             <TextField
-  //               label="תגובה"
-  //               multiline
-  //               rows={4}
-  //               fullWidth
-  //               value={generalReplyText}
-  //               onChange={(e) => setGeneralReplyText(e.target.value)}
-  //             />
-  //             <Button variant="contained" color="primary" onClick={handleGeneralReply}>
-  //               שלח תגובה 
-  //             </Button>
-  //           </div>
-  //         )}
-
-  //       </>
-  //     ) : <div>No such a user</div>}
-  //   </Container>
-  // );
   return (
     <Container style={{ paddingTop: '50px' }}>
       <Typography variant="h2" align="center" gutterBottom>
+        
+        <Avatar alt="User Avatar" src={currentUser.profileImage} />
+        <Button variant="outlined" color="secondary" onClick={handleLogout}>
+          LOG OUT
+        </Button>
         אזור אישי
       </Typography>
-  
+
       {currentUser ? (
         <>
           <Box
@@ -312,42 +273,24 @@ const UserPersonalArea = () => {
             <p style={{ color: '#666' }}>User Name: {currentUser.userName}</p>
             <p style={{ color: '#666' }}>Phone: {currentUser.phone}</p>
           </Box>
-  
+
           <UserAsideTabs />
-  
-          
-        {/* Zoom Button */}
-        {/* <IconButton onClick={handleZoomMeeting}>
+
+
+          {/* Zoom Button */}
+          {/* <IconButton onClick={handleZoomMeeting}>
           <ZoomIcon />
           התקשרות ב-Zoom
         </IconButton> */}
 
-        {/* Skype Button */}
-        {/* <IconButton onClick={handleSkypeCall}>
+          {/* Skype Button */}
+          {/* <IconButton onClick={handleSkypeCall}>
           <SkypeIcon />
           התקשרות ב-Skype
         </IconButton> */}
 
-          <IconButton onClick={() => setGeneralReplying(!isGeneralReplying)}>
-            ✍️ הוסף תגובה 
-          </IconButton>
-  
-          {isGeneralReplying && (
-            <div>
-              <TextField
-                label="תגובה"
-                multiline
-                rows={4}
-                fullWidth
-                value={generalReplyText}
-                onChange={(e) => setGeneralReplyText(e.target.value)}
-              />
-              <Button variant="contained" color="primary" onClick={handleGeneralReply}>
-                שלח תגובה 
-              </Button>
-            </div>
-          )}
-  
+ 
+
         </>
       ) : <div>No such a user</div>}
     </Container>

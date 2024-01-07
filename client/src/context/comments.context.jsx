@@ -198,6 +198,8 @@ export const CommentProvider = ({ children }) => {
   //   });
   // };
 
+  
+
   const updateComment = (commentID, updatedData) => {
     setComments((comments) =>
       comments.map((comment) =>
@@ -207,6 +209,28 @@ export const CommentProvider = ({ children }) => {
     return comments;
   };
   
+  const addComment = async ({ email, contentComment }) => {
+    console.log(email,contentComment,'add comment');
+    try {
+      const config = {
+        method: 'post',
+        url: `http://localhost:3000/comments/createComment`,
+        data:  { email, contentComment } 
+      };
+      const response = await axiosRequest(config);
+   console.log(response,'added');
+      return updateComment(response.result._id , response.result);
+    
+    } catch (error) {
+      // Handle errors
+      if (error.response && error.response.data && error.response.data.message) {
+        console.error('Error fetching comments:', error.response.data.message);
+      } else {
+        console.error('An error occurred during fetching comments:', error);
+      }
+    }
+  }
+
   const likeComment = async (commentID, like) => {
     try {
       const config = {
@@ -249,7 +273,7 @@ export const CommentProvider = ({ children }) => {
     }
   };
 
-  const replyComment = async (commentID , comment) => {;
+  const replyComment = async (commentID , comment) => {
     const email =  currentUser.email
     try {
       const config = {
@@ -273,7 +297,7 @@ export const CommentProvider = ({ children }) => {
 
 
   return (
-    <CommentContext.Provider value={{ comments, getAllComments, likeComment, dislikeComment , replyComment }}>
+    <CommentContext.Provider value={{ comments, getAllComments, addComment , likeComment, dislikeComment , replyComment }}>
       {children}
     </CommentContext.Provider>
   );
