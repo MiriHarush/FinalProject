@@ -27,7 +27,7 @@ mongoose.connect(mongoURL)
             console.log(`Message from client: ${msg}`);
             const newMessage= new message({
                 content: msg.content,
-                userMessage:new mongoose.Types.ObjectId(msg.userMessage)
+                userMessage:new mongoose.Types  .ObjectId(msg.userMessage)
             });
             newMessage.save()
             .then(() => {

@@ -8,13 +8,8 @@ import AddCourse from '../pages/AddCourse';
 import UserPersonalArea from '../pages/UserPersonalArea'
 import SpaceDashboard from '../pages/SpaceDashboard';
 import Contact from '../pages/Contact';
-<<<<<<< HEAD
-
-
-=======
 import AboutUs from '../pages/AboutUs';
 import Comments from '../pages/Comments';
->>>>>>> origin/michal
 const RoutesNavBar = () => {
   return (
     <div>

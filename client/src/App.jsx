@@ -1,7 +1,6 @@
 import React from 'react';
 import RoutesNavBar from './components/RoutesNavBar';
 import RoutesPages from './components/RoutesPages';
-<<<<<<< HEAD
 import Home from './pages/Home';
 import SignUp from './pages/SignUp';
 import LogIn from './pages/LogIn';
@@ -19,36 +18,17 @@ import './App.css'
 
 function App() {
 
-=======
-import ForgotPassword from './pages/forgotPassword';
-import { UserProvider } from './context/users.context';
-import { SpaceProvider } from'./context/spaces.context';
-import { BrowserRouter as Router } from 'react-router-dom';
-import './App.css'
-
-function App() {
-  
->>>>>>> origin/michal
 
   return (
     <UserProvider>
       <SpaceProvider>
         <Router>
-<<<<<<< HEAD
           <RoutesNavBar />
           <RoutesPages />
         </Router>
       </SpaceProvider>
     </UserProvider>
 
-=======
-           <RoutesNavBar />
-           <RoutesPages/>
-           <ForgotPassword/>
-      </Router>
-      </SpaceProvider>
-    </UserProvider>
->>>>>>> origin/michal
   );
 }
 

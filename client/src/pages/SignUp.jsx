@@ -703,11 +703,12 @@ import SmsIcon from '@mui/icons-material/Sms';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { UserContext } from '../context/users.context';
+import  "../css/LogIn.css"
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#e91e63',
+      main: 'rgb(174, 124, 61)',
     },
   },
 });
@@ -781,10 +782,11 @@ const SignUp = () => {
   }
 
   return (
+      <Paper elevation={3} className="img" >
     <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
-        <Paper elevation={3} style={{ padding: 20, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <Typography variant="h4" align="center" gutterBottom style={{ color: '#e91e63' }}>
+      <Container component="main" maxWidth="xs" className='container-signup' >
+        {/* <Paper elevation={3} style={{ padding: 20, display: 'flex', flexDirection: 'column', alignItems: 'center' }}> */}
+          <Typography variant="h4" align="center" gutterBottom style={{ color: 'rgb(174, 124, 61)' }}>
             Sign Up
           </Typography>
           <form onSubmit={handleSubmit} style={{ width: '100%' }}>
@@ -799,6 +801,7 @@ const SignUp = () => {
                   value={formData.name}
                   onChange={handleChange}
                   inputProps={{ pattern: '^[A-Za-z\s]+$', title: 'Only letters and spaces are allowed' }}
+                  style={{ color: 'black' }}
                 />
                 {nameError && (
                   <Typography variant="caption" color="error">
@@ -842,6 +845,7 @@ const SignUp = () => {
                       </InputAdornment>
                     ),
                   }}
+                  style={{ color: 'black' }}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -918,11 +922,15 @@ const SignUp = () => {
             </Button>
           </form>
           <Typography variant="body2" color="textSecondary">
-            Already have an account? <Link to="/login">Login here</Link>
+            Already have an account? 
+            <Link to="/login" style={{color: 'rgb(174, 124, 61)' }}>Login here</Link>
+      
           </Typography>
-        </Paper>
       </Container>
+        {/* </Paper> */}
     </ThemeProvider>
+</Paper>
+
   );
 };
 
