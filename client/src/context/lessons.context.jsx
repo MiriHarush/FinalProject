@@ -103,15 +103,15 @@ export const LessonProvider = ({ children }) => {
   };
 
 
-  const uploadFile = async (id,url) => {
+  const uploadFile = async (lesId, myData) => {
     const config = {
       headers: {
         'Authorization': authorization,  // הכנסת ה-Token ל-headers
         'Content-Type': 'application/json',  // תלוי בסוג הבקשה שאת מבצעת
       },
       method: 'post',
-      url: `http://localhost:3000/lesson/uploadFile/${id}`,
-      data:url
+      url: `http://localhost:3000/lesson/uploadFile/${lesId}`,
+      data:myData
     };
 
     const newFile = await axiosRequest(config);

@@ -28,7 +28,6 @@ exports.uploadFile = async (req, res, next) => {
   const { lesId } = req.params;
   const userId = res.locals.user_id;
   try {
-    console.log("mirii")
     let upload = await Lesson.findOne({ _id: lesId });
     if (!upload) {
       throw new Error("the lesson is not exist")
