@@ -4,23 +4,23 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import PersonIcon from '@mui/icons-material/Person';
-import MailOutlineIcon from '@mui/icons-material/MailOutline';
 
 const AddSpace = ({ onAddSpace, onConfirmAdd, open, anchorEl }) => {
+  const [nameSpace, setNameSpace] = useState('');
+
   const handleConfirmAdd = () => {
-    
     handleClose();
-    onConfirmAdd(); // Notify the parent component about the confirmation
+    console.log("nameeee", nameSpace);
+    onConfirmAdd({nameSpace}); // Notify the parent component about the confirmation
   };
 
   const handleClose = () => {
     onAddSpace();
   };
 
-  const user = {
-    name: 'John Doe',
-    email: 'john.doe@example.com',
+ 
+  const handleSpaceNameChange = (event) => {
+    setNameSpace(event.target.value);
   };
 
   return (
@@ -44,22 +44,10 @@ const AddSpace = ({ onAddSpace, onConfirmAdd, open, anchorEl }) => {
         <TextField
           label="Space Name"
           variant="outlined"
-          defaultValue={user.name}
+          value={nameSpace}
+          onChange={handleSpaceNameChange}
           fullWidth
           margin="normal"
-          InputProps={{
-            startAdornment: <PersonIcon sx={{ color: '#FF4081' }} />,
-          }}
-        />
-        <TextField
-          label="Space Manager Email"
-          variant="outlined"
-          defaultValue={user.email}
-          fullWidth
-          margin="normal"
-          InputProps={{
-            startAdornment: <MailOutlineIcon sx={{ color: '#FF4081' }} />,
-          }}
         />
         <Button
           variant="contained"

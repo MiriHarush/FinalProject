@@ -5,6 +5,7 @@ import MuiAlert from '@mui/material/Alert';
 import { Link } from 'react-router-dom';
 import ForumIcon from '@mui/icons-material/Forum';
 
+
 const Home = () => {
   const [popularCourses, setPopularCourses] = useState([
     { id: 1, title: 'React Basics', enrollmentCount: 120 },

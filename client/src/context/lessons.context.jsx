@@ -8,6 +8,7 @@ import { axiosRequest } from '../utils/serverConnection';
 export const LessonContext = createContext();
 
 export const LessonProvider = ({ children }) => {
+  
   const [currentLesson, setCurrentLesson] = useState(null);
 
 
@@ -102,8 +103,25 @@ export const LessonProvider = ({ children }) => {
   };
 
 
+  const uploadFile = async (id,url) => {
+    const config = {
+      headers: {
+        'Authorization': authorization,  // הכנסת ה-Token ל-headers
+        'Content-Type': 'application/json',  // תלוי בסוג הבקשה שאת מבצעת
+      },
+      method: 'post',
+      url: `http://localhost:3000/lesson/uploadFile/${id}`,
+      data:url
+    };
+
+    const newFile = await axiosRequest(config);
+    console.log('added file:', newFile);
+    return newFile;
+  };
+
+
   return (
-    <LessonContext.Provider value={{ currentLesson, updateCurrentLesson, getAllLessons, getLesson, addLesson, updateLesson, deleteLesson }}>
+    <LessonContext.Provider value={{ currentLesson, updateCurrentLesson, getAllLessons, getLesson, addLesson, updateLesson, deleteLesson, uploadFile }}>
       {children}
     </LessonContext.Provider>
   );

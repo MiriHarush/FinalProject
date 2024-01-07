@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Grid from '@mui/material/Grid';
 import { styled } from '@mui/system';
-
+import { InvitationContext } from '../context/invitations.context';
 
 const StyledCard = styled(Card)({
     margin: '10px',
@@ -43,11 +43,14 @@ const StyledStamp = styled('div')({
     fontWeight: 'bold',
 });
 
-const InvitationModal = ({ invite }) => {
-    const { instructorName, courseName } = invite;
+const InvitationModal = ({ invite, onConfirmOrder }) => {
+    const { inviteMail, courseId, courseName } = invite;
+    const { updateInviteStatus } = useContext(InvitationContext);
 
-    const orderConfirmation = () => {
-        // הוסף פעולות כאן אם יש צורך
+
+    const orderConfirmation = async (status) => {
+        await updateInviteStatus(invite._id, status);
+        onConfirmOrder();
     };
 
     return (
@@ -57,7 +60,7 @@ const InvitationModal = ({ invite }) => {
                 <StyledSeal />
                 <CardContent>
                     <Typography variant="h6" component="div">
-                        {`Invitation from ${instructorName}`}
+                        {`Invitation from ${inviteMail}`}
                     </Typography>
                     <Typography variant="body2" color="textSecondary">
                         {`To Course: ${courseName}`}
@@ -65,6 +68,7 @@ const InvitationModal = ({ invite }) => {
                     <Button
                         variant="contained"
                         color="primary"
+                        onClick={()=>orderConfirmation("accept")}
                         style={{ margin: '10px' }}
                     >
                         Accept
@@ -72,7 +76,7 @@ const InvitationModal = ({ invite }) => {
                     <Button
                         variant="contained"
                         color="secondary"
-                        onClick={orderConfirmation}
+                        onClick={()=>orderConfirmation("reject")}
                     >
                         Reject
                     </Button>

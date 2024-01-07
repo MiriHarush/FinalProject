@@ -210,10 +210,10 @@ import SkypeButton from '../components/SkypeButton';
 
 const UserPersonalArea = () => {
   const { currentUser } = useContext(UserContext);
-  const { comments, addComment, addReply, likeComment, dislikeComment, addGeneralReply } = useContext(CommentContext);
-  const [newCommentText, setNewCommentText] = useState('');
   const [generalReplyText, setGeneralReplyText] = useState('');
   const [isGeneralReplying, setGeneralReplying] = useState(false);
+  
+  // console.log('in current', currentUser);
 
   const handleCommentSubmit = () => {
     addComment(newCommentText, currentUser ? currentUser.name : 'Anonymous');
