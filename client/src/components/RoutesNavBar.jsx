@@ -9,21 +9,12 @@ import UserPersonalArea from '../pages/UserPersonalArea'
 import SpaceDashboard from '../pages/SpaceDashboard';
 import CourseUserDashboard from '../pages/CourseUserDashboard';
 import Contact from '../pages/Contact';
-<<<<<<< HEAD
 import AboutUs from '../pages/AboutUs';
 import Comments from '../pages/Comments';
 import LessonModal from './LessonModal';
 import CourseManagerDashboard from '../pages/CourseManagerDashboard';
 
-=======
-<<<<<<< HEAD
 
-
-=======
-import AboutUs from '../pages/AboutUs';
-import Comments from '../pages/Comments';
->>>>>>> origin/michal
->>>>>>> origin/miri2
 const RoutesNavBar = () => {
   return (
     <div>
