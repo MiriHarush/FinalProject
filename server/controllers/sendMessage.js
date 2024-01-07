@@ -34,8 +34,8 @@ const createUserMail = async (mail) => {
     
     const userEmail = mail; 
     console.log(userEmail)
-    const subject = 'הודעת התחברות לאתר';
-    const message = 'ברוך הבא! התחברת בהצלחה לאתר שלנו.';
+    const subject = 'Website login message';
+    const message = 'Welcome! You have successfully connected to our website';
     
     const emailSent = await sendEmail(userEmail, subject, message);
     
