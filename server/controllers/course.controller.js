@@ -51,7 +51,7 @@ exports.addCourse = async (req, res, next) => {
         const savedCourse = await newCourse.save();
         const saveInvitationsPromises = invitations.map(async (invitation) => {
             try {
-                await saveInvitations(savedCourse._id, user.email, invitation);
+                await saveInvitations(savedCourse._id, user.email, invitation, savedCourse.courseName);
             } catch (err) {
                 console.error(`Failed to save invitation for ${invitation}: ${err}`);
                 // Handle error as needed
@@ -83,11 +83,12 @@ exports.addCourse = async (req, res, next) => {
     }
 }
 
-function saveInvitations(courseId, inviteEmail, acceptsMail) {
+function saveInvitations(courseId, inviteEmail, acceptsMail, courseName) {
     const newInvite = new Invite({
         courseId: courseId,
         inviteMail: inviteEmail,
-        acceptMail: acceptsMail
+        acceptMail: acceptsMail, 
+        courseName: courseName
     });
 
     return newInvite.save();
