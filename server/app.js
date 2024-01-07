@@ -24,6 +24,7 @@ app.use("/contact", contactUsRoutes);
 app.use("/comments", commentsRoutes);
 
 app.use((err,req,res,next)=>{
+    console.log(err);
     res.status(400).json({
         status:"fail",
         message:err.message
