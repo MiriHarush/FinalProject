@@ -218,7 +218,6 @@ const Comments = () => {
   const [isCommenting, setIsCommenting] = useState(false);
 
   useEffect(() => {
-    console.log('ueeee');
     const fetchData = async () => {
       const commentsData = await getAllComments();
       setComments(commentsData.result);
@@ -260,17 +259,19 @@ const Comments = () => {
         </div>
       )}
       {comments.map((comment) => (
+       
         <Comment
           key={comment._id}
           id={comment._id}
           user={comment.userName}
+          profileImage={comment.profileImage}
           text={comment.contentComment}
           like={comment.like}
           disLike={comment.disLike}
           replies={Array.isArray(comment.reply) ? comment.reply : []}
           onUpdate={() => setCommentUpdate(commentUpdate + 1)}
         />
-      ))}
+))}
     </Container>
   );
 };

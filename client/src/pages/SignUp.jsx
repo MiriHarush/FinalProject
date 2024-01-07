@@ -559,7 +559,7 @@ const SignUp = () => {
   
     const formDataWithImage = new FormData();
     formDataWithImage.append('file', formData.profileImage);
-  delete formDataWithoutConfirmPassword.profileImage;
+    delete formDataWithoutConfirmPassword.profileImage;
     Object.entries(formDataWithoutConfirmPassword).forEach(([key, value]) => {
       formDataWithImage.append(key, value);
   

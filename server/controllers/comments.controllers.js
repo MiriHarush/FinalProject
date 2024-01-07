@@ -22,7 +22,8 @@ exports.createComments = async (req, res, next) => {
             email,
             userName: user.userName,
             contentComment,
-            ownerUser: user._id
+            ownerUser: user._id,
+            profileImage: user.profileImage
         })
         const savedComment = await newComments.save();
         res.status(201).json(savedComment)
