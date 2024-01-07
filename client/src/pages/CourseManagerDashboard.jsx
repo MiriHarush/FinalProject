@@ -1,5 +1,4 @@
 import React, { useState, useContext, useEffect } from 'react';
-// import { useParams } from 'react-router-dom';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
@@ -13,7 +12,7 @@ import { useNavigate } from 'react-router-dom';
 
 const CourseManagerDashboard = () => {
   const { currentCourse } = useContext(CourseContext);
-  const { getAllLessons } = useContext(LessonContext);
+  const { updateCurrentLesson, getAllLessons, addLesson } = useContext(LessonContext);
   const { getAllMyInvitations } = useContext(InvitationContext);
 
   const [lessons, setLessons] = useState([]);
@@ -63,14 +62,23 @@ const CourseManagerDashboard = () => {
   const [selectedLesson, setSelectedLesson] = useState(null);
 
 
-  const addLesson = () => {
+  const addNewLesson = async () => {
     const lessonId = (lessons.length + 1).toString();
     const updatedLessons = [...lessons, { ...newLesson, id: lessonId }];
 
-    setLessons((prevData) => ({
-      ...prevData,
-      lessons: updatedLessons,
-    }));
+
+    const lesson = {
+      lessonName: newLesson.title,
+      descerption: newLesson.content,
+      ownerLesson: currentCourse._id
+    }
+
+    await addLesson(lesson);
+
+
+    setLessons(() => ([
+      ...updatedLessons,
+    ]));
 
     setNewLesson({ title: '', content: '' });
   };
@@ -78,7 +86,9 @@ const CourseManagerDashboard = () => {
   const openLessonModal = (lesson) => {
     setSelectedLesson(lesson);
     setLessonModalOpen(true);
-    navigate('/lessonModal',{ state: { isManager: 'false' } });
+    updateCurrentLesson(lesson);
+
+    navigate('/lessonModal', { state: { isManager: 'true' } });
 
   };
 
@@ -97,7 +107,7 @@ const CourseManagerDashboard = () => {
       <p>Permission: {currentCourse.permission}</p>
       <h3>Lessons:</h3>
       <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-        {lessons.map((lesson) => (
+        {lessons?.map((lesson) => (
           <Card key={lesson.id} style={{ margin: '10px', minWidth: '250px' }}>
             <CardContent>
               <Typography variant="h6" component="div">
@@ -124,13 +134,13 @@ const CourseManagerDashboard = () => {
             </Typography>
             <input
               type="text"
-              placeholder="Lesson Title"
+              placeholder="Lesson Name"
               value={newLesson.title}
               onChange={(e) => setNewLesson({ ...newLesson, title: e.target.value })}
               style={{ marginBottom: '10px', width: '100%' }}
             />
             <textarea
-              placeholder="Lesson Content"
+              placeholder="Lesson Description"
               value={newLesson.content}
               onChange={(e) => setNewLesson({ ...newLesson, content: e.target.value })}
               style={{ marginBottom: '10px', width: '100%' }}
@@ -138,7 +148,7 @@ const CourseManagerDashboard = () => {
             <Button
               variant="outlined"
               color="primary"
-              onClick={addLesson}
+              onClick={addNewLesson}
               style={{ marginTop: '10px' }}
             >
               Add Lesson

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import Typography from '@mui/material/Typography';
@@ -23,7 +23,7 @@ const LessonModal = () => {
   const [uploadedFile, setUploadedFile] = useState(null);
   const { currentLesson, uploadFile } = useContext(LessonContext);
   const { currentCourse } = useContext(CourseContext);
-
+  const [files, setFiles] = useState([]);
 
   const location = useLocation();
   const { isManager } = location.state;
@@ -40,6 +40,11 @@ const LessonModal = () => {
 
   const [fileError, setFileError] = useState('');
   const [filePreview, setFilePreview] = useState(null);
+
+
+  useEffect(() => {
+    setFiles(currentLesson.content);
+  }, [filePreview]);
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -58,7 +63,6 @@ const LessonModal = () => {
     }
   };
 
-
   const getType = (file) => {
     const url = file;
     const urlArray = url.split('/');
@@ -68,17 +72,20 @@ const LessonModal = () => {
   }
 
   const handleUpload = async () => {
+    const myData = new FormData();
+    myData.append('file', filePreview);
+
     // Check if the uploaded file type is allowed for the selected content type
     console.log("upload", uploadedFile);
     if (allowedContentTypes[contentType].includes(uploadedFile.type)) {
       console.log('Content Type:', contentType);
       console.log('File uploaded:', uploadedFile);
       // Add additional logic to handle the uploaded file and content type
-      const fullUrl = filePreview;
-      const urlStartIndex = fullUrl.indexOf('http');
-      const url = urlStartIndex !== -1 ? fullUrl.substring(urlStartIndex) : '';
+      // const fullUrl = filePreview;
+      // const urlStartIndex = fullUrl.indexOf('http');
+      // const url = urlStartIndex !== -1 ? fullUrl.substring(urlStartIndex) : '';
 
-      await uploadFile(currentCourse._id, url)
+      await uploadFile(currentLesson._id, myData)
     } else {
       alert('Invalid file type for the selected content type.');
     }
@@ -100,6 +107,7 @@ const LessonModal = () => {
         return null;
     }
   };
+
 
   return (
     <Card style={{ margin: '10px', width: '45%' }}>
