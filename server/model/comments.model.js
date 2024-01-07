@@ -35,7 +35,11 @@ const commentsSchema = new mongoose.Schema({
             type: String
         }
     }
-    ]
+    ],
+    profileImage: {
+        type: String,
+        url: String
+    }
 })
 
 const Comments = mongoose.model("Comments", commentsSchema);
