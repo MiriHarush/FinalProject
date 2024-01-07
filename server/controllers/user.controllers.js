@@ -48,6 +48,8 @@ exports.createUser = async (req, res, next) => {
         const allowedContact = ['Email', 'SMS', 'Phone'];
 
         const file = req.file.path
+        console.log(file);
+        console.log(req.profileImage);
         const result = await cloudinary.uploader.upload(file, { resource_type: "image" })
         body.profileImage = result.url ;
 

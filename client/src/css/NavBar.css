@@ -1,0 +1,22 @@
+/* .navbar-nav */
+.nav-link,
+.dropdown-link {
+    color: rgb(174, 124, 61)!important;
+    /* color: rgb(40, 111, 153) !important; */
+
+}
+
+
+.nav-link::before {
+    content: '';
+    display: block;
+    width: 0;
+    height: 2px;
+    background: rgb(174, 124, 61);
+    /* background: rgb(40, 111, 153); */
+    transition: width .4s ease-in;
+}
+
+.nav-link:hover::before {
+    width: 100%;
+}

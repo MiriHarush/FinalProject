@@ -134,7 +134,7 @@ import { UserContext } from '../context/users.context';
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#3f51b5',
+      main: 'rgb(174, 124, 61)',
     },
   },
 });
@@ -183,56 +183,61 @@ const LogIn = () => {
   };
 
   return (
-    <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
-        <Paper elevation={3} style={{ padding: 20, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <Typography variant="h4" align="center" gutterBottom style={{ color: '#3f51b5' }}>
-            Log In
-          </Typography>
-          <form onSubmit={handleSubmit} style={{ width: '100%' }}>
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <TextField
-                  label="Email"
-                  type="email"
-                  fullWidth
-                  required
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  error={Boolean(emailError)}
-                />
-                {emailError && <FormHelperText style={{ color: 'red' }}>{emailError}</FormHelperText>}
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  label="Password"
-                  type="password"
-                  fullWidth
-                  required
-                  name="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                />
-              </Grid>
-            </Grid>
-            <Button type="submit" variant="contained" color="primary" fullWidth style={{ marginTop: 20 }}>
-              Log In
-            </Button>
+    <Paper elevation={3} className="img" >
+    {/* style={{ padding: '50px', display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundImage: 'url("https://images.pexels.com/photos/4145190/pexels-photo-4145190.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1")', backgroundSize: 'cover', minHeight: '100vh' }} */}
+     <ThemeProvider theme={theme}>
+       <Container component="main" maxWidth="xs" className='container-login' >
+         <Grid container spacing={2} justifyContent="center" alignItems="center">
+           <Grid item xs={12}>
+             <Typography variant="h4" align="center" gutterBottom style={{ color: 'rgb(174, 124, 61)' }}>
+               Log In
+             </Typography>
+             <form onSubmit={handleSubmit} style={{ width: '100%' }}>
+               <Grid container spacing={2}>
+                 <Grid item xs={12}>
+                   <TextField
+                     label="Email"
+                     type="email"
+                     fullWidth
+                     required
+                     name="email"
+                     value={formData.email}
+                     onChange={handleChange}
+                     error={Boolean(emailError)}
+                   />
+                   {emailError && <FormHelperText style={{ color: 'red' }}>{emailError}</FormHelperText>}
+                 </Grid>
+                 <Grid item xs={12}>
+                   <TextField
+                     label="Password"
+                     type="password"
+                     fullWidth
+                     required
+                     name="password"
+                     value={formData.password}
+                     onChange={handleChange}
+                   />
+                 </Grid>
+               </Grid>
+               <Button type="submit" variant="contained" color="primary" fullWidth style={{ marginTop: '20px' ,color: 'white' }}>
+                Log In
+              </Button>
             <Typography variant="body2" style={{ marginTop: 10 }}>
-              <MuiLink component={Link} to="/forgot-password" style={{ color: '#3f51b5' }}>
+              <MuiLink component={Link} to="/forgot-password" style={{ color: 'rgb(174, 124, 61)' }}>
                 Forgot your password?
               </MuiLink>
               <br />
               Don't have an account?{' '}
-              <MuiLink component={Link} to="/signup" style={{ color: '#3f51b5' }}>
+              <MuiLink component={Link} to="/signup" style={{ color: 'rgb(174, 124, 61)' }}>
                 Sign Up
               </MuiLink>
             </Typography>
           </form>
-        </Paper>
+          </Grid>
+        </Grid>
       </Container>
     </ThemeProvider>
+  </Paper>
   );
 };
 

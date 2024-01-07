@@ -41,7 +41,7 @@ exports.patchCommentToReply = async (req, res, next) => {
 
         let message = await Comments.findByIdAndUpdate(
             { _id: id },
-            { $push: { reply: { userName: user.userName, comment: comment } } }
+            { $push: { reply: { userName: user.userName, comment: comment, profileImage: user.profileImage } } }
         )
         res.send(message)
     }
@@ -62,7 +62,7 @@ exports.deleteComments = async (req, res, next) => {
         res.send({ message: 'The comment deleted successfully' });
     }
     catch (error) {
-      next(error)
+        next(error)
     }
 }
 
@@ -70,9 +70,9 @@ exports.updateLike = async (req, res, next) => {
     const { id } = req.params;
     const { like } = req.body;
     try {
-
+        console.log(body)
         let likeComments = await Comments.findByIdAndUpdate({ _id: id }, { like })
-        res.send(likeComments)
+         res.send(likeComments)
     }
     catch (error) {
         next(error)
@@ -84,9 +84,10 @@ exports.updateDisLike = async (req, res, next) => {
     const { disLike } = req.body;
 
     try {
+        console.log(req.body)
 
         let likeComments = await Comments.findByIdAndUpdate({ _id: id }, { disLike })
-        res.send(likeComments)
+         res.send(likeComments)
     }
     catch (error) {
         next(error)
