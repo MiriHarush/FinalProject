@@ -41,7 +41,7 @@ exports.patchCommentToReply = async (req, res, next) => {
 
         let message = await Comments.findByIdAndUpdate(
             { _id: id },
-            { $push: { reply: { userName: user.userName, comment: comment } } }
+            { $push: { reply: { userName: user.userName, comment: comment, profileImage: user.profileImage } } }
         )
         res.send(message)
     }

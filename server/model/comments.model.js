@@ -33,6 +33,10 @@ const commentsSchema = new mongoose.Schema({
         },
         comment: {
             type: String
+        }, 
+        profileImage: {
+            type: String, 
+            url: String
         }
     }
     ],
