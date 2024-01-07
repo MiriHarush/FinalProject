@@ -9,7 +9,7 @@ const invitationRoutes= require("./routes/invitation.routes")
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(cors({origin:"*", methods:"*"}));
 
 // app.use(express.static(path.join(__dirname,"public")))
 
@@ -20,6 +20,7 @@ app.use("/lesson", lessonRoutes);
 app.use("/invitations", invitationRoutes);
 
 app.use((err,req,res,next)=>{
+    console.log(err);
     res.status(400).json({
         status:"fail",
         message:err.message

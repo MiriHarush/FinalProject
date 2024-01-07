@@ -35,7 +35,7 @@ const { Invite } = require("../model/invatations.model");
 exports.updateInvite = async(req, res, next) => {
     const {idInvite} = req.params;
     const {newStatus} = req.body;
-
+console.log({newStatus});
     try {
         const updatedInvite = await Invite.findByIdAndUpdate(
             idInvite,
@@ -49,6 +49,7 @@ exports.updateInvite = async(req, res, next) => {
 
         return res.json(updatedInvite);
     } catch (error) {
+        console.log(error)
        next(error)
     }
 }
@@ -56,13 +57,13 @@ exports.updateInvite = async(req, res, next) => {
 exports.getUserInvitationsByEmail = async (req, res, next) => {
 
     const { userEmail } = req.params
-    console.log(userEmail);
+    // console.log(userEmail);
     try {
         // מצא את כל ההזמנות במסד הנתונים ששייכות למייל מסוים
         // const userInvitations = await Invite.find({ acceptMail: userEmail });
         const userInvitations = await Invite.find({ acceptMail: userEmail, statusInvite: 'waiting' });
 
-        console.log(userInvitations);
+        // console.log(userInvitations);
 
         // return userInvitations;
         res.send(userInvitations);

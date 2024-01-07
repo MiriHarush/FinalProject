@@ -63,7 +63,7 @@ const CourseUserDashboard = () => {
 
   return (
     <>
-    <CourseManagerDashboard/>
+    {/* <CourseManagerDashboard/> */}
     <hr/>
       <div>
         <h1>lessons in course </h1>
