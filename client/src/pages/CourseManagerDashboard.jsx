@@ -8,6 +8,7 @@ import LessonModal from '../components/LessonModal'; // Import the LessonModal c
 import { CourseContext } from '../context/courses.context';
 import { LessonContext } from '../context/lessons.context';
 import { InvitationContext } from '../context/invitations.context';
+import { useNavigate } from 'react-router-dom';
 
 
 const CourseManagerDashboard = () => {
@@ -17,6 +18,8 @@ const CourseManagerDashboard = () => {
 
   const [lessons, setLessons] = useState([]);
   const [invitations, setInvitations] = useState([]);
+
+  const navigate = useNavigate();
 
 
   useEffect(() => {
@@ -75,6 +78,8 @@ const CourseManagerDashboard = () => {
   const openLessonModal = (lesson) => {
     setSelectedLesson(lesson);
     setLessonModalOpen(true);
+    navigate('/lessonModal',{ state: { isManager: 'false' } });
+
   };
 
   const closeLessonModal = () => {

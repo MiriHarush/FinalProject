@@ -109,7 +109,7 @@ const LessonModal = () => {
         </Typography>
         <hr />
         <Typography variant="body1" component="div">
-          {currentLesson.content.map((file) => {
+          {currentLesson?.content.map((file) => {
             return <FileModal fileType={getType(file)} fileUrl={file} />
           })}
         </Typography>

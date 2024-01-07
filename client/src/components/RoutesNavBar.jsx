@@ -9,7 +9,9 @@ import AboutUs from '../pages/AboutUs';
 import Comments from '../pages/Comments';
 import LessonModal from './LessonModal';
 import CourseManagerDashboard from '../pages/CourseManagerDashboard';
-
+import CourseUserDashboard from '../pages/CourseUserDashboard';
+import UserPersonalArea from '../pages/UserPersonalArea';
+import SpaceDashboard from '../pages/SpaceDashboard';
 
 const RoutesNavBar = () => {
   return (
