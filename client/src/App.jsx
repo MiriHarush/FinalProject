@@ -23,7 +23,7 @@ import { InvitationProvider } from './context/invitations.context';
 
 
 function App() {
-  
+
 
   return (
     <UserProvider>
@@ -37,16 +37,6 @@ function App() {
             </InvitationProvider>
           </LessonProvider>
         </CourseProvider>
-          <CommentProvider>
-            <ContactProvider>
-            <Router>
-              <RoutesNavBar />
-              <RoutesPages />
-            </Router>
-            </ContactProvider>
-            </CommentProvider>
-            </LessonProvider>
-            </CourseProvider>
       </SpaceProvider>
     </UserProvider>
 
