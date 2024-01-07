@@ -48,6 +48,16 @@
 import React, { useContext, useState } from 'react';
 import { TextField, Button, Container, Typography, Grid } from '@mui/material';
 import { ContactContext } from '../context/contact.context';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: 'rgb(174, 124, 61)',
+    },
+  },
+});
 
 const Contact = () => {
   const { addContact } = useContext(ContactContext);
@@ -72,9 +82,10 @@ const Contact = () => {
   };
 
   return (
+    <ThemeProvider theme={theme}>
     <Container style={{ paddingTop: '50px' }}>
-      <Typography variant="h2" align="center" gutterBottom>
-        צור קשר
+      <Typography variant="h2" align="center" gutterBottom style={{ color: 'rgb(174, 124, 61)' }}>
+        Contact Us
       </Typography>
 
       <form onSubmit={handleSubmit}>
@@ -107,14 +118,15 @@ const Contact = () => {
               type="submit"
               variant="contained"
               color="primary"
-              style={{ background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)' }}
-            >
+              style={{ background: 'rgb(174, 124, 61)' }}
+              >
               שלח
             </Button>
           </Grid>
         </Grid>
       </form>
     </Container>
+                </ThemeProvider>
   );
 };
 
