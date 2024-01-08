@@ -7,14 +7,12 @@ import AddSpace from './AddSpace';
 import { SpaceContext } from '../context/spaces.context';
 import { useNavigate } from 'react-router-dom';
 
-
 const SpacesDashboard = () => {
   const { getAllSpaces, updateCurrentSpace, addSpace } = useContext(SpaceContext);
   const [spaces, setSpaces] = useState([]);
   const [selectedSpace, setSelectedSpace] = useState(null);
   const [isAddingSpace, setIsAddingSpace] = useState(false);
   const [isConfirmingAdd, setIsConfirmingAdd] = useState(false);
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -24,7 +22,6 @@ const SpacesDashboard = () => {
     }
     fetchData();
   }, [isAddingSpace])
-
 
   const handleSpaceClick = async (space) => {
     setSelectedSpace(space);
@@ -87,7 +84,6 @@ const SpacesDashboard = () => {
           )}
         </Grid>
         <Grid item xs={12}>
-          {/* {selectedSpace && <SpaceDashboard space={selectedSpace} />} */}
           {isAddingSpace && !isConfirmingAdd && (
             <AddSpace
               onAddSpace={() => setIsAddingSpace(false)}

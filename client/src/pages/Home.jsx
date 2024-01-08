@@ -1,10 +1,8 @@
-// Home.jsx
 import React, { useState } from 'react';
 import { Container, Typography, Grid, Card, CardContent, Button, Snackbar } from '@mui/material';
 import MuiAlert from '@mui/material/Alert';
 import { Link } from 'react-router-dom';
 import ForumIcon from '@mui/icons-material/Forum';
-
 
 const Home = () => {
   const [popularCourses, setPopularCourses] = useState([
@@ -17,16 +15,10 @@ const Home = () => {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
 
   const handleEnroll = (courseId) => {
-    // Update enrollment count for the selected course
     const updatedCourses = popularCourses.map((course) =>
       course.id === courseId ? { ...course, enrollmentCount: course.enrollmentCount + 1 } : course
     );
     setPopularCourses(updatedCourses);
-
-    // Set the user state
-    setUser({ name: 'John Doe' });
-
-    // Show a success message
     setSnackbarOpen(true);
   };
 

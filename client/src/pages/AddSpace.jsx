@@ -11,7 +11,7 @@ const AddSpace = ({ onAddSpace, onConfirmAdd, open, anchorEl }) => {
   const handleConfirmAdd = () => {
     handleClose();
     console.log("nameeee", nameSpace);
-    onConfirmAdd({nameSpace}); // Notify the parent component about the confirmation
+    onConfirmAdd({nameSpace}); 
   };
 
   const handleClose = () => {

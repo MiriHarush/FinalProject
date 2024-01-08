@@ -31,10 +31,8 @@ export const UserProvider = ({ children }) => {
       const loggedUser = await axiosRequest(config);
       setCurrentUser({ ...loggedUser.result.user });
       localStorage.setItem('userToken', loggedUser.result.token);
-      // Clear any previous login errors
       setLoginError('');
     } catch (error) {
-      // Handle login errors
       if (error.response && error.response.data && error.response.data.message) {
         setLoginError(error.response.data.message);
       } else {
@@ -42,28 +40,7 @@ export const UserProvider = ({ children }) => {
       }
     }
   };
-
-
-  const userGuestCourses = async (email) => {
-    try {
-      const config = {
-        method: 'post',
-        url: 'http://localhost:3000/users/guestCourses',
-        data: email,
-      };
-      
-      const courses = await axiosRequest(config);
-      return courses;
-    } catch (error) {
-      // Handle login errors
-      if (error.response && error.response.data && error.response.data.message) {
-        setLoginError(error.response.data.message);
-      } else {
-        setLoginError('An error occurred during login.');
-      }
-    }
-  };
-
+ 
   const forgotPassword = async (email) => {
     console.log({email});
     try {
@@ -77,7 +54,6 @@ export const UserProvider = ({ children }) => {
       return message;
      
     } catch (error) {
-      // Handle login errors
       if (error.response && error.response.data && error.response.data.message) {
         setLoginError(error.response.data.message);
       } else {
@@ -99,7 +75,6 @@ export const UserProvider = ({ children }) => {
       return message;
      
     } catch (error) {
-      // Handle login errors
       if (error.response && error.response.data && error.response.data.message) {
         setLoginError(error.response.data.message);
       } else {
@@ -114,7 +89,7 @@ export const UserProvider = ({ children }) => {
   };
 
   return (
-    <UserContext.Provider value={{ currentUser, signup, login, userGuestCourses, logout, forgotPassword , resetPassword ,loginError }}>
+    <UserContext.Provider value={{ currentUser, signup, login, logout, forgotPassword , resetPassword ,loginError }}>
       {children}
     </UserContext.Provider>
   );

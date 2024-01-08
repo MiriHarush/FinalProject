@@ -2,7 +2,6 @@ import React from 'react';
 
 const ZoomButton = () => {
   const handleZoomMeeting = async () => {
-    // Add Zoom API logic here to create a meeting
     console.log('Opening Zoom Meeting...');
   };
 

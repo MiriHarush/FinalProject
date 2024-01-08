@@ -13,8 +13,8 @@ const StyledCard = styled(Card)({
     position: 'relative',
     boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
     borderRadius: '10px',
-    display: 'flex',  // הוסף תכונת Flex
-    flexDirection: 'column',  // כדי שהכפתורים יורדו לקרקע
+    display: 'flex', 
+    flexDirection: 'column', 
 });
 
 const StyledSeal = styled('div')({

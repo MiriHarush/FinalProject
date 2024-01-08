@@ -116,14 +116,12 @@ const AddCourse = ({ onClose }) => {
       <TextField
         label="Course Name"
         variant="outlined"
-        // value={course.courseName}
         onChange={(e) => handleChange('courseName', e.target.value)}
         sx={{ marginBottom: '20px', width: '300px' }}
       />
          <TextField
         label="Description"
         variant="outlined"
-        // value={course.courseName}
         onChange={(e) => handleChange('description', e.target.value)}
         sx={{ marginBottom: '20px', width: '300px' }}
       />
@@ -137,7 +135,6 @@ const AddCourse = ({ onClose }) => {
           inputProps={{
             startAdornment: (
               <>
-                {/* <PeopleIcon sx={{ color: '#2196F3' }} /> */}
                 {course.typeCourse === 'experiential' && <BusinessIcon sx={{ marginLeft: '5px' }} />}
                 {course.typeCourse === 'studies' && <PublicIcon sx={{ marginLeft: '5px' }} />}
                 {course.typeCourse === 'enrichment' && <LockIcon sx={{ marginLeft: '5px' }} />}
