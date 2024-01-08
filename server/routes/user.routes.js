@@ -1,6 +1,6 @@
 const express = require("express");
 const { sendEmail, mail } = require("../controllers/sendMessage");
-const { createUser, login, getUserSpaces, getInfoUser, getUsers, patchUser, forgotPassword, resetPassword, getUserInvitationsByEmail } = require("../controllers/user.controllers");
+const { createUser, login, getUserSpaces, getInfoUser, getUsers, patchUser, forgotPassword, resetPassword, getUserInvitationsByEmail, getAcceptCourses } = require("../controllers/user.controllers");
 const { auth } = require("../middleWare/auth");
 const upload = require("../middleWare/multer");
 
@@ -16,6 +16,8 @@ router.get("/getAllUsers", getUsers);
 router.get("/getUserSpaces/",auth(), getUserSpaces);
 router.get("/getInfoUser/:id", getInfoUser);
 router.patch("/editUser/:idEdit", auth(), patchUser);
+router.post("/guestCourses", getAcceptCourses);
+
 
 // router.post("/sendEmail", mail);
 
