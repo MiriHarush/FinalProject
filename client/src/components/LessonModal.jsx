@@ -24,6 +24,7 @@ const LessonModal = () => {
   const { currentLesson, uploadFile } = useContext(LessonContext);
   const { currentCourse } = useContext(CourseContext);
   const [files, setFiles] = useState([]);
+  const [filesChanges, setFilesChanges] = useState(0);
 
   const location = useLocation();
   const { isManager } = location.state;
@@ -40,11 +41,19 @@ const LessonModal = () => {
 
   const [fileError, setFileError] = useState('');
   const [filePreview, setFilePreview] = useState(null);
+  const [newContent, setNewContent] = useState(null);
 
 
   useEffect(() => {
+    console.log(newContent);
     setFiles(currentLesson.content);
-  }, [filePreview]);
+  }, [newContent]);
+
+
+  useEffect(() => {
+    console.log(files);
+
+  }, [files]);
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -58,7 +67,8 @@ const LessonModal = () => {
       setUploadedFile(null);
     } else {
       setFileError(''); // Clear the error message
-      setFilePreview(file ? URL.createObjectURL(file) : null);
+      // setFilePreview(file ? URL.createObjectURL(file) : null);
+      setFilePreview(file);
       setUploadedFile(file);
     }
   };
@@ -78,14 +88,12 @@ const LessonModal = () => {
     // Check if the uploaded file type is allowed for the selected content type
     console.log("upload", uploadedFile);
     if (allowedContentTypes[contentType].includes(uploadedFile.type)) {
-      console.log('Content Type:', contentType);
-      console.log('File uploaded:', uploadedFile);
-      // Add additional logic to handle the uploaded file and content type
-      // const fullUrl = filePreview;
-      // const urlStartIndex = fullUrl.indexOf('http');
-      // const url = urlStartIndex !== -1 ? fullUrl.substring(urlStartIndex) : '';
 
-      await uploadFile(currentLesson._id, myData)
+      const newFile = await uploadFile(currentLesson._id, myData);
+      currentLesson.content = newFile.result.content;
+      setNewContent(currentLesson.content)
+      setFilesChanges(filesChanges+1)
+      console.log(currentLesson.content);
     } else {
       alert('Invalid file type for the selected content type.');
     }
@@ -112,12 +120,16 @@ const LessonModal = () => {
   return (
     <Card style={{ margin: '10px', width: '45%' }}>
       <CardContent>
+        {console.log(currentLesson)}
         <Typography variant="h4" component="div">
           {currentLesson?.lessonName}
         </Typography>
         <hr />
         <Typography variant="body1" component="div">
-          {currentLesson?.content.map((file) => {
+          {/* {currentLesson?.content.map((file) => {
+            return <FileModal fileType={getType(file)} fileUrl={file} />
+          })} */}
+          {files?.map((file) => {
             return <FileModal fileType={getType(file)} fileUrl={file} />
           })}
         </Typography>
@@ -181,14 +193,14 @@ const LessonModal = () => {
                 )}
               </>
             )}
-            {filePreview && (
+            {/* {filePreview && (
               <div style={{ marginTop: '10px' }}>
                 <Typography variant="body2" color="textSecondary">
                   File Preview:
                 </Typography>
                 <img src={filePreview} alt="File Preview" style={{ maxWidth: '100%', maxHeight: '200px' }} />
               </div>
-            )}
+            )} */}
           </>
         )}
       </CardContent>

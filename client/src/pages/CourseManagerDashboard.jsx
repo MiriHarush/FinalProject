@@ -111,10 +111,10 @@ const CourseManagerDashboard = () => {
           <Card key={lesson.id} style={{ margin: '10px', minWidth: '250px' }}>
             <CardContent>
               <Typography variant="h6" component="div">
-                {lesson.title}
+                {lesson.lessonName}
               </Typography>
               <Typography variant="body2" color="textSecondary">
-                {lesson.content}
+                {lesson.descerption}
               </Typography>
               <Button
                 variant="outlined"

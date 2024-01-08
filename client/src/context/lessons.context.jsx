@@ -107,7 +107,6 @@ export const LessonProvider = ({ children }) => {
     const config = {
       headers: {
         'Authorization': authorization,  // הכנסת ה-Token ל-headers
-        'Content-Type': 'application/json',  // תלוי בסוג הבקשה שאת מבצעת
       },
       method: 'post',
       url: `http://localhost:3000/lesson/uploadFile/${lesId}`,
