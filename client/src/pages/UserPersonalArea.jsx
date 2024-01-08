@@ -210,16 +210,10 @@ import ZoomButton from '../components/ZoomButton';
 import SkypeButton from '../components/SkypeButton';
 
 const UserPersonalArea = () => {
-<<<<<<< HEAD
   const { currentUser , logout} = useContext(UserContext);
   const [generalReplyText, setGeneralReplyText] = useState('');
   const [isGeneralReplying, setGeneralReplying] = useState(false);
   const navigate = useNavigate();
-=======
-  const { currentUser } = useContext(UserContext);
-  const [generalReplyText, setGeneralReplyText] = useState('');
-  const [isGeneralReplying, setGeneralReplying] = useState(false);
->>>>>>> shani
   // console.log('in current', currentUser);
 
   const handleCommentSubmit = () => {

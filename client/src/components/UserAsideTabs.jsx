@@ -38,8 +38,9 @@ const UserAsideTabs = () => {
             overflowX: 'auto',  // Allow horizontal scrolling
           }}
         >
-          <Tab label="Invitations" value="0" />
-          <Tab label="My spaces" value="1" />
+          <Tab label="My invitations" value="0" />
+          <Tab label="My Spaces" value="1" />
+          <Tab label="My Courses" value="2" />
         </Tabs>
 
         {/* Panel for the first tab */}
@@ -49,6 +50,10 @@ const UserAsideTabs = () => {
 
         <TabPanel value="1">
           <SpacesDashboard />
+        </TabPanel>
+
+        <TabPanel value="2">
+          <UserCoursers />
         </TabPanel>
 
       </Box>

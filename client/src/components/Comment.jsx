@@ -77,6 +77,7 @@ const Comment = ({ id, user, profileImage, text, like, disLike, replies, onUpdat
               key={reply._id}
               id={reply._id}
               user={reply.userName}
+              profileImage={reply.profileImage}
               text={reply.comment}
             />
           ))}
