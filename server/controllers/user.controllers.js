@@ -9,6 +9,7 @@ const { forgotPasswordEmail } = require("./sendMessage");
 const { Invite } = require("../model/invatations.model");
 const cloudinary = require("../utils/cloudinary");
 const { Types } = require("mongoose");
+const { Course } = require("../model/course.model");
 
 exports.getUsers = async (req, res, next) => {
     try {
@@ -222,4 +223,26 @@ exports.forgotPassword = async (req, res, next) => {
         next(error);
     }
 };
+
+
+exports.getAcceptCourses = async (req, res, next) => {
+    try {
+        const { email } = req.body;
+        const userAcceptInvitations = await Invite.find({ acceptMail: email, statusInvite: 'accept' });
+        
+        const courseInfo = [];
+        for (const accept of userAcceptInvitations) {
+            const courseId = accept.courseId;
+            const coursesAccept = await Course.findById(courseId);
+            if (coursesAccept) {
+                courseInfo.push(coursesAccept);
+            }
+        }
+
+        res.send(courseInfo);
+    } catch (error) {
+        next(error);
+    }
+}
+
 

@@ -1,6 +1,6 @@
 const express = require("express");
 const { auth } = require("../middleWare/auth");
-const { addCourse, deleteCourse, patchCourse, getAllCourses, getInfoCourse } = require("../controllers/course.controller");
+const { addCourse, deleteCourse, patchCourse, getAllCourses, getInfoCourse, getAcceptCourses } = require("../controllers/course.controller");
 
 
 
