@@ -46,7 +46,7 @@ const LessonModal = () => {
 
   useEffect(() => {
     console.log(newContent);
-    setFiles(currentLesson.content);
+    setFiles(newContent);
   }, [newContent]);
 
 
