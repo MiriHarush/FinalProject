@@ -1,4 +1,5 @@
 import React, { useContext, useState, useCallback } from 'react';
+import Avatar from '@mui/material/Avatar';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDropzone } from 'react-dropzone';
 import {
@@ -14,16 +15,16 @@ import {
   FormControl,
   InputAdornment,
   IconButton,
-  Avatar,
+  FormHelperText,
 } from '@mui/material';
-import { UserContext } from '../context/users.context';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import EmailIcon from '@mui/icons-material/Email';
 import PhoneIcon from '@mui/icons-material/Phone';
 import SmsIcon from '@mui/icons-material/Sms';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import "../css/LogIn.css"
+import { UserContext } from '../context/users.context';
+import  "../css/LogIn.css"
 
 const theme = createTheme({
   palette: {
@@ -42,7 +43,6 @@ const SignUp = () => {
     userName: '',
     phone: '',
     contact: '',
-    profileImage: null,
   });
 
   const [showPassword, setShowPassword] = useState(false);
@@ -68,17 +68,22 @@ const SignUp = () => {
     const { name, value } = e.target;
     let updatedValue = value;
 
+    // Add additional validation based on the field name
     if (name === 'name') {
+      // Allow only letters and spaces
       updatedValue = updatedValue.replace(/[^A-Za-z\s]/g, '');
       setNameError(!/^[A-Za-z\s]+$/.test(updatedValue));
     } else if (name === 'phone') {
+      // Allow only numbers
       updatedValue = updatedValue.replace(/[^0-9]/g, '');
     } else if (name === 'email') {
+      // Email validation
       setEmailError(!/\S+@\S+\.\S+/.test(value) || !/(.com)|(.org)|(.net)$/.test(value));
     }
 
     setFormData((prevData) => ({ ...prevData, [name]: updatedValue }));
 
+    // Password validation
     if (name === 'password') {
       if (value.length < 8 || !/[A-Z]/.test(value) || !/[a-z]/.test(value) || !/[0-9]/.test(value)) {
         setPasswordError(true);
@@ -161,7 +166,6 @@ const SignUp = () => {
                   helperText={emailError && 'Invalid email format or missing domain (.com, .org, .net)'}
                 />
               </Grid>
-
               <Grid item xs={12}>
                 <TextField
                   label="Password"
@@ -256,7 +260,6 @@ const SignUp = () => {
                   </Select>
                 </FormControl>
               </Grid>
-
             </Grid>
             <Button type="submit" fullWidth variant="contained" color="primary" style={{ margin: '20px 0' }}>
               Sign Up

@@ -18,6 +18,40 @@ const UserAsideTabs = () => {
   };
 
   return (
+    // <TabContext value={value}>
+    //   <Box>
+    //     <Tabs
+    //       value={value}
+    //       onChange={handleChange}
+    //       variant="scrollable"  // Make the tabs scrollable
+    //       scrollButtons="auto"  // Automatically show/hide scroll buttons
+    //       aria-label="user tabs"
+    //       sx={{
+    //         width: '70%',
+    //         backgroundColor: '#fff',
+    //         borderRadius: '15px',
+    //         boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
+    //         alignSelf: 'center',
+    //         overflowX: 'auto',  // Allow horizontal scrolling
+    //       }}
+    //     >
+    //       <Tab label="Invitations" value="0" />
+    //       <Tab label="My spaces" value="1" />
+    //     </Tabs>
+
+    //     {/* Panel for the first tab */}
+    //     <TabPanel value="0">
+    //       <Invitations/>
+    //     </TabPanel>
+
+    //     <TabPanel value="1">
+    //       <SpacesDashboard />
+    //     </TabPanel>
+
+    //   </Box>
+    // </TabContext>
+
+
     <TabContext value={value}>
       <Box>
         <Tabs
@@ -45,7 +79,7 @@ const UserAsideTabs = () => {
         </TabPanel>
 
         <TabPanel value="1">
-          <SpacesDashboard />
+          <SpacesDashboard/>
         </TabPanel>
 
         <TabPanel value="2">

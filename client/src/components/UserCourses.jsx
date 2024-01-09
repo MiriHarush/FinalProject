@@ -6,21 +6,32 @@ const UserCourses = () => {
   const { userGuestCourses } = useContext(CourseContext);
   const [courses, setCourses] = useState([]);
 
+
   useEffect(() => {
-    const email = currentUser?.email;
-    console.log('current email',email);
-    const fetchedCourses = userGuestCourses(email);
-    setCourses(fetchedCourses);
-  }, [userGuestCourses]);
+    const fetchData = async () => {
+      const email = currentUser?.email;
+      console.log('current email',email);
+      const fetchedCourses = await userGuestCourses(email);
+      setCourses(fetchedCourses);
+    }
+    fetchData();
+  }, [userGuestCourses])
+
 
   return (
     <div>
+      {console.log('comp',courses)}
       <h2>Hello Your Courses Are:</h2>
-      <ul>
+      {
+        courses.length > 0 ?<div>{  <ul>
         {courses.map(course => (
           console.log('courses invite',course)
         ))}
-      </ul>
+      </ul>}</div>:
+      <div>no courses😔</div>
+      
+      }
+    
     </div>
   );
 }

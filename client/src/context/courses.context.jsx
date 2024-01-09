@@ -37,8 +37,8 @@ export const CourseProvider = ({ children }) => {
             data: {email},
           };
           
-          const courses = await axiosRequest(config);
-          return courses;
+          const response = await axiosRequest(config);
+          return response.result;
         } catch (error) {
           if (error.response && error.response.data && error.response.data.message) {
             setLoginError(error.response.data.message);

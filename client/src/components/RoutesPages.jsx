@@ -9,6 +9,8 @@ import CourseManagerDashboard from '../pages/CourseManagerDashboard';
 import CourseUserDashboard from '../pages/CourseUserDashboard';
 import SpaceDashboard from '../pages/SpaceDashboard';
 import LessonModal from './LessonModal';
+
+
 const RoutesPages = () => {
 
   return (
@@ -16,11 +18,13 @@ const RoutesPages = () => {
       <Route path="/chat" element={<Chat />} />
       <Route path="/userPersonalArea" element={<UserPersonalArea />} />
       <Route path="/addCourse" element={<AddCourse />} />
-      <Route path="/spaceDashboard" element={<SpaceDashboard />} />
-      <Route path="/courseManagerDashboard" element={<CourseManagerDashboard />} />
-      <Route path="/lessonModal" element={<LessonModal />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/reset-password" element={<ResetPassword />} />
+      <Route path="/spaceDashboard" element={<SpaceDashboard />} />
+      <Route path="/courseManagerDashboard" element={<CourseManagerDashboard />} />
+      <Route path="/courseUserDashboard" element={<CourseUserDashboard />} />
+      <Route path="/lessonModal" element={<LessonModal />} />
+      
     </Routes>
   );
 }
