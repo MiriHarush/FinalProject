@@ -1,4 +1,3 @@
-// Chat.jsx
 import React, { useState, useEffect } from 'react';
 import { Container, Typography, TextField, List, ListItem, ListItemText, Button } from '@mui/material';
 import io from "socket.io-client";

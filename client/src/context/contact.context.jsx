@@ -17,7 +17,6 @@ export const ContactProvider = ({ children }) => {
       const msg = await axiosRequest(config);
      console.log('msg from  cntx' , msg);
     } catch (error) {
-      // Handle login errors
       if (error.response && error.response.data && error.response.data.message) {
         setLoginError(error.response.data.message);
       } else {

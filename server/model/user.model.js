@@ -34,7 +34,10 @@ const userSchema = new mongoose.Schema({
         ref: 'Space'
         
     }], 
-    resetToken: String,
+    resetToken:
+     {
+        type: String
+    },
     profileImage: {
         type: String,
         url: String, 

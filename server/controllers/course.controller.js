@@ -8,7 +8,7 @@ const { sendInvitation } = require("./sendMessage");
 exports.getAllCourses = async (req, res, next) => {
     try {
         const { id } = req.params;
-        const courses = await Course.find({ownerCourse: id});
+        const courses = await Course.find({ ownerCourse: id });
         res.send(courses);
     } catch (error) {
         next(error)
@@ -33,7 +33,7 @@ exports.addCourse = async (req, res, next) => {
         req.body.ownerUser = res.locals.user_id;
 
 
-        const { courseName, typeCourse, permission, lessons, description, ownerCourse, ownerUser, invitations} = req.body;
+        const { courseName, typeCourse, permission, lessons, description, ownerCourse, ownerUser, invitations } = req.body;
 
         const newCourse = new Course({
             ownerUser,
@@ -68,7 +68,7 @@ exports.addCourse = async (req, res, next) => {
                 // Handle error as needed
             }
         });
-    
+
         // חכה להשלמת כל ה-promises שנוצרו על ידי ה-map
         await Promise.all(emailPromises);
 
@@ -87,12 +87,15 @@ function saveInvitations(courseId, inviteEmail, acceptsMail, courseName) {
     const newInvite = new Invite({
         courseId: courseId,
         inviteMail: inviteEmail,
-        acceptMail: acceptsMail, 
+        acceptMail: acceptsMail,
         courseName: courseName
     });
 
     return newInvite.save();
 }
+
+
+
 
 
 
@@ -103,7 +106,7 @@ exports.deleteCourse = async (req, res, next) => {
 
     try {
         let course = await Course.findOne({ _id: delId })
-console.log(course)
+        console.log(course)
 
         if (String(course.ownerUser) !== String(userId)) {
             throw new Error("you are not auther")
@@ -113,7 +116,7 @@ console.log(course)
         res.send({ message: 'The course deleted successfully' });
     }
     catch (error) {
-      next(error)
+        next(error)
     }
 }
 
@@ -123,8 +126,8 @@ exports.patchCourse = async (req, res, next) => {
     const userId = res.locals.user_id;
     const body = req.body;
     try {
-        let patchCourse = await Course.findOne({_id: idEdit});
-        if(!patchCourse){
+        let patchCourse = await Course.findOne({ _id: idEdit });
+        if (!patchCourse) {
             throw new Error("the course is not exist")
         }
 
@@ -138,27 +141,27 @@ exports.patchCourse = async (req, res, next) => {
     }
 
 }
-    
 
-    exports.patchCourse = async (req, res, next) => {
-    
-        const { idEdit } = req.params;
-        const userId = res.locals.user_id;
-        const body = req.body;
-        try {
-            let patchCourse = await Course.findOne({_id: idEdit});
-            if(!patchCourse){
-                throw new Error("the course is not exist")
-            }
-    
-            if (String(patchCourse.ownerUser) !== String(userId)) {
-                throw new Error("you are not the auther")
-            }
-            patchCourse = await Course.findByIdAndUpdate(idEdit, body, { new: true });
-            res.send(patchCourse)
-        } catch (error) {
-            next(error)
+
+exports.patchCourse = async (req, res, next) => {
+
+    const { idEdit } = req.params;
+    const userId = res.locals.user_id;
+    const body = req.body;
+    try {
+        let patchCourse = await Course.findOne({ _id: idEdit });
+        if (!patchCourse) {
+            throw new Error("the course is not exist")
         }
-    
+
+        if (String(patchCourse.ownerUser) !== String(userId)) {
+            throw new Error("you are not the auther")
+        }
+        patchCourse = await Course.findByIdAndUpdate(idEdit, body, { new: true });
+        res.send(patchCourse)
+    } catch (error) {
+        next(error)
     }
+
+}
 

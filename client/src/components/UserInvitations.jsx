@@ -3,11 +3,6 @@ import { Container, Typography, Button, Dialog, DialogTitle, DialogContent, Dial
 import MailIcon from '@mui/icons-material/Mail';
 
 
-const invitationsData = [
-  { id: 1, sender: 'User A', message: 'Hello, would you like to chat?', pendingApproval: true },
-  { id: 2, sender: 'User B', message: 'I have a question about your product.', pendingApproval: true },
-];
-
 const UserInvitations = () => {
   const [viewingLetters, setViewingLetters] = useState(false);
   const [selectedLetter, setSelectedLetter] = useState(null);
@@ -56,7 +51,6 @@ const UserInvitations = () => {
               <DialogContent>
                 <Typography variant="h6">{selectedLetter.sender}</Typography>
                 <Typography>{selectedLetter.message}</Typography>
-                {/* נוסיף פרטים נוספים כפי שיש לך בכל הזמנה */}
               </DialogContent>
               <DialogActions>
                 <Button onClick={() => setSelectedLetter(null)} color="primary">

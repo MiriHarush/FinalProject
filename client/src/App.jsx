@@ -11,17 +11,8 @@ import { InvitationProvider } from './context/invitations.context';
 import { BrowserRouter as Router } from 'react-router-dom';
 import './App.css'
 import styled from 'styled-components';
-
-import './index.css'; // או './App.css' אם יש לך קובץ כזה
+import './index.css'; 
 import { ThemeProvider, createTheme } from '@mui/material';
-// import { ThemeProvider } from '@material-ui/styles';
-
-// const Wrapper = styled.div`
-//  font-family: 'Dosis', sans-serif;
-//   margin: 0;
-//   padding: 0;
-//   overflow-x: hidden;
-// `;
 const theme = createTheme({
   typography: {
     fontFamily: 'Dosis'
@@ -53,3 +44,4 @@ function App() {
 }
 
 export default App;
+
