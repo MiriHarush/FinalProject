@@ -104,9 +104,8 @@
 // export default SpacesDashboard;
 
 
-
 import React, { useState, useContext, useEffect } from 'react';
-import { Grid, Typography, Tooltip, Fab, Container } from '@mui/material';
+import { Grid, Typography, Tooltip, Fab, Container, Card, CardContent } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import SpaceModel from '../components/SpaceModal';
 import SpaceDashboard from './SpaceDashboard';
@@ -133,7 +132,6 @@ const SpacesDashboard = () => {
     fetchData();
   }, [isAddingSpace])
 
-
   const handleSpaceClick = async (space) => {
     setSelectedSpace(space);
     setIsAddingSpace(false);
@@ -148,17 +146,13 @@ const SpacesDashboard = () => {
   };
 
   const handleConfirmAdd = async (name) => {
-    console.log(name);
-
     const space = await addSpace(name);
     console.log("space", space);
     if (space.success === 'true') {
       setSpaces((prevSpaces) => [...prevSpaces, space]);
-
     }
     setIsConfirmingAdd(false);
   };
-
 
   return (
     <Container maxWidth="lg" style={{ marginTop: '20px', position: 'relative' }}>
@@ -167,8 +161,12 @@ const SpacesDashboard = () => {
       </Typography>
       <Grid container spacing={3}>
         {spaces?.map((space) => (
-          <Grid key={space.id} item xs={12} sm={6} md={4} lg={3}>
-            <SpaceModel {...space} onClick={() => handleSpaceClick(space)} />
+          <Grid key={space.id} item xs={12} sm={6} md={4} lg={5}>
+            {/* <Card> */}
+              <CardContent>
+                <SpaceModel {...space} onClick={() => handleSpaceClick(space)} />
+              </CardContent>
+            {/* </Card> */}
           </Grid>
         ))}
         <Grid container item xs={12} alignItems="center" justifyContent="center" spacing={1}>
@@ -200,7 +198,6 @@ const SpacesDashboard = () => {
           )}
         </Grid>
         <Grid item xs={12}>
-          {/* {selectedSpace && <SpaceDashboard space={selectedSpace} />} */}
           {isAddingSpace && !isConfirmingAdd && (
             <AddSpace
               onAddSpace={() => setIsAddingSpace(false)}

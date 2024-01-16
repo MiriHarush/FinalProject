@@ -11,6 +11,8 @@ import SpaceDashboard from '../pages/SpaceDashboard';
 import LessonModal from './LessonModal';
 
 
+import SpaceDashboard from '../pages/SpaceDashboard';
+import LessonModal from './LessonModal';
 const RoutesPages = () => {
 
   return (
@@ -18,6 +20,9 @@ const RoutesPages = () => {
       <Route path="/chat" element={<Chat />} />
       <Route path="/userPersonalArea" element={<UserPersonalArea />} />
       <Route path="/addCourse" element={<AddCourse />} />
+      <Route path="/spaceDashboard" element={<SpaceDashboard />} />
+      <Route path="/courseManagerDashboard" element={<CourseManagerDashboard />} />
+      <Route path="/lessonModal" element={<LessonModal />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/reset-password" element={<ResetPassword />} />
       <Route path="/userPersonalArea" element={<UserPersonalArea />} />
