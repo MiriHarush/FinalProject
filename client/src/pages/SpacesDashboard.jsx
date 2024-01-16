@@ -7,14 +7,12 @@
 // import { SpaceContext } from '../context/spaces.context';
 // import { useNavigate } from 'react-router-dom';
 
-
 // const SpacesDashboard = () => {
 //   const { getAllSpaces, updateCurrentSpace, addSpace } = useContext(SpaceContext);
 //   const [spaces, setSpaces] = useState([]);
 //   const [selectedSpace, setSelectedSpace] = useState(null);
 //   const [isAddingSpace, setIsAddingSpace] = useState(false);
 //   const [isConfirmingAdd, setIsConfirmingAdd] = useState(false);
-
 //   const navigate = useNavigate();
 
 //   useEffect(() => {
@@ -24,7 +22,6 @@
 //     }
 //     fetchData();
 //   }, [isAddingSpace])
-
 
 //   const handleSpaceClick = async (space) => {
 //     setSelectedSpace(space);
@@ -87,7 +84,6 @@
 //           )}
 //         </Grid>
 //         <Grid item xs={12}>
-//           {/* {selectedSpace && <SpaceDashboard space={selectedSpace} />} */}
 //           {isAddingSpace && !isConfirmingAdd && (
 //             <AddSpace
 //               onAddSpace={() => setIsAddingSpace(false)}
@@ -116,6 +112,8 @@ import SpaceDashboard from './SpaceDashboard';
 import AddSpace from './AddSpace';
 import { SpaceContext } from '../context/spaces.context';
 import { useNavigate } from 'react-router-dom';
+
+
 
 const SpacesDashboard = () => {
   const { getAllSpaces, updateCurrentSpace, addSpace } = useContext(SpaceContext);
@@ -149,6 +147,7 @@ const SpacesDashboard = () => {
 
   const handleConfirmAdd = async (name) => {
     const space = await addSpace(name);
+    console.log("space", space);
     if (space.success === 'true') {
       setSpaces((prevSpaces) => [...prevSpaces, space]);
     }
@@ -175,9 +174,15 @@ const SpacesDashboard = () => {
             <Tooltip title="Add New Space" placement="right">
               <Fab
                 id="add-space-button"
-                color="primary"
                 aria-label="add"
                 onClick={handleAddSpaceClick}
+                style={{
+                  backgroundColor: 'rgb(174, 124, 61)',
+                  color: 'white',
+                  '&:hover': {
+                    backgroundColor: '#d7be9e',
+                  },
+                }}
               >
                 <AddIcon />
               </Fab>
@@ -211,4 +216,3 @@ const SpacesDashboard = () => {
 };
 
 export default SpacesDashboard;
-

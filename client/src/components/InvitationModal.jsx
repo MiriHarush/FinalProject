@@ -13,8 +13,8 @@ const StyledCard = styled(Card)({
     position: 'relative',
     boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
     borderRadius: '10px',
-    display: 'flex',  // הוסף תכונת Flex
-    flexDirection: 'column',  // כדי שהכפתורים יורדו לקרקע
+    display: 'flex', 
+    flexDirection: 'column', 
 });
 
 const StyledSeal = styled('div')({
@@ -67,16 +67,18 @@ const InvitationModal = ({ invite, onConfirmOrder }) => {
                     </Typography>
                     <Button
                         variant="contained"
-                        color="primary"
                         onClick={()=>orderConfirmation("accept")}
-                        style={{ margin: '10px' }}
+                        style={{ margin: '10px', backgroundColor: 'rgb(174, 124, 61)', color: 'white'}}
                     >
                         Accept
                     </Button>
                     <Button
                         variant="contained"
-                        color="secondary"
                         onClick={()=>orderConfirmation("reject")}
+                        style={{
+                            backgroundColor: 'rgb(174, 124, 61)', // כאן אתה מגדיר את הצבע של הרקע
+                            color: 'white', // כאן אתה מגדיר את צבע הטקסט
+                          }}
                     >
                         Reject
                     </Button>

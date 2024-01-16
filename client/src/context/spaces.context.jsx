@@ -2,27 +2,23 @@ import { createContext } from 'react';
 import { axiosRequest } from '../utils/serverConnection'
 import { useState } from 'react';
 
-
 export const SpaceContext = createContext();
-
 
 export const SpaceProvider = ({ children }) => {
 
     const [currentSpace, setCurrentSpace] = useState(null);
-
     const token = localStorage.getItem('userToken');
-    const authorization = `Bearer ${token}`;  // הכנסת ה-Token ל-headers
+    const authorization = `Bearer ${token}`;  
 
     const updateCurrentSpace = (space) => {
         setCurrentSpace(space);
     };
 
-
     const getAllSpaces = async () => {
         const config = {
             headers: {
-                'Authorization': authorization,  // הכנסת ה-Token ל-headers
-                'Content-Type': 'application/json',  // תלוי בסוג הבקשה שאת מבצעת
+                'Authorization': authorization, 
+                'Content-Type': 'application/json',  
             },
             method: 'get',
             url: 'http://localhost:3000/spaces/getAllSpaces',
@@ -36,8 +32,8 @@ export const SpaceProvider = ({ children }) => {
     const getSpace = async (id) => {
         const config = {
             headers: {
-                'Authorization': authorization,  // הכנסת ה-Token ל-headers
-                'Content-Type': 'application/json',  // תלוי בסוג הבקשה שאת מבצעת
+                'Authorization': authorization,  
+                'Content-Type': 'application/json',  
             },
             method: 'get',
             url: `http://localhost:3000/spaces/getInfoSpace/${id}`,
@@ -52,8 +48,8 @@ export const SpaceProvider = ({ children }) => {
     const addSpace = async (nameSpace) => {
         const config = {
             headers: {
-                'Authorization': authorization,  // הכנסת ה-Token ל-headers
-                'Content-Type': 'application/json',  // תלוי בסוג הבקשה שאת מבצעת
+                'Authorization': authorization,  
+                'Content-Type': 'application/json',  
             },
             method: 'post',
             url: 'http://localhost:3000/spaces/addSpace',
@@ -63,7 +59,6 @@ export const SpaceProvider = ({ children }) => {
         const space = await axiosRequest(config);
         return space;
     }
-
 
     const updateSpace = async (id, dataSpace) => {
         const config = {
@@ -86,7 +81,6 @@ export const SpaceProvider = ({ children }) => {
         const space = await axiosRequest(config);
         return space;
     }
-
 
     return (
         <SpaceContext.Provider value={{ currentSpace, updateCurrentSpace, getAllSpaces, getSpace, addSpace, updateSpace, deleteSpace }}>

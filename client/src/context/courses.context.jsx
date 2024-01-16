@@ -4,7 +4,6 @@ import { useState } from 'react';
 
 export const CourseContext = createContext();
 
-
 export const CourseProvider = ({ children }) => {
     const [currentCourse, setCurrentCourse] = useState(null);
 
@@ -19,8 +18,8 @@ export const CourseProvider = ({ children }) => {
     const getAllCourses = async (id) => {
         const config = {
             headers: {
-                'Authorization': authorization,  // הכנסת ה-Token ל-headers
-                'Content-Type': 'application/json',  // תלוי בסוג הבקשה שאת מבצעת
+                'Authorization': authorization,  
+                'Content-Type': 'application/json', 
             },
             method: 'get',
             url: `http://localhost:3000/courses/getAllCourses/${id}`,
@@ -30,12 +29,31 @@ export const CourseProvider = ({ children }) => {
         return allCourses;
     }
 
+    const userGuestCourses = async (email) => {
+        try {
+          const config = {
+            method: 'post',
+            url: 'http://localhost:3000/users/guestCourses',
+            data: {email},
+          };
+          
+          const response = await axiosRequest(config);
+          return response.result;
+        } catch (error) {
+          if (error.response && error.response.data && error.response.data.message) {
+            setLoginError(error.response.data.message);
+          } else {
+            setLoginError('An error occurred during login.');
+          }
+        }
+      };
+    
 
     const getCourse = async (id) => {
         const config = {
             headers: {
-                'Authorization': authorization,  // הכנסת ה-Token ל-headers
-                'Content-Type': 'application/json',  // תלוי בסוג הבקשה שאת מבצעת
+                'Authorization': authorization,  
+                'Content-Type': 'application/json',  
             },
             method: 'get',
             url: `http://localhost:3000/Courses/getInfoCourse/${id}`,
@@ -50,8 +68,8 @@ export const CourseProvider = ({ children }) => {
     const addCourse = async (dataCourse) => {
         const config = {
             headers: {
-                'Authorization': authorization,  // הכנסת ה-Token ל-headers
-                'Content-Type': 'application/json',  // תלוי בסוג הבקשה שאת מבצעת
+                'Authorization': authorization,  
+                'Content-Type': 'application/json',  
             },
             method: 'post',
             url: 'http://localhost:3000/courses/addCourse',
@@ -66,8 +84,8 @@ export const CourseProvider = ({ children }) => {
     const updateCourse = async (id, dataCourse) => {
         const config = {
             headers: {
-                'Authorization': authorization,  // הכנסת ה-Token ל-headers
-                'Content-Type': 'application/json',  // תלוי בסוג הבקשה שאת מבצעת
+                'Authorization': authorization,  
+                'Content-Type': 'application/json',  
             },
             method: 'patch',
             url: `http://localhost:3000/courses/updateCourse/${id}`,
@@ -82,8 +100,8 @@ export const CourseProvider = ({ children }) => {
     const deleteCourse = async (id) => {
         const config = {
             headers: {
-                'Authorization': authorization,  // הכנסת ה-Token ל-headers
-                'Content-Type': 'application/json',  // תלוי בסוג הבקשה שאת מבצעת
+                'Authorization': authorization,  
+                'Content-Type': 'application/json',  
             },
             method: 'delete',
             url: `http://localhost:3000/courses/deleteCourse/${id}`,
@@ -93,9 +111,8 @@ export const CourseProvider = ({ children }) => {
         return course;
     }
 
-
     return (
-        <CourseContext.Provider value={{ currentCourse, updateCurrentCourse, getAllCourses, getCourse, addCourse, updateCourse, deleteCourse }}>
+        <CourseContext.Provider value={{ currentCourse, updateCurrentCourse, getAllCourses, userGuestCourses, getCourse, addCourse, updateCourse, deleteCourse }}>
             {children}
         </CourseContext.Provider>
     );

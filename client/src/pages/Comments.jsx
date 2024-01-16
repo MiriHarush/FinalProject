@@ -3,12 +3,15 @@ import { Container, Typography, TextField, Button, IconButton } from '@mui/mater
 import { CommentContext } from '../context/comments.context';
 import Comment from '../components/Comment';
 import { UserContext } from '../context/users.context';
+import Footer from '../components/Footer';
 
 const Comments = () => {
   const [comments, setComments] = useState([]);
   const [commentUpdate, setCommentUpdate] = useState(0);
   const { getAllComments, addComment } = useContext(CommentContext);
   const { currentUser } = useContext(UserContext);
+
+console.log(currentUser);
 
   const [newCommentText, setNewCommentText] = useState('');
   const [isCommenting, setIsCommenting] = useState(false);
@@ -24,13 +27,14 @@ const Comments = () => {
   const handleCommentSubmit = async () => {
     const email = currentUser.email;
     const contentComment = newCommentText;
-    await addComment({  email , contentComment });
+    await addComment({ email, contentComment });
     setNewCommentText('');
     setIsCommenting(false);
     setCommentUpdate(commentUpdate + 1);
   };
 
   return (
+    <>
     <Container style={{ paddingTop: '50px' }}>
       {currentUser && (
         <div>
@@ -55,7 +59,7 @@ const Comments = () => {
         </div>
       )}
       {comments.map((comment) => (
-      
+
         <Comment
           key={comment._id}
           id={comment._id}
@@ -67,9 +71,14 @@ const Comments = () => {
           replies={Array.isArray(comment.reply) ? comment.reply : []}
           onUpdate={() => setCommentUpdate(commentUpdate + 1)}
         />
-))}
+      ))}
     </Container>
+    <Footer/>
+    </>
   );
 };
 
 export default Comments;
+
+
+

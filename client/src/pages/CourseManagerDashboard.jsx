@@ -9,17 +9,13 @@ import { LessonContext } from '../context/lessons.context';
 import { InvitationContext } from '../context/invitations.context';
 import { useNavigate } from 'react-router-dom';
 
-
 const CourseManagerDashboard = () => {
   const { currentCourse } = useContext(CourseContext);
   const { updateCurrentLesson, getAllLessons, addLesson } = useContext(LessonContext);
   const { getAllMyInvitations } = useContext(InvitationContext);
-
   const [lessons, setLessons] = useState([]);
   const [invitations, setInvitations] = useState([]);
-
   const navigate = useNavigate();
-
 
   useEffect(() => {
     const fetchData = async () => {
@@ -28,12 +24,10 @@ const CourseManagerDashboard = () => {
 
       const invitationsData = await getAllMyInvitations(currentCourse._id);
       setInvitations(invitationsData.result);
-
     }
     fetchData();
 
   }, [])
-
 
   useEffect(() => {
     console.log("lessons", lessons);
@@ -43,29 +37,13 @@ const CourseManagerDashboard = () => {
     console.log("invitations", invitations);
   }, [invitations])
 
-
-  // const { courseId } = useParams();
-
-  // const [courseData, setCourseData] = useState({
-  //   name: 'Course Name',
-  //   type: 'Course Type',
-  //   permission: 'Public',
-  //   lessons: [
-  //     { id: '1', title: 'Lesson 1', content: 'Lesson 1 content...' },
-  //     { id: '2', title: 'Lesson 2', content: 'Lesson 2 content...' },
-  //     // Add more lessons as needed
-  //   ],
-  // });
-
   const [newLesson, setNewLesson] = useState({ title: '', content: '' });
   const [lessonModalOpen, setLessonModalOpen] = useState(false);
   const [selectedLesson, setSelectedLesson] = useState(null);
 
-
   const addNewLesson = async () => {
     const lessonId = (lessons.length + 1).toString();
     const updatedLessons = [...lessons, { ...newLesson, id: lessonId }];
-
 
     const lesson = {
       lessonName: newLesson.title,
@@ -74,7 +52,6 @@ const CourseManagerDashboard = () => {
     }
 
     await addLesson(lesson);
-
 
     setLessons(() => ([
       ...updatedLessons,
@@ -89,14 +66,12 @@ const CourseManagerDashboard = () => {
     updateCurrentLesson(lesson);
 
     navigate('/lessonModal', { state: { isManager: 'true' } });
-
   };
 
   const closeLessonModal = () => {
     setSelectedLesson(null);
     setLessonModalOpen(false);
   };
-
 
   return (
     <div style={{ padding: '20px' }}>
@@ -111,10 +86,10 @@ const CourseManagerDashboard = () => {
           <Card key={lesson.id} style={{ margin: '10px', minWidth: '250px' }}>
             <CardContent>
               <Typography variant="h6" component="div">
-                {lesson.title}
+                {lesson.lessonName}
               </Typography>
               <Typography variant="body2" color="textSecondary">
-                {lesson.content}
+                {lesson.descerption}
               </Typography>
               <Button
                 variant="outlined"
@@ -156,7 +131,6 @@ const CourseManagerDashboard = () => {
           </CardContent>
         </Card>
       </div>
-      {/* Lesson Modal */}
       {lessonModalOpen && (
         <LessonModal
           open={lessonModalOpen}
