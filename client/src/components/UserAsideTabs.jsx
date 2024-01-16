@@ -18,55 +18,29 @@ const UserAsideTabs = () => {
   };
 
   return (
-    // <TabContext value={value}>
-    //   <Box>
-    //     <Tabs
-    //       value={value}
-    //       onChange={handleChange}
-    //       variant="scrollable"  // Make the tabs scrollable
-    //       scrollButtons="auto"  // Automatically show/hide scroll buttons
-    //       aria-label="user tabs"
-    //       sx={{
-    //         width: '70%',
-    //         backgroundColor: '#fff',
-    //         borderRadius: '15px',
-    //         boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
-    //         alignSelf: 'center',
-    //         overflowX: 'auto',  // Allow horizontal scrolling
-    //       }}
-    //     >
-    //       <Tab label="Invitations" value="0" />
-    //       <Tab label="My spaces" value="1" />
-    //     </Tabs>
-
-    //     {/* Panel for the first tab */}
-    //     <TabPanel value="0">
-    //       <Invitations/>
-    //     </TabPanel>
-
-    //     <TabPanel value="1">
-    //       <SpacesDashboard />
-    //     </TabPanel>
-
-    //   </Box>
-    // </TabContext>
-
-
     <TabContext value={value}>
       <Box>
         <Tabs
           value={value}
           onChange={handleChange}
-          variant="scrollable"  
-          scrollButtons="auto" 
+          variant="scrollable"
+          scrollButtons="auto"
           aria-label="user tabs"
+          indicatorColor='rgb(174, 124, 61)'
           sx={{
             width: '70%',
             backgroundColor: '#fff',
             borderRadius: '15px',
             boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
             alignSelf: 'center',
-            overflowX: 'auto', 
+            overflowX: 'auto',
+            // color: 'rgb(174, 124, 61)',
+            "& .MuiTabs-indicator": {
+              backgroundColor: 'rgb(174, 124, 61)'
+            },
+            "& .Mui-selected": {
+              color: 'rgb(174, 124, 61)', // צבע החום גם לטקסט של הטאב הנבחר
+            },
           }}
         >
           <Tab label="My invitations" value="0" />
@@ -75,11 +49,11 @@ const UserAsideTabs = () => {
         </Tabs>
 
         <TabPanel value="0">
-          <Invitations/>
+          <Invitations />
         </TabPanel>
 
         <TabPanel value="1">
-          <SpacesDashboard/>
+          <SpacesDashboard />
         </TabPanel>
 
         <TabPanel value="2">

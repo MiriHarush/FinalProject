@@ -40,10 +40,10 @@ const UserPersonalArea = () => {
     setGeneralReplying(false);
   };
 
-  const handleLogout = () => {
-   logout();
-   navigate('/')
-  };
+  // const handleLogout = () => {
+  //  logout();
+  //  navigate('/')
+  // };
 
   return (
 //     <Container style={{ paddingTop: '50px' }}>
@@ -102,50 +102,17 @@ const UserPersonalArea = () => {
 
 
 
-<Container style={{ paddingTop: '50px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-{/* <Button variant="outlined" color="secondary" onClick={handleLogout} style={{ alignSelf: 'flex-end', marginRight: '20px',background: 'rgb(174, 124, 61)' , color:'white' }}>
-        LOG OUT
-      </Button>
-  <Typography variant="h2" style={{ alignSelf: 'flex-srart'}} gutterBottom>
-    <Avatar alt="User Avatar" src={currentUser.profileImage}  />
-    Welcome to your space 🤗
-  </Typography> */}
-  
+<Container style={{ paddingTop: '50px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>  
   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between'  }}>
-    <p style={{ color: '#666' }}> {currentUser.userName}</p>
+    <p style={{ color: 'rgb(174, 124, 61)', marginRight: '10px' }}> {currentUser.userName}</p>
     <Avatar alt="User Avatar" src={currentUser.profileImage} style={{ marginRight: '950px' }} />
-    <Button
-      variant="outlined"
-      color="secondary"
-      onClick={handleLogout}
-      style={{ background: 'rgb(174, 124, 61)', color: 'white' }}
-    >
-      LOG OUT
-    </Button>
   </div>
 
   <Typography variant="h2" gutterBottom style={{ color: 'rgb(174, 124, 61)'}}>
-    {/* Hey  {currentUser.userName} Welcome to your space 🤗 */}
-    Hey  {currentUser.userName} Welcome to your space 
+    Hi  {currentUser.userName} , Welcome to the personal area 
   </Typography>
   {currentUser ? (
     <>
-      {/* <Box
-        sx={{
-          backgroundColor: '#f8f8f8',
-          padding: '20px',
-          borderRadius: '15px',
-          boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
-          marginBottom: '20px',
-          textAlign: 'center',
-        }}
-      >
-        <h2 style={{ color: '#333' }}>WELCOME, {currentUser.name}!</h2>
-        <p style={{ color: '#666' }}>Email: {currentUser.email}</p>
-        <p style={{ color: '#666' }}>User Name: {currentUser.userName}</p>
-        <p style={{ color: '#666' }}>Phone: {currentUser.phone}</p>
-      </Box> */}
-
       <UserAsideTabs />
     </>
   ) : <div>No such a user</div>}
