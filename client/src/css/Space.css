@@ -1,0 +1,17 @@
+.space{
+    /* background-color: rgba(255, 255, 255, 0.771) !important; */
+    /* color:rgb(174, 124, 61) !important ; */
+    margin: 10px;
+    /* max-width: 30%; */
+width: 50%;
+    box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.5) !important;
+    /* box-shadow:0px 0px 43px 18px #121111 ; */
+    border-radius: 16px !important;
+}
+
+.textCenter {
+    color:rgb(174, 124, 61) !important ;
+font-weight: bold;
+    text-align: center;
+
+}

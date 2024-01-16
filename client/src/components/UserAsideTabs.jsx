@@ -7,10 +7,11 @@ import TabPanel from '@mui/lab/TabPanel';
 import SpacesDashboard from '../pages/SpacesDashboard';
 import Invitations from './Invitations';
 import UserCourses from './UserCourses';
+import '../css/UserPersonalArea.css';
+
 
 const UserAsideTabs = () => {
 
-  const inviteData = { instructorName: "aaa", courseName: "bbb" };
   const [value, setValue] = useState('0');
 
   const handleChange = (event, newValue) => {
@@ -23,12 +24,13 @@ const UserAsideTabs = () => {
         <Tabs
           value={value}
           onChange={handleChange}
-          variant="scrollable"
+          // variant="scrollable"
           scrollButtons="auto"
           aria-label="user tabs"
+          centered
           indicatorColor='rgb(174, 124, 61)'
           sx={{
-            width: '70%',
+            width: '100%',
             backgroundColor: '#fff',
             borderRadius: '15px',
             boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',

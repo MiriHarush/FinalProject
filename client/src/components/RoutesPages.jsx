@@ -9,6 +9,8 @@ import CourseManagerDashboard from '../pages/CourseManagerDashboard';
 import CourseUserDashboard from '../pages/CourseUserDashboard';
 import SpaceDashboard from '../pages/SpaceDashboard';
 import LessonModal from './LessonModal';
+
+
 const RoutesPages = () => {
 
   return (

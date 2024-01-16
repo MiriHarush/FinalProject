@@ -174,7 +174,7 @@ import Button from '@mui/material-next/Button';
 import IconButton from '@mui/material/IconButton';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-
+import Footer from '../components/Footer';
 import AddCourse from './AddCourse';
 import { useContext, useEffect } from 'react';
 import { SpaceContext } from '../context/spaces.context';
@@ -256,6 +256,7 @@ const SpaceDashboard = () => {
   };
 
   return (
+    <>
     <div style={{ padding: '3%' }} className='centerContainer' >
       <h2 className='textCenter'>Space Dashboard: {currentSpace.nameSpace}</h2>
 
@@ -277,6 +278,8 @@ const SpaceDashboard = () => {
 
       {isAddCourseModalOpen && <AddCourse onClose={closeAddCourseModal} />}
     </div>
+    {/* <Footer/> */}
+    </>
   );
 };
 

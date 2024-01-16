@@ -73,7 +73,7 @@ const token = urlParams.get('token');
   return (
     <Container component="main" maxWidth="xs">
       <Paper elevation={3} style={{ padding: 20, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <Typography variant="h5" align="center" gutterBottom style={{ color: '#3f51b5' }}>
+        <Typography variant="h5" align="center" gutterBottom style={{ color: 'rgb(174, 124, 61)' }}>
           Reset Password
         </Typography>
         <form onSubmit={handleSubmit} style={{ width: '100%' }}>
@@ -100,15 +100,34 @@ const token = urlParams.get('token');
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 error={Boolean(confirmPasswordError)}
                 helperText={confirmPasswordError}
+                sx={{
+                  '&:focus': {
+                    borderColor: 'rgb(174, 124, 61)',
+                  },
+                  '& label.Mui-focused': {
+                    color: 'rgb(174, 124, 61)',
+                  },
+                  '& .MuiOutlinedInput-root': {
+                    '& fieldset': {
+                      borderColor: 'rgb(174, 124, 61)',
+                    },
+                    '&:hover fieldset': {
+                      borderColor: 'rgb(174, 124, 61)',
+                    },
+                    '&.Mui-focused fieldset': {
+                      borderColor: 'rgb(174, 124, 61)',
+                    },
+                  },
+                }}
               />
             </Grid>
           </Grid>
           <Button
             type="submit"
             variant="contained"
-            color="primary"
+            // color="primary"
             fullWidth
-            style={{ marginTop: 20 }}
+            style={{ marginTop: 20, backgroundColor: 'rgb(174, 124, 61)' }}
             disabled={loading}
           >
             {loading ? 'Resetting Password...' : 'Reset Password'}
