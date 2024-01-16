@@ -20,13 +20,15 @@ const CourseUserDashboard = () => {
   const [invitations, setInvitations] = useState([]);
   const navigate = useNavigate();
 
+  console.log("curcur", currentCourse);
+
   useEffect(() => {
     const fetchData = async () => {
       const lessonsData = await getAllLessons(currentCourse._id);
       setLessons(lessonsData.result);
 
-      const invitationsData = await getAllMyInvitations(currentCourse._id);
-      setInvitations(invitationsData.result);
+      // const invitationsData = await getAllMyInvitations(currentCourse._id);
+      // setInvitations(invitationsData.result);
     }
     fetchData();
 
@@ -36,9 +38,9 @@ const CourseUserDashboard = () => {
     console.log("lessons", lessons);
   }, [lessons])
 
-  useEffect(() => {
-    console.log("invitations", invitations);
-  }, [invitations])
+  // useEffect(() => {
+  //   console.log("invitations", invitations);
+  // }, [invitations])
 
   const getType = (file) => {
     const url = file;
@@ -87,7 +89,7 @@ const CourseUserDashboard = () => {
           </div>
         )}
       </div>
-
+{/* 
       <div>
         <h1>invitations</h1>
         <div style={{ display: 'flex', flexWrap: 'wrap' }}>
@@ -99,7 +101,7 @@ const CourseUserDashboard = () => {
             ))
           )}
         </div>
-      </div>
+      </div> */}
     </>
   );
 };

@@ -11,8 +11,6 @@ import SpaceDashboard from '../pages/SpaceDashboard';
 import LessonModal from './LessonModal';
 
 
-import SpaceDashboard from '../pages/SpaceDashboard';
-import LessonModal from './LessonModal';
 const RoutesPages = () => {
 
   return (

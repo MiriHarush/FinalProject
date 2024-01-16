@@ -89,11 +89,11 @@ const ForgotPassword = () => {
         <IconButton component={Link} to="/login" style={{ alignSelf: 'flex-start', marginBottom: 10 }}>
           <ArrowBackIcon />
         </IconButton>
-        <Typography variant="h5" align="center" gutterBottom style={{ color: '#3f51b5' }}>
+        <Typography variant="h5" align="center" gutterBottom style={{ color: 'rgb(174, 124, 61)' }}>
           {resetPassword ? 'Password Reset Instructions' : 'Forgot Password'}
         </Typography>
         {resetPassword ? (
-          <Typography variant="body1" style={{ color: 'green', marginBottom: 20, textAlign: 'center' }}>
+          <Typography variant="body1" style={{ color: 'rgb(174, 124, 61)', marginBottom: 20, textAlign: 'center' }}>
             {successMessage}
             <br />
             To confirm your password reset, check your email and follow the instructions.
@@ -114,9 +114,28 @@ const ForgotPassword = () => {
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
-                        <EmailIcon style={{ color: '#3f51b5' }} />
+                        <EmailIcon style={{ color: 'rgb(174, 124, 61)' }} />
                       </InputAdornment>
                     ),
+                  }}
+                  sx={{
+                    '&:focus': {
+                      borderColor: 'rgb(174, 124, 61)',
+                    },
+                    '& label.Mui-focused': {
+                      color: 'rgb(174, 124, 61)',
+                    },
+                    '& .MuiOutlinedInput-root': {
+                      '& fieldset': {
+                        borderColor: 'rgb(174, 124, 61)',
+                      },
+                      '&:hover fieldset': {
+                        borderColor: 'rgb(174, 124, 61)',
+                      },
+                      '&.Mui-focused fieldset': {
+                        borderColor: 'rgb(174, 124, 61)',
+                      },
+                    },
                   }}
                 />
               </Grid>
@@ -124,16 +143,16 @@ const ForgotPassword = () => {
             <Button
               type="submit"
               variant="contained"
-              color="primary"
+              // color='rgb(174, 124, 61)'
               fullWidth
-              style={{ marginTop: 20 }}
+              style={{ marginTop: 20,  backgroundColor:'rgb(174, 124, 61)' }}
               disabled={loading}
             >
               {loading ? 'Sending...' : 'Reset Password'}
             </Button>
             <FormHelperText style={{ marginTop: 10 }}>
               Remember your password?{' '}
-              <MuiLink onClick={handleBackToLogin} style={{ color: '#3f51b5', cursor: 'pointer' }}>
+              <MuiLink onClick={handleBackToLogin} style={{ color: 'rgb(174, 124, 61)', cursor: 'pointer' }}>
                 Log In
               </MuiLink>
             </FormHelperText>

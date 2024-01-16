@@ -108,11 +108,11 @@ import React, { useState, useContext, useEffect } from 'react';
 import { Grid, Typography, Tooltip, Fab, Container, Card, CardContent } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import SpaceModel from '../components/SpaceModal';
-import SpaceDashboard from './SpaceDashboard';
+// import SpaceDashboard from './SpaceDashboard';
 import AddSpace from './AddSpace';
 import { SpaceContext } from '../context/spaces.context';
 import { useNavigate } from 'react-router-dom';
-
+import '../css/UserPersonalArea.css';
 
 
 const SpacesDashboard = () => {
@@ -155,19 +155,15 @@ const SpacesDashboard = () => {
   };
 
   return (
-    <Container maxWidth="lg" style={{ marginTop: '20px', position: 'relative' }}>
-      <Typography variant="h3" align="center" gutterBottom>
-        Spaces Dashboard
-      </Typography>
-      <Grid container spacing={3}>
+    <div>
+      <Grid container spacing={3} className='courseContainer'>
         {spaces?.map((space) => (
-          <Grid key={space.id} item xs={12} sm={6} md={4} lg={5}>
-            {/* <Card> */}
-              <CardContent>
-                <SpaceModel {...space} onClick={() => handleSpaceClick(space)} />
-              </CardContent>
-            {/* </Card> */}
-          </Grid>
+          // <Grid key={space.id} item xs={12} sm={6} md={4} lg={5}>
+          //     <SpaceModel {...space} onClick={() => handleSpaceClick(space)} />
+          // </Grid>
+          // <Card key={space.id}>
+            <SpaceModel {...space} onClick={() => handleSpaceClick(space)} />
+          // </Card>
         ))}
         <Grid container item xs={12} alignItems="center" justifyContent="center" spacing={1}>
           <Grid item>
@@ -211,7 +207,7 @@ const SpacesDashboard = () => {
           )}
         </Grid>
       </Grid>
-    </Container>
+    </div>
   );
 };
 

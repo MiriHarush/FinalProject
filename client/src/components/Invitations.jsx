@@ -22,7 +22,7 @@ const Invitations = () => {
 
 
     return (
-        <Grid>
+        <Grid className='courseContainer'>
             {invitations.map((invite) => {
                 return <InvitationModal invite={invite} onConfirmOrder={() => setConfirmOrder(true)} />
             })}
