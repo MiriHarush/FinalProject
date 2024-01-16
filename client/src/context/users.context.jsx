@@ -113,6 +113,26 @@ export const UserProvider = ({ children }) => {
   };
 
 
+  // const userGuestCourses = async (email) => {
+  //   try {
+  //     const config = {
+  //       method: 'post',
+  //       url: 'http://localhost:3000/users/guestCourses',
+  //       data: {email},
+  //     };
+      
+  //     const courses = await axiosRequest(config);
+  //     return courses;
+  //   } catch (error) {
+  //     // Handle login errors
+  //     if (error.response && error.response.data && error.response.data.message) {
+  //       setLoginError(error.response.data.message);
+  //     } else {
+  //       setLoginError('An error occurred during login.');
+  //     }
+  //   }
+  // };
+
   const userGuestCourses = async (email) => {
     try {
       const config = {
