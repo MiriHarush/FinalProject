@@ -772,15 +772,18 @@ const SignUp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { confirmPassword, ...formDataWithoutConfirmPassword } = formData;
-    signup(formDataWithoutConfirmPassword);
-  };
-
-  // Redirect to login page if user is already authenticated
-  if (isAuthenticated) {
-    navigate('/login');
-    return null; // You can also render a loading spinner or any other UI while redirecting
-  }
-
+  
+    const formDataWithImage = new FormData();
+    formDataWithImage.append('file', formData.profileImage);
+    delete formDataWithoutConfirmPassword.profileImage;
+    Object.entries(formDataWithoutConfirmPassword).forEach(([key, value]) => {
+      formDataWithImage.append(key, value);
+  
+    });
+  
+    console.log(formDataWithImage, 'img');
+    signup(formDataWithImage);
+  }  
   return (
       <Paper elevation={3} className="img" >
     <ThemeProvider theme={theme}>

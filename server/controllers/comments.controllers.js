@@ -22,7 +22,8 @@ exports.createComments = async (req, res, next) => {
             email,
             userName: user.userName,
             contentComment,
-            ownerUser: user._id
+            ownerUser: user._id,
+            profileImage: user.profileImage
         })
         const savedComment = await newComments.save();
         res.status(201).json(savedComment)
@@ -40,7 +41,7 @@ exports.patchCommentToReply = async (req, res, next) => {
 
         let message = await Comments.findByIdAndUpdate(
             { _id: id },
-            { $push: { reply: { userName: user.userName, comment: comment } } }
+            { $push: { reply: { userName: user.userName, comment: comment, profileImage: user.profileImage } } }
         )
         res.send(message)
     }

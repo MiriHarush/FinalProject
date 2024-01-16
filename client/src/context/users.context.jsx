@@ -12,10 +12,7 @@ export const UserProvider = ({ children }) => {
     const config = {
       method: 'post',
       url: 'http://localhost:3000/users/createUser',
-      data: userData,
-      headers: {
-        // 'Content-Type': 'multipart/form-data',
-      }
+      data: userData
     };
 
     const signedUser = await axiosRequest(config);
@@ -36,6 +33,27 @@ export const UserProvider = ({ children }) => {
       localStorage.setItem('userToken', loggedUser.result.token);
       // Clear any previous login errors
       setLoginError('');
+    } catch (error) {
+      // Handle login errors
+      if (error.response && error.response.data && error.response.data.message) {
+        setLoginError(error.response.data.message);
+      } else {
+        setLoginError('An error occurred during login.');
+      }
+    }
+  };
+
+
+  const userGuestCourses = async (email) => {
+    try {
+      const config = {
+        method: 'post',
+        url: 'http://localhost:3000/users/guestCourses',
+        data: email,
+      };
+      
+      const courses = await axiosRequest(config);
+      return courses;
     } catch (error) {
       // Handle login errors
       if (error.response && error.response.data && error.response.data.message) {
@@ -96,7 +114,7 @@ export const UserProvider = ({ children }) => {
   };
 
   return (
-    <UserContext.Provider value={{ currentUser, signup, login, logout, forgotPassword , resetPassword ,loginError }}>
+    <UserContext.Provider value={{ currentUser, signup, login, userGuestCourses, logout, forgotPassword , resetPassword ,loginError }}>
       {children}
     </UserContext.Provider>
   );

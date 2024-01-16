@@ -6,7 +6,7 @@ import { UserContext } from '../context/users.context';
 
 const Invitations = () => {
     const { currentUser } = useContext(UserContext);
-    const { getAllMyInvitations } = useContext(InvitationContext);
+    const { currentInvitation, getAllMyInvitations, updateInviteStatus } = useContext(InvitationContext);
     const [invitations, setInvitations] = useState([]);
     const [confirmOrder, setConfirmOrder] = useState(false)
 
