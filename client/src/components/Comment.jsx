@@ -64,16 +64,35 @@ const Comment = ({ id, user, profileImage, text, like, disLike, replies, onUpdat
           {isReplying && (
             <div>
               <TextField
-                label="תשובה"
+                label="Reply"
                 multiline
                 rows={4}
                 fullWidth
                 value={replyText}
                 onChange={(e) => setReplyText(e.target.value)}
+                sx={{
+                  '&:focus': {
+                    borderColor: 'rgb(174, 124, 61)',
+                  },
+                  '& label.Mui-focused': {
+                    color: 'rgb(174, 124, 61)',
+                  },
+                  '& .MuiOutlinedInput-root': {
+                    '& fieldset': {
+                      borderColor: 'rgb(174, 124, 61)',
+                    },
+                    '&:hover fieldset': {
+                      borderColor: 'rgb(174, 124, 61)',
+                    },
+                    '&.Mui-focused fieldset': {
+                      borderColor: 'rgb(174, 124, 61)',
+                    },
+                  },
+                }}
               />
-              <Button variant="contained" color="primary" onClick={handleReply}>
-                שלח תשובה
-              </Button>
+              <Button variant="contained" onClick={handleReply} style={{background:"rgb(174, 124, 61)"}}>
+              Send a reply
+                            </Button>
             </div>
           )}
           {currentComment.replies && currentComment.replies.map((reply) => (

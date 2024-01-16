@@ -112,8 +112,30 @@ export const UserProvider = ({ children }) => {
     setCurrentUser(null);
   };
 
+
+  const userGuestCourses = async (email) => {
+    try {
+      const config = {
+        method: 'post',
+        url: 'http://localhost:3000/users/guestCourses',
+        data: {email},
+      };
+      
+      const courses = await axiosRequest(config);
+      return courses;
+    } catch (error) {
+      // Handle login errors
+      if (error.response && error.response.data && error.response.data.message) {
+        setLoginError(error.response.data.message);
+      } else {
+        setLoginError('An error occurred during login.');
+      }
+    }
+  };
+
+
   return (
-    <UserContext.Provider value={{ currentUser, signup, login, logout, forgotPassword , resetPassword ,loginError }}>
+    <UserContext.Provider value={{ currentUser, signup, login, logout, forgotPassword , resetPassword ,loginError, userGuestCourses }}>
       {children}
     </UserContext.Provider>
   );

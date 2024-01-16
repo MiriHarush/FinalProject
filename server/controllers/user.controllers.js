@@ -237,7 +237,6 @@ exports.getAcceptCourses = async (req, res, next) => {
                 courseInfo.push(coursesAccept);
             }
         }
-
         res.send(courseInfo);
     } catch (error) {
         next(error);

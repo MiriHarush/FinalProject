@@ -10,6 +10,7 @@ import { SpaceContext } from '../context/spaces.context';
 import { CourseContext } from '../context/courses.context';
 import { UserContext } from '../context/users.context';
 
+
 const SpaceDashboard = () => {
   const { currentUser } = useContext(UserContext);
   const { currentSpace } = useContext(SpaceContext);
