@@ -2,12 +2,15 @@ import React, { useState, useContext, useEffect } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
+// import Button from '@mui/material/Button';
+import Button from '@mui/material-next/Button';
 import LessonModal from '../components/LessonModal'; // Import the LessonModal component
 import { CourseContext } from '../context/courses.context';
 import { LessonContext } from '../context/lessons.context';
 import { InvitationContext } from '../context/invitations.context';
 import { useNavigate } from 'react-router-dom';
+import '../css/lesson.css';
+
 
 const CourseManagerDashboard = () => {
   const { currentCourse } = useContext(CourseContext);
@@ -74,35 +77,39 @@ const CourseManagerDashboard = () => {
   };
 
   return (
-    <div style={{ padding: '20px' }}>
-      <h2>Course Manager Dashboard - Course ID:</h2>
-      <p>Course Name: {currentCourse.courseName}</p>
-      <p>Course Type: {currentCourse.typeCourse}</p>
-      <p>Description: {currentCourse.description}</p>
-      <p>Permission: {currentCourse.permission}</p>
-      <h3>Lessons:</h3>
-      <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+    <div className='centerContainer'>
+
+      <h2 style={{ color: 'rgb(62, 63, 63)' }}>Course Manager Dashboard - Course ID:</h2>
+      <div className='words'>
+
+        <h3><span style={{ fontWeight: 'bold' }}>Course name: </span> {currentCourse.courseName}</h3>
+        <h3><span style={{ fontWeight: 'bold' }}>Course Type:  </span> {currentCourse.typeCourse}</h3>
+        <h3><span style={{ fontWeight: 'bold' }}>Description:  </span> {currentCourse.description}</h3>
+        <h3><span style={{ fontWeight: 'bold' }}>Permission:  </span> {currentCourse.permission}</h3>
+        <h3>Lessons:</h3>
+      </div>
+      <div >
         {lessons?.map((lesson) => (
-          <Card key={lesson.id} style={{ margin: '10px', minWidth: '250px' }}>
-            <CardContent>
-              <Typography variant="h6" component="div">
+          <Card key={lesson.id} className='courseCard'>
+            <CardContent style={{ textAlign: 'center' }}>
+              <Typography variant="h5" component="div">
                 {lesson.lessonName}
               </Typography>
-              <Typography variant="body2" color="textSecondary">
+              <Typography variant="h6" color="textSecondary">
                 {lesson.descerption}
               </Typography>
               <Button
                 variant="outlined"
                 color="primary"
                 onClick={() => openLessonModal(lesson)}
-                style={{ marginTop: '10px' }}
+                className='courseButton'
               >
                 View Lesson
               </Button>
             </CardContent>
           </Card>
         ))}
-        <Card style={{ margin: '10px', minWidth: '250px' }}>
+        <Card className='courseCard'>
           <CardContent>
             <Typography variant="h6" component="div">
               New Lesson
@@ -124,7 +131,7 @@ const CourseManagerDashboard = () => {
               variant="outlined"
               color="primary"
               onClick={addNewLesson}
-              style={{ marginTop: '10px' }}
+              className='courseButton'
             >
               Add Lesson
             </Button>

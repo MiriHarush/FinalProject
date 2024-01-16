@@ -243,4 +243,21 @@ exports.getAcceptCourses = async (req, res, next) => {
     }
 }
 
+exports.getAcceptCourses = async (req, res, next) => {
+    try {
+        const { email } = req.body;
+        const userAcceptInvitations = await Invite.find({ acceptMail: email, statusInvite: 'accept' });
 
+        const courseInfo = [];
+        for (const accept of userAcceptInvitations) {
+            const courseId = accept.courseId;
+            const coursesAccept = await Course.findById(courseId);
+            if (coursesAccept) {
+                courseInfo.push(coursesAccept);
+            }
+        }
+        res.send(courseInfo);
+    } catch (error) {
+        next(error);
+    }
+}

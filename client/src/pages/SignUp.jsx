@@ -106,6 +106,8 @@ const SignUp = () => {
     const { confirmPassword, ...formDataWithoutConfirmPassword } = formData;
 
   
+  
+
     const formDataWithImage = new FormData();
     formDataWithImage.append('file', formData.profileImage);
     delete formDataWithoutConfirmPassword.profileImage;
