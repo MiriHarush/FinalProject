@@ -29,6 +29,7 @@ import AddCourse from '../pages/AddCourse';
 import UserPersonalArea from '../pages/UserPersonalArea';
 import ForgotPassword from './ForgotPassword';
 import ResetPassword from './ResetPassword';
+import SpaceDashboard from '../pages/SpaceDashboard';
 import CourseManagerDashboard from '../pages/CourseManagerDashboard';
 import CourseUserDashboard from '../pages/CourseUserDashboard';
 
@@ -43,6 +44,7 @@ const RoutesPages = () => {
       <Route path="/addCourse" element={<AddCourse />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/reset-password" element={<ResetPassword />} />
+      <Route path="/spaceDashboard" element={<SpaceDashboard />} />
       
     </Routes>
   );

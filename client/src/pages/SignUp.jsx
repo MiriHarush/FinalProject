@@ -577,6 +577,15 @@ const SignUp = () => {
           <Typography variant="h4" align="center" gutterBottom style={{ color: 'rgb(174, 124, 61)' }}>
             Sign Up
           </Typography>
+          <Grid item xs={12}>
+                <div {...getRootProps()} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer' }}>
+                  <input {...getInputProps()} />
+                  <Avatar src={formData.profileImage ? URL.createObjectURL(formData.profileImage) : ''} alt="Profile Image" sx={{ width: 80, height: 80, marginBottom: 2 }} />
+                  <Typography variant="caption" color="textSecondary">
+                    Click to upload profile picture
+                  </Typography>
+                </div>
+              </Grid>
           <form onSubmit={handleSubmit} style={{ width: '100%' }}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
