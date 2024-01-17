@@ -225,7 +225,7 @@ import {
 } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { UserContext } from '../context/users.context';
-import  "../css/LogIn.css"
+import '../css/LogIn.css';
 
 const theme = createTheme({
   palette: {
@@ -240,7 +240,6 @@ const LogIn = () => {
     email: '',
     password: '',
   });
-
   const [emailError, setEmailError] = useState('');
   const [labelError, setLabelError] = useState(false); // <-- תיקון של שם המשתנה
 
@@ -267,7 +266,7 @@ const LogIn = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     if (!validateEmail()) {
       return;
     }
@@ -328,7 +327,6 @@ const LogIn = () => {
                 <Button type="submit" variant="contained" color="primary" fullWidth style={{ marginTop: '20px', color: 'white' }}>
                   Log In
                 </Button>
-                {loginError && <Typography variant="body2" style={{ marginTop: 10, color: 'red' }}>{loginError}</Typography>}
                 <Typography variant="body2" style={{ marginTop: 10 }}>
                   <MuiLink component={Link} to="/forgot-password" style={{ color: 'rgb(174, 124, 61)' }}>
                     Forgot your password?
