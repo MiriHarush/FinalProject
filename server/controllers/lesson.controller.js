@@ -27,6 +27,7 @@ exports.getLesson = async (req, res, next) => {
 exports.uploadFile = async (req, res, next) => {
   const { lesId } = req.params;
   const userId = res.locals.user_id;
+  console.log(req.files);
   try {
     let upload = await Lesson.findOne({ _id: lesId });
     if (!upload) {
@@ -39,8 +40,10 @@ exports.uploadFile = async (req, res, next) => {
 
     const url = []
     for (let i = 0; i < req.files?.length; i++) {
+      console.log("fff", req.files[i].path);
       const file = req.files[i].path
-      const result = await cloudinary.uploader.upload(file, { resource_type: "auto" })
+      const result = await cloudinary.uploader.upload(file, { resource_type: "auto" });
+      console.log(result);
       url[i] = result.url;
     }
 

@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { InvitationContext } from '../context/invitations.context';
 import InvitationModal from './InvitationModal';
 import { UserContext } from '../context/users.context';
+import { Grid } from '@mui/material';
 
 
 const Invitations = () => {
@@ -21,11 +22,11 @@ const Invitations = () => {
 
 
     return (
-        <>
+        <Grid className='courseContainer'>
             {invitations.map((invite) => {
                 return <InvitationModal invite={invite} onConfirmOrder={() => setConfirmOrder(true)} />
             })}
-        </>
+        </Grid>
     )
 }
 

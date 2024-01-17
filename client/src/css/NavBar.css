@@ -1,4 +1,13 @@
 /* .navbar-nav */
+.navbar {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 1000; 
+    background-color: white;
+}
+
+
 .nav-link,
 .dropdown-link {
     color: rgb(174, 124, 61)!important;

@@ -11,7 +11,7 @@ const AddSpace = ({ onAddSpace, onConfirmAdd, open, anchorEl }) => {
   const handleConfirmAdd = () => {
     handleClose();
     console.log("nameeee", nameSpace);
-    onConfirmAdd({nameSpace}); // Notify the parent component about the confirmation
+    onConfirmAdd({nameSpace}); 
   };
 
   const handleClose = () => {
@@ -52,7 +52,7 @@ const AddSpace = ({ onAddSpace, onConfirmAdd, open, anchorEl }) => {
         <Button
           variant="contained"
           onClick={handleConfirmAdd}
-          sx={{ backgroundColor: '#4CAF50', color: '#fff', marginTop: '20px', width: '100%' }}
+          sx={{ backgroundColor: 'rgb(174, 124, 61)', color: 'white', marginTop: '20px', width: '100%' }}
         >
           Confirm Add
         </Button>

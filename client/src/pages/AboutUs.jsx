@@ -1,138 +1,73 @@
-// import React from 'react';
-// import { Container, Typography, Grid, Button, Paper, CssBaseline } from '@mui/material';
-// import { Link } from 'react-router-dom';
-// import CreateIcon from '@mui/icons-material/Create';
-// import ForumIcon from '@mui/icons-material/Forum';
-
-// const AboutUs = () => {
-//   return (
-//     <Container style={{ paddingTop: '50px', fontFamily: 'Verdana, Geneva, Tahoma, sans-serif' }}>
-//       <CssBaseline />
-
-//       <Typography variant="h2" align="center" gutterBottom style={{ fontSize: '2.5rem' }}>
-//         אודותינו
-//       </Typography>
-
-//       <Typography variant="body1" paragraph style={{ fontSize: '1.2rem' }}>
-//         אנו מאמינים ביצירת חוויות לימודיות משותפות, המספקות השראה ויצירתיות. במסגרת הפלטפורמה שלנו, תוכל לצפות במגוון רחב של קורסים וליצור מרחבים משלך עם תכנים ייחודיים.
-//       </Typography>
-
-//       <Grid container spacing={3} justifyContent="center">
-//         <Grid item xs={12} sm={6}>
-//           <Button
-//             variant="contained"
-//             color="primary"
-//             endIcon={<CreateIcon />}
-//             component={Link}
-//             to="/courses"
-//             style={{
-//               background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
-//               color: 'white',
-//               fontSize: '1.2rem',
-//             }}
-//           >
-//             צפה בקורסים
-//           </Button>
-//         </Grid>
-//         <Grid item xs={12} sm={6}>
-//           <Button
-//             variant="contained"
-//             color="secondary"
-//             endIcon={<ForumIcon />}
-//             style={{ fontSize: '1.2rem' }}
-//           >
-//             צור מרחב
-//           </Button>
-//         </Grid>
-//       </Grid>
-
-//       <Paper elevation={3} style={{ padding: '20px', marginTop: '30px' }}>
-//         <Typography variant="h4" gutterBottom style={{ fontSize: '1.8rem' }}>
-//           יצירת חוויות משותפות
-//         </Typography>
-//         <Typography variant="body1" style={{ fontSize: '1.2rem' }}>
-//           אנו מאמינים שהלמידה הטובה ביותר היא זו שנעשית יחד ובחוויה משותפת. יצירת קהילה מתמקדת בשיתוף ובהשפעה הדדית.
-//         </Typography>
-//       </Paper>
-//     </Container>
-//   );
-// };
-
-// export default AboutUs;
-
 import React from 'react';
-import { Container, Typography, Grid, Button, Paper, CssBaseline } from '@mui/material';
-import { Link } from 'react-router-dom';
-import CreateIcon from '@mui/icons-material/Create';
-import ForumIcon from '@mui/icons-material/Forum';
-import { useSpring, animated } from 'react-spring';
+import { Container, Typography, Paper } from '@mui/material';
+import { useSpring, animated, config } from 'react-spring';
+import Footer from '../components/Footer';
 
 const AboutUs = () => {
-  const fadeIn = useSpring({
-    from: { opacity: 0, transform: 'translateY(30px)' },
-    to: { opacity: 1, transform: 'translateY(0)' },
+  const fadeInLeft = useSpring({
+    from: { opacity: 0, transform: 'translateX(-30px)' },
+    to: { opacity: 1, transform: 'translateX(0)' },
+    config: { ...config.slow, duration: 2000 },
   });
 
+  const fadeInRight = useSpring({
+    from: { opacity: 0, transform: 'translateX(30px)' },
+    to: { opacity: 1, transform: 'translateX(0)' },
+    config: { ...config.slow, duration: 2000 },
+  });
+
+  const imageStyle = {
+    boxShadow: '5px 5px 10px rgba(0, 0, 0, 0.2)', // קביעת צל
+    borderRadius: '4px', // קצוות רכים
+  };
+  
+
   return (
-    <Container style={{ paddingTop: '50px', fontFamily: 'Verdana, Geneva, Tahoma, sans-serif' }}>
-      <CssBaseline />
-
-      <animated.div style={fadeIn}>
-        <Typography variant="h2" align="center" gutterBottom style={{ fontSize: '2.5rem' }}>
-          אודותינו
-        </Typography>
-      </animated.div>
-
-      <animated.div style={fadeIn}>
-        <Typography variant="body1" paragraph style={{ fontSize: '1.2rem' }}>
-          אנו מאמינים ביצירת חוויות לימודיות משותפות, המספקות השראה ויצירתיות. במסגרת הפלטפורמה שלנו, תוכל לצפות במגוון רחב של קורסים וליצור מרחבים משלך עם תכנים ייחודיים.
-        </Typography>
-      </animated.div>
-
-      <Grid container spacing={3} justifyContent="center">
-        <Grid item xs={12} sm={6}>
-          <animated.div style={fadeIn}>
-            <Button
-              variant="contained"
-              color="primary"
-              endIcon={<CreateIcon />}
-              component={Link}
-              to="/courses"
-              style={{
-                background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
-                color: 'white',
-                fontSize: '1.2rem',
-              }}
-            >
-              צפה בקורסים
-            </Button>
-          </animated.div>
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <animated.div style={fadeIn}>
-            <Button
-              variant="contained"
-              color="secondary"
-              endIcon={<ForumIcon />}
-              style={{ fontSize: '1.2rem' }}
-            >
-              צור מרחב
-            </Button>
-          </animated.div>
-        </Grid>
-      </Grid>
-
-      <animated.div style={fadeIn}>
-        <Paper elevation={3} style={{ padding: '20px', marginTop: '30px' }}>
-          <Typography variant="h4" gutterBottom style={{ fontSize: '1.8rem' }}>
-            יצירת חוויות משותפות
-          </Typography>
-          <Typography variant="body1" style={{ fontSize: '1.2rem' }}>
-            אנו מאמינים שהלמידה הטובה ביותר היא זו שנעשית יחד ובחוויה משותפת. יצירת קהילה מתמקדת בשיתוף ובהשפעה הדדית.
-          </Typography>
-        </Paper>
-      </animated.div>
-    </Container>
+    <>
+      <Container style={{ paddingTop: '50px', fontFamily: 'Arial, sans-serif', textAlign: 'center' }}>
+        <animated.div style={fadeInLeft}>
+          <div style={{ display: 'flex', flexDirection: 'row', gap: '20px', justifyContent: 'center', paddingTop: '10px' }}>
+            <div style={{ width: '50%', color: 'rgb(174, 124, 61)' }}>
+              <Typography variant="h2" gutterBottom style={{ fontSize: '3rem', marginBottom: '20px', borderBottom: '2px solid rgb(174, 124, 61)' }}>
+                Welcome to Our Learning Community
+              </Typography>
+              <Typography variant="body1" paragraph style={{ fontSize: '1.5rem', marginBottom: '30px' }}>
+                Explore a diverse range of courses and create your own spaces with unique content. Join us in fostering shared learning experiences that inspire and cultivate creativity.
+              </Typography>
+            </div>
+            <animated.img
+              src="https://images.pexels.com/photos/6177658/pexels-photo-6177658.jpeg?auto=compress&cs=tinysrgb&w=600"
+              alt=""
+              height={"300px"}
+              width={'20%'}
+              style={imageStyle}
+            />
+          </div>
+        </animated.div>
+        <br />
+        <br />
+        <animated.div style={fadeInRight}>
+          <div style={{ display: 'flex', flexDirection: 'row', gap: '20px', justifyContent: 'center', paddingTop: '10px' }}>
+            <animated.img
+              src="https://images.pexels.com/photos/5238078/pexels-photo-5238078.jpeg?auto=compress&cs=tinysrgb&w=600"
+              alt=""
+              height={"300px"}
+              width={'20%'}
+              style={{ ...imageStyle, borderBottom: '2px solid rgb(174, 124, 61)' }}
+            />
+            <div style={{ width: '50%', color: 'rgb(174, 124, 61)' }}>
+              <Typography variant="h4" gutterBottom style={{ fontSize: '2rem', marginBottom: '15px', borderBottom: '2px solid rgb(174, 124, 61)' }}>
+                Our Vision: Creating Shared Experiences
+              </Typography>
+              <Typography variant="body1" style={{ fontSize: '1.5rem' }}>
+                We believe that the best learning happens together in a shared experience. Building a community focuses on collaboration and mutual influence.
+              </Typography>
+            </div>
+          </div>
+        </animated.div>
+      </Container>
+      <Footer />
+    </>
   );
 };
 

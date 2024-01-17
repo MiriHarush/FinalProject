@@ -33,9 +33,9 @@ exports.getInfoUser = async (req, res, next) => {
 
 exports.createUser = async (req, res, next) => {
     const body = req.body;
-    console.log('body:',req.body);
+    console.log('body:', req.body);
 
-    console.log('file:',req.file);
+    console.log('file:', req.file);
     try {
         console.log("JOI");
         const validate = validCreateUser(body)
@@ -52,7 +52,7 @@ exports.createUser = async (req, res, next) => {
         console.log(file);
         console.log(req.profileImage);
         const result = await cloudinary.uploader.upload(file, { resource_type: "image" })
-        body.profileImage = result.url ;
+        body.profileImage = result.url;
 
 
         if (contact && allowedContact.includes(contact)) {
@@ -159,25 +159,24 @@ exports.updateLoginMethod = (req, res) => {
 
 
 exports.resetPassword = async (req, res, next) => {
+    console.log("body",req.body)
     try {
-        const { resetToken } = req.query;
+        const { token } = req.query;
         const { newPassword } = req.body;
 
-        console.log("resetToken" + resetToken);
         // Decode and verify the reset token
-        const decodedToken = jwt.verify(resetToken, "123@@");
-        console.log(decodedToken);
+        const decodedToken = jwt.verify(token, "123@@");
         const userId = decodedToken.userId;
-
         // Find the user in the database
         const user = await User.findById(userId);
+    
         if (!user) {
             throw new Error("User not found");
         }
-        console.log(user.resetToken);
+        console.log(user);
 
         // Check if the token matches the user's reset token
-        if (user.resetToken !== resetToken) {
+        if (user.resetToken !== token) {
             throw new Error("Invalid reset token");
         }
 
@@ -229,7 +228,7 @@ exports.getAcceptCourses = async (req, res, next) => {
     try {
         const { email } = req.body;
         const userAcceptInvitations = await Invite.find({ acceptMail: email, statusInvite: 'accept' });
-        
+
         const courseInfo = [];
         for (const accept of userAcceptInvitations) {
             const courseId = accept.courseId;
@@ -238,7 +237,6 @@ exports.getAcceptCourses = async (req, res, next) => {
                 courseInfo.push(coursesAccept);
             }
         }
-
         res.send(courseInfo);
     } catch (error) {
         next(error);
