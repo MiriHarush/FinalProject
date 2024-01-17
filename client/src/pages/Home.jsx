@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Container, Typography, Grid, Card, CardContent, Button, Snackbar } from '@mui/material';
+import { Container, Typography, Grid, Card, CardContent, Button, Snackbar, Box } from '@mui/material';
 import MuiAlert from '@mui/material/Alert';
 import { Link } from 'react-router-dom';
 import ForumIcon from '@mui/icons-material/Forum';
@@ -44,11 +44,12 @@ const Home = () => {
       {currentUser == null && (
         <div className='img' >
           <div style={{ flexDirection: 'row', gap: '20px', paddingTop: '10px' }}>
-            <LogIn />
+            {/* <LogIn /> */}
             <SignUp />
           </div>
         </div>
       )}
+
 
       {currentUser && (
         navigate('/userPersonalArea')

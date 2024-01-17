@@ -250,17 +250,24 @@ const LessonModal = () => {
   const [newContent, setNewContent] = useState(null);
 
 
-  useEffect(() => {
-    // console.log(newContent);
-    // setFiles(currentLesson.content)
-    const fetchData = async () => {
-      const filesData = await getLesson(currentCourse._id);
-      setFiles(filesData.result.files);
-    };
-    fetchData();
-  }, [filesChanges]);
+  // useEffect(() => {
+  //   // console.log(newContent);
+  //   // setFiles(currentLesson.content)
+  //   const fetchData = async () => {
+  //     const filesData = await getLesson(currentCourse._id);
+  //     setFiles(filesData.result.files);
+  //   };
+  //   fetchData();
+  // // }, [filesChanges]);
 
   // }, [newContent]);
+
+  useEffect(() => {
+    console.log(newContent);
+    // setFiles(newContent);
+    setFiles(currentLesson.content)
+
+  }, [newContent]);
   // useEffect(() => {
   //   // console.log(newContent);
   //   // setFiles(currentLesson.content)
@@ -321,6 +328,7 @@ const LessonModal = () => {
       alert('Invalid file type for the selected content type.');
     }
   };
+
 
   const getIcon = (value) => {
     switch (value) {

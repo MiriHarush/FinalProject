@@ -50,7 +50,8 @@ exports.uploadFile = async (req, res, next) => {
     //  upload = await Lesson.findByIdAndUpdate(lesId, body, { new: true });
     upload = await Lesson.findByIdAndUpdate(
       { _id: lesId },
-      { $push: { content: url } }
+      { $push: { content: url } },
+      { new: true }
     )
     res.send(upload)
   } catch (error) {
@@ -100,7 +101,8 @@ exports.deleteFile = async (req, res, next) => {
   console.log(fileName)
 
   const { delId } = req.query;
-  let files = await Lesson.findOneAndUpdate({ _id: delId }, { $pull: { content: { $in: [url] } } })
+
+      let files = await Lesson.findOneAndUpdate({ _id: delId }, { $pull: { content: { $in: [url] } } } )
 
   await cloudinary.uploader.destroy(fileName)
 
