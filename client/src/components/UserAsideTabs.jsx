@@ -14,12 +14,13 @@ const UserAsideTabs = () => {
 
   const [value, setValue] = useState('0');
 
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
   return (
-    <TabContext value={value}>
+    <TabContext value={value} style={{ background: 'rgba(255, 255, 255, 0.9)' }}>
       <Box>
         <Tabs
           value={value}
@@ -30,6 +31,7 @@ const UserAsideTabs = () => {
           centered
           indicatorColor='rgb(174, 124, 61)'
           sx={{
+            color: 'rgb(174, 124, 61)',
             width: '100%',
             backgroundColor: '#fff',
             borderRadius: '15px',
@@ -45,9 +47,22 @@ const UserAsideTabs = () => {
             },
           }}
         >
-          <Tab label="My invitations" value="0" />
-          <Tab label="My Spaces" value="1" />
-          <Tab label="My Courses" value="2" />
+          <Tab label="My invitations" value="0" sx={{
+            color: 'rgb(174, 124, 61)',
+            '&.Mui-selected': {
+              color: 'rgb(174, 124, 61)',
+            },
+          }} />
+          <Tab label="My Spaces" value="1" sx={{
+            color: 'rgb(174, 124, 61)', '&.Mui-selected': {
+              color: 'rgb(174, 124, 61)',
+            },
+          }} />
+          <Tab label="My Courses" value="2" sx={{
+            color: 'rgb(174, 124, 61)', '&.Mui-selected': {
+              color: 'rgb(174, 124, 61)',
+            },
+          }} />
         </Tabs>
 
         <TabPanel value="0">

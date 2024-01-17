@@ -142,6 +142,7 @@ const FileCard = styled(Card)({
 const FileIcon = styled(Typography)({
   fontSize: '2em',
   marginRight: '8px',
+  
 });
 
 const ButtonsContainer = styled('div')({
@@ -224,17 +225,20 @@ const FileModal = ({ fileUrl }) => {
       return (
         <FileCard key={fileName}>
           <FileIcon> 📄 </FileIcon>
+          <div style={{display: 'flex', alignItems: 'center'}}>
+
           <CardContent>
             <Typography variant="body1">{fileName}</Typography>
           </CardContent>
-          <ButtonsContainer>
-            <IconButton color="primary" onClick={openFullView}>
+          <ButtonsContainer style={{ marginLeft: 'auto' }}>
+            <IconButton color="primary" onClick={openFullView} className='colorIcon'>
               <OpenInNew />
             </IconButton>
-            <IconButton color="primary" onClick={() => downloadFile(fileName, fileUrl)}>
+            <IconButton color="primary" onClick={() => downloadFile(fileName, fileUrl)}  className='colorIcon'>
               <CloudDownload />
             </IconButton>
           </ButtonsContainer>
+          </div>
         </FileCard>
       );
     } else if (fileType === 'zip') {
@@ -245,10 +249,11 @@ const FileModal = ({ fileUrl }) => {
           <Typography variant="body1">{fileName}</Typography>
         </CardContent>
         <ButtonsContainer>
-          <IconButton color="primary" onClick={openFullView}>
+
+          <IconButton color="primary" onClick={openFullView}  className='colorIcon'>
             <OpenInNew />
           </IconButton>
-          <IconButton color="primary" onClick={() => downloadFile(fileName, fileUrl)}>
+          <IconButton color="primary" onClick={() => downloadFile(fileName, fileUrl)} className='colorIcon'>
             <CloudDownload />
           </IconButton>
         </ButtonsContainer>
@@ -263,10 +268,10 @@ const FileModal = ({ fileUrl }) => {
           <Typography variant="body1">{fileName}</Typography>
         </CardContent>
         <ButtonsContainer>
-          <IconButton color="primary" onClick={openFullView}>
+          <IconButton color="primary" onClick={openFullView}  className='colorIcon'>
             <OpenInNew />
           </IconButton>
-          <IconButton color="primary" onClick={() => downloadFile(fileName, fileUrl)}>
+          <IconButton color="primary" onClick={() => downloadFile(fileName, fileUrl)}  className='colorIcon'>
             <CloudDownload />
           </IconButton>
         </ButtonsContainer>
@@ -284,10 +289,10 @@ const FileModal = ({ fileUrl }) => {
           <Typography variant="body1">{fileName}</Typography>
         </CardContent>
         <ButtonsContainer>
-          <IconButton color="primary" onClick={openFullView}>
+          <IconButton color="primary" onClick={openFullView}  className='colorIcon'>
             <OpenInNew />
           </IconButton>
-          <IconButton color="primary" onClick={() => downloadFile(fileName, fileUrl)}>
+          <IconButton color="primary" onClick={() => downloadFile(fileName, fileUrl)}  className='colorIcon'>
             <CloudDownload />
           </IconButton>
         </ButtonsContainer>
@@ -303,10 +308,10 @@ const FileModal = ({ fileUrl }) => {
           <Typography variant="body1">{fileName}</Typography>
         </CardContent>
         <ButtonsContainer>
-          <IconButton color="primary" onClick={openFullView}>
+          <IconButton color="primary" onClick={openFullView}  className='colorIcon'>
             <OpenInNew />
           </IconButton>
-          <IconButton color="primary" onClick={() => downloadFile(fileName, fileUrl)}>
+          <IconButton color="primary" onClick={() => downloadFile(fileName, fileUrl)}  className='colorIcon'>
             <CloudDownload />
           </IconButton>
         </ButtonsContainer>

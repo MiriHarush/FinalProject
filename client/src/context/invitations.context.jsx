@@ -5,12 +5,13 @@ export const InvitationContext = createContext();
 
 export const InvitationProvider = ({ children }) => {
 
-  const [currentInvitation, setCurrentInvitation] = useState(null);
+  const [currentInvitation, setCurrentInvitation] = useState(JSON.parse(localStorage.getItem('invitation')) ||null);
   const token = localStorage.getItem('userToken');
   const authorization = `Bearer ${token}`;  
 
   const updateCurrentInvite = (invite) => {
     setCurrentInvitation(invite);
+    localStorage.setItem('invitation',JSON.stringify(invite));     
 };
 
 

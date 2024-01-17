@@ -46,11 +46,12 @@ exports.uploadFile = async (req, res, next) => {
       console.log(result);
       url[i] = result.url;
     }
-
+console.log(result);
     //  upload = await Lesson.findByIdAndUpdate(lesId, body, { new: true });
     upload = await Lesson.findByIdAndUpdate(
       { _id: lesId },
-      { $push: { content: url } }
+      { $push: { content: url } },
+      { new: true }
     )
     res.send(upload)
   } catch (error) {

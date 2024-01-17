@@ -2,6 +2,8 @@ import React, { useContext, useState } from 'react';
 import { TextField, Button, Container, Typography, Grid } from '@mui/material';
 import { ContactContext } from '../context/contact.context';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+// import Button from '@mui/material-next/Button';
+
 import Footer from '../components/Footer';
 
 const theme = createTheme({
@@ -30,6 +32,8 @@ const Contact = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     addContact(formData);
+    setFormData({ email: '',
+    contentMessage: '',})
   };
 
   return (
@@ -150,6 +154,7 @@ const Contact = () => {
                 variant="contained"
                 color="primary"
                 style={{ background: 'rgb(174, 124, 61)' }}
+                onClick={handleSubmit}
               >
                 send
               </Button>

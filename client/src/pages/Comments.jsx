@@ -31,11 +31,13 @@ const Comments = () => {
   const { getAllComments, addComment } = useContext(CommentContext);
   const { currentUser } = useContext(UserContext);
 
+  // setCurrentUser(JSON.parse(localStorage.getItem('user')));
   console.log(currentUser);
 
   const [newCommentText, setNewCommentText] = useState('');
   const [isCommenting, setIsCommenting] = useState(false);
 
+  
   useEffect(() => {
     const fetchData = async () => {
       const commentsData = await getAllComments();
@@ -53,9 +55,10 @@ const Comments = () => {
     setCommentUpdate(commentUpdate + 1);
   };
 
+  
   return (
     <>
-      <Container style={{ paddingTop: '50px' }}>
+      <Container style={{ paddingTop: '50px', minHeight: "800px" }}>
         {currentUser && (
           <div>
             <IconButton onClick={() => setIsCommenting(!isCommenting)}>

@@ -5,7 +5,6 @@ import MuiAlert from '@mui/material/Alert';
 import { Link } from 'react-router-dom';
 import ForumIcon from '@mui/icons-material/Forum';
 import SignUp from './SignUp';
-import LogIn from './LogIn';
 import { CommentContext } from '../context/comments.context';
 import { UserContext } from '../context/users.context';
 import '../css/Home.css'
@@ -42,10 +41,9 @@ const Home = () => {
     <>
     {console.log(currentUser)}
       {currentUser == null && (
-        <div className='img' style={{ textAlign: 'center' }}>
-          <div style={{ display: 'flex', flexDirection: 'row', gap: '20px', justifyContent: 'center', paddingTop: '10px' }}>
+        <div className='img' >
+          <div style={{ flexDirection: 'row', gap: '20px', paddingTop: '10px' }}>
             <SignUp />
-            <LogIn />
           </div>
         </div>
       )}

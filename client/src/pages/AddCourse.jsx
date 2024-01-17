@@ -72,7 +72,7 @@ const AddCourse = ({ onClose }) => {
 
   const handleAddUser = async () => {
     console.log(course.userToAdd);
-    if (course.userToAdd && course.permission === 'private') {
+    if ( course.userToAdd&& course.permission === 'private') {
       const existingUser = await checkUserExistence(course.userToAdd);
 
       if (existingUser) {
