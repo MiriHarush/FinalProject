@@ -10,6 +10,8 @@ import { InvitationContext } from '../context/invitations.context';
 import FileModal from '../components/FileModal';
 import CourseManagerDashboard from './CourseManagerDashboard';
 import { useNavigate } from 'react-router-dom';
+import '../css/lesson.css';
+
 
 const CourseUserDashboard = () => {
 
@@ -57,11 +59,12 @@ const CourseUserDashboard = () => {
 
   return (
     <>
-    <hr/>
-      <div>
-        <h1>lessons in course </h1>
+      <div  className='centerContainer'>
+      <h2 style={{ color: 'rgb(174, 124, 61)', fontWeight: 'bold' }}>Course User Dashboard</h2>
+
+        <h1 style={{color: 'rgb(174, 124, 61)'}}>lessons in course </h1>
         {lessons.length === 0 ? (
-          <p>no lessons</p>
+          <p style={{color: 'rgb(174, 124, 61)'}}>no lessons</p>
         ) : (
           <div style={{ display: 'flex', flexWrap: 'wrap' }}>
             {lessons.map((lesson) => (

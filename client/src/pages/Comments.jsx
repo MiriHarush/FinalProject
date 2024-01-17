@@ -31,6 +31,7 @@ const Comments = () => {
   const { getAllComments, addComment } = useContext(CommentContext);
   const { currentUser } = useContext(UserContext);
 
+  // setCurrentUser(JSON.parse(localStorage.getItem('user')));
   console.log(currentUser);
 
   const [newCommentText, setNewCommentText] = useState('');

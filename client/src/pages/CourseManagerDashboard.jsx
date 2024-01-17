@@ -17,15 +17,26 @@ import AccessibilityNewIcon from '@mui/icons-material/AccessibilityNew';
 import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
+import AddIcon from '@mui/icons-material/Add';
+import FormControl from '@mui/material/FormControl';
 
 
 const CourseManagerDashboard = () => {
-  const { currentCourse } = useContext(CourseContext);
+  const { currentCourse, sentInvites } = useContext(CourseContext);
   const { updateCurrentLesson, getAllLessons, addLesson } = useContext(LessonContext);
   const { getAllMyInvitations } = useContext(InvitationContext);
   const [lessons, setLessons] = useState([]);
   const [invitations, setInvitations] = useState([]);
+
+
+  const [addInviteUsers, setAddInviteUsers] = useState([]);
+  const [userToAdd, setUserToAdd] = useState('');
+  const [doYouWantInvite, setDoYouWantInvite] = useState(false);
   const navigate = useNavigate();
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -39,13 +50,13 @@ const CourseManagerDashboard = () => {
 
   }, [])
 
-  useEffect(() => {
-    console.log("lessons", lessons);
-  }, [lessons])
+  // useEffect(() => {
+  //   console.log("lessons", lessons);
+  // }, [lessons])
 
-  useEffect(() => {
-    console.log("invitations", invitations);
-  }, [invitations])
+  // useEffect(() => {
+  //   console.log("invitations", invitations);
+  // }, [invitations])
 
   const [newLesson, setNewLesson] = useState({ title: '', content: '' });
   const [lessonModalOpen, setLessonModalOpen] = useState(false);
@@ -53,20 +64,20 @@ const CourseManagerDashboard = () => {
 
   const addNewLesson = async () => {
     const lessonId = (lessons.length + 1).toString();
-    const updatedLessons = [...lessons, { ...newLesson, id: lessonId }];
 
     const lesson = {
       lessonName: newLesson.title,
       descerption: newLesson.content,
       ownerLesson: currentCourse._id
     }
+    const updatedLessons = [...lessons, { ...lesson, id: lessonId }];
 
     await addLesson(lesson);
 
     setLessons(() => ([
       ...updatedLessons,
     ]));
-
+    console.log(lessons);
     setNewLesson({ title: '', content: '' });
   };
 
@@ -84,47 +95,69 @@ const CourseManagerDashboard = () => {
   };
 
   const handleChange = (field, value) => {
-    console.log("change");
-    // setCourse((prevCourse) => ({ ...prevCourse, [field]: value }));
+    if (field === "inviteUsers") {
+      setDoYouWantInvite(true)
+    }
+    if (field === "userToAdd") {
+      setUserToAdd(value)
+    }
   };
+
+
+
+  const checkUserExistence = async (userEmail) => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        const fakeUser =
+          userEmail
+        resolve(fakeUser);
+      }, 1000);
+    });
+  };
+
 
 
   const handleAddUser = async () => {
-    console.log("im shani");
-    // console.log(course.userToAdd);
-    if (currentCourse.userToAdd && currentCourse.permission === 'private') {
-      const existingUser = await checkUserExistence(currentCourse.userToAdd);
-
-      if (existingUser) {
-        setInvitations((prevCourse) => ([...prevCourse.invitations, existingUser]));
-        console.log(invitations);
-
-      } else {
-        console.log('User does not exist');
-      }
+    const existingUser = await checkUserExistence(userToAdd);
+    console.log(existingUser);
+    if (!currentCourse.invitations.includes(userToAdd)) {
+  
+    if (existingUser) {
+      setAddInviteUsers([...addInviteUsers, existingUser]);
+    } else {
+      console.log('User does not exist');
     }
-    console.log(invitations);
-
+    handleChange('userToAdd', '');
+  }
+  else{
+    handleChange('userToAdd', '');
+  }
   };
 
   const handleRemoveUser = (index) => {
-    const newUsers = [...currentCourse.invitations];
+    const newUsers = [...addInviteUsers];
     newUsers.splice(index, 1);
-    setInvitations(newUsers);
+    setAddInviteUsers(newUsers);
+  };
+
+  const handleSendInvites = async () => {
+   const send =  await sentInvites(currentCourse._id, addInviteUsers);
+   console.log(send);
+   setDoYouWantInvite(false);
   };
 
 
   return (
     <div className='centerContainer'>
 
-      <h2 style={{ color: 'rgba(255, 255, 255, 0.908)',fontWeight:'bold' }}>Course Manager Dashboard - Course ID:</h2>
+      <h2 style={{ color: 'rgba(174, 124, 61, 0.908)', fontWeight: 'bold' }}>Course Manager Dashboard</h2>
       <div className='words'>
 
-        <h3><span style={{ fontWeight: 'bold' }}>Course name: </span> {currentCourse.courseName}</h3>
-        <h3><span style={{ fontWeight: 'bold' }}>Course Type:  </span> {currentCourse.typeCourse}</h3>
-        <h3><span style={{ fontWeight: 'bold' }}>Description:  </span> {currentCourse.description}</h3>
-        <h3><span style={{ fontWeight: 'bold' }}>Permission:  </span> {currentCourse.permission}</h3>
-        <h3>Lessons:</h3>
+        <h3 style={{color: 'rgb(174, 124, 61)'}}><span style={{ fontWeight: 'bold',  color: 'rgb(174, 124, 61)' }}>Course name: </span> {currentCourse.courseName}</h3>
+        <h3 style={{color: 'rgb(174, 124, 61)'}}><span style={{ fontWeight: 'bold',  color: 'rgb(174, 124, 61)' }}>Course Type:  </span> {currentCourse.typeCourse}</h3>
+        <h3 style={{color: 'rgb(174, 124, 61)'}}><span style={{ fontWeight: 'bold',  color: 'rgb(174, 124, 61)' }}>Description:  </span> {currentCourse.description}</h3>
+        <h3 style={{color: 'rgb(174, 124, 61)'}}><span style={{ fontWeight: 'bold',  color: 'rgb(174, 124, 61)' }}>Permission:  </span> {currentCourse.permission}</h3>
+        <h3 style={{color: 'rgb(174, 124, 61)', fontWeight: 'bold'}}>Lessons:</h3>
       </div>
       <div >
         {lessons?.map((lesson) => (
@@ -184,116 +217,184 @@ const CourseManagerDashboard = () => {
         />
       )}
 
-
-
-
-
-
-      {invitations.map((user, index) => (
-        <Box
-          key={index}
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            marginBottom: '10px',
-          }}
-        >
-          <Avatar sx={{ marginRight: '10px' }}>{user[0]}</Avatar>
-          <Typography sx={{ color: 'rgb(109, 106, 106)' }}>
-            {user}
-          </Typography>
-          <IconButton
-            aria-label="remove"
-            size="small"
-            onClick={() => handleRemoveUser(index)}
-            // sx={{ marginLeft: 'auto', color: 'red' }}
-            sx={{
-              // marginBottom: '20px',
-              // width: '300px',
-              // borderColor: 'rgb(174, 124, 61)',
-              // border: '1px solid rgb(174, 124, 61)',
-              marginLeft: 'auto',
-              borderRadius: '4px',
-              '&:focus': {
+      {currentCourse.permission === 'private' && (
+        <>
+          <FormControl variant="outlined" sx={{
+            marginBottom: '20px', width: '300px',
+            borderRadius: '4px',
+            '&:focus': {
+              borderColor: 'rgb(174, 124, 61)',
+            },
+            '& label.Mui-focused': {
+              color: 'rgb(174, 124, 61)',
+            },
+            '& .MuiOutlinedInput-root': {
+              '& fieldset': {
                 borderColor: 'rgb(174, 124, 61)',
               },
-              '& label.Mui-focused': {
-                color: 'rgb(174, 124, 61)',
+              '&:hover fieldset': {
+                borderColor: 'rgb(174, 124, 61)',
               },
-              '& .MuiOutlinedInput-root': {
-                '& fieldset': {
-                  borderColor: 'rgb(174, 124, 61)',
-                },
-                '&:hover fieldset': {
-                  borderColor: 'rgb(174, 124, 61)',
-                },
-                '&.Mui-focused fieldset': {
-                  borderColor: 'rgb(174, 124, 61)',
-                },
+              '&.Mui-focused fieldset': {
+                borderColor: 'rgb(174, 124, 61)',
               },
-            }}
-          >
-            <CloseIcon />
-          </IconButton>
-        </Box>
-      ))}
-      <TextField
-        label="User email for ordering"
-        variant="outlined"
-        value={currentCourse.userToAdd}
-        onChange={(e) => handleChange('userToAdd', e.target.value)}
-        // sx={{ marginBottom: '20px', width: '300px' }}
-        sx={{
-          marginBottom: '20px',
-          width: '300px',
-          // borderColor: 'rgb(174, 124, 61)',
-          // border: '1px solid rgb(174, 124, 61)',
-          borderRadius: '4px',
-          '&:focus': {
-            borderColor: 'rgb(174, 124, 61)',
-          },
-          '& label.Mui-focused': {
-            color: 'rgb(174, 124, 61)',
-          },
-          '& .MuiOutlinedInput-root': {
-            '& fieldset': {
-              borderColor: 'rgb(174, 124, 61)',
             },
-            '&:hover fieldset': {
-              borderColor: 'rgb(174, 124, 61)',
-            },
-            '&.Mui-focused fieldset': {
-              borderColor: 'rgb(174, 124, 61)',
-            },
-          },
-        }}
-        InputProps={{
-          startAdornment: (
-            <MailOutlineIcon sx={{ color: 'rgb(109, 106, 106)' }} />
-          ),
-        }}
-      />
-      <Button
-        variant="contained"
-        onClick={handleAddUser}
-        // sx={{ backgroundColor: 'rgb(174, 124, 61)', color: 'white', marginBottom: '20px' }}
-        sx={{
-          backgroundColor: 'rgb(174, 124, 61)',
-          color: 'white',
-          marginBottom: '20px',
-          '&:hover': {
-            backgroundColor: 'rgba(255, 255, 255, 0.178)',
-            color: 'rgb(174, 124, 61)',
-            borderColor: 'rgb(174, 124, 61)',
-          },
-        }}
-        startIcon={<AccessibilityNewIcon />}
+          }}>
+            <InputLabel>Do you invite users?</InputLabel>
+            <Select
+              value={doYouWantInvite}
+              onChange={(e) => handleChange('inviteUsers', e.target.value)}
+              label="Do you invite users?"
+              sx={{ color: 'rgb(109, 106, 106)' }}
+              inputProps={{
+                startAdornment: (
+                  <AddIcon sx={{ color: 'rgb(109, 106, 106)' }} />
+                ),
+              }}
+            >
+              <MenuItem value={false}>
+                <CloseIcon sx={{ marginRight: '5px', color: 'rgb(109, 106, 106)' }} />
+                No
+              </MenuItem>
+              <MenuItem value={true}>
+                <AddIcon sx={{ marginRight: '5px', color: 'rgb(109, 106, 106)' }} />
+                Yes
+              </MenuItem>
+            </Select>
+          </FormControl>
 
-      >
-        Add user
-      </Button>
-    </div>
-  );
-};
+          {doYouWantInvite && (
+            <>
+              {addInviteUsers.map((user, index) => (
+                <Box
+                  key={index}
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    marginBottom: '10px',
+                  }}
+                >
+                  <Avatar sx={{ marginRight: '10px' }}>{user[0]}</Avatar>
+                  <Typography sx={{ color: 'rgb(109, 106, 106)' }}>
+                    {user}
+                  </Typography>
+                  <IconButton
+                    aria-label="remove"
+                    size="small"
+                    onClick={() => handleRemoveUser(index)}
+                    // sx={{ marginLeft: 'auto', color: 'red' }}
+                    sx={{
+                      // marginBottom: '20px',
+                      // width: '300px',
+                      // borderColor: 'rgb(174, 124, 61)',
+                      // border: '1px solid rgb(174, 124, 61)',
+                      marginLeft: 'auto',
+                      borderRadius: '4px',
+                      '&:focus': {
+                        borderColor: 'rgb(174, 124, 61)',
+                      },
+                      '& label.Mui-focused': {
+                        color: 'rgb(174, 124, 61)',
+                      },
+                      '& .MuiOutlinedInput-root': {
+                        '& fieldset': {
+                          borderColor: 'rgb(174, 124, 61)',
+                        },
+                        '&:hover fieldset': {
+                          borderColor: 'rgb(174, 124, 61)',
+                        },
+                        '&.Mui-focused fieldset': {
+                          borderColor: 'rgb(174, 124, 61)',
+                        },
+                      },
+                    }}
+                  >
+                    <CloseIcon />
+                  </IconButton>
+                </Box>
+              ))}
+              <TextField
+                label="User email for ordering"
+                variant="outlined"
+                value={userToAdd}
+                onChange={(e) => handleChange('userToAdd', e.target.value)}
+                // sx={{ marginBottom: '20px', width: '300px' }}
+                sx={{
+                  marginBottom: '20px',
+                  width: '300px',
+                  // borderColor: 'rgb(174, 124, 61)',
+                  // border: '1px solid rgb(174, 124, 61)',
+                  borderRadius: '4px',
+                  '&:focus': {
+                    borderColor: 'rgb(174, 124, 61)',
+                  },
+                  '& label.Mui-focused': {
+                    color: 'rgb(174, 124, 61)',
+                  },
+                  '& .MuiOutlinedInput-root': {
+                    '& fieldset': {
+                      borderColor: 'rgb(174, 124, 61)',
+                    },
+                    '&:hover fieldset': {
+                      borderColor: 'rgb(174, 124, 61)',
+                    },
+                    '&.Mui-focused fieldset': {
+                      borderColor: 'rgb(174, 124, 61)',
+                    },
+                  },
+                }}
+                InputProps={{
+                  startAdornment: (
+                    <MailOutlineIcon sx={{ color: 'rgb(109, 106, 106)' }} />
+                  ),
+                }}
+              />
+              <Button
+                variant="contained"
+                onClick={handleAddUser}
+                // sx={{ backgroundColor: 'rgb(174, 124, 61)', color: 'white', marginBottom: '20px' }}
+                sx={{
+                  backgroundColor: 'rgb(174, 124, 61)',
+                  color: 'white',
+                  marginBottom: '20px',
+                  '&:hover': {
+                    backgroundColor: 'rgba(255, 255, 255, 0.178)',
+                    color: 'rgb(174, 124, 61)',
+                    borderColor: 'rgb(174, 124, 61)',
+                  },
+                }}
+                startIcon={<AccessibilityNewIcon />}
+
+              >
+                Add user
+              </Button>
+              <Button
+                variant="contained"
+                onClick={handleSendInvites}
+                sx={{
+                  backgroundColor: 'rgb(174, 124, 61)',
+                  color: 'white',
+                  marginBottom: '20px',
+                  '&:hover': {
+                    backgroundColor: 'rgba(255, 255, 255, 0.178)',
+                    color: 'rgb(174, 124, 61)',
+                    borderColor: 'rgb(174, 124, 61)',
+                  },
+                }}
+                startIcon={<MailOutlineIcon />}
+
+              >
+                Send Invitations
+              </Button>
+            </>
+          )}
+        </>
+      )}
+
+
+
+    </div >
+  )
+}
 
 export default CourseManagerDashboard;

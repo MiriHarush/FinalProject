@@ -5,13 +5,14 @@ import { useState } from 'react';
 export const CourseContext = createContext();
 
 export const CourseProvider = ({ children }) => {
-    const [currentCourse, setCurrentCourse] = useState(null);
+    const [currentCourse, setCurrentCourse] = useState(JSON.parse(localStorage.getItem('course')) || null);
 
     const token = localStorage.getItem('userToken');
     const authorization = `Bearer ${token}`;  // הכנסת ה-Token ל-headers
 
     const updateCurrentCourse = (course) => {
         setCurrentCourse(course);
+        localStorage.setItem('course',JSON.stringify(course));     
     };
 
 
@@ -61,6 +62,7 @@ export const CourseProvider = ({ children }) => {
 
         const course = await axiosRequest(config);
         setCurrentCourse({ ...course.result.course });
+        localStorage.setItem('course',JSON.stringify(course.result.course));     
         return course;
     }
 
@@ -111,8 +113,25 @@ export const CourseProvider = ({ children }) => {
         return course;
     }
 
+const sentInvites = async (id, users) => {
+    console.log("users",users);
+    const config = {
+        headers: {
+            'Authorization': authorization,  
+            'Content-Type': 'application/json',  
+        },
+        method: 'post',
+        url: `http://localhost:3000/courses/sentInvites/${id}`,
+        data: users
+    };
+
+    const invites = await axiosRequest(config);
+    return invites;
+}
+
+
     return (
-        <CourseContext.Provider value={{ currentCourse, updateCurrentCourse, getAllCourses, userGuestCourses, getCourse, addCourse, updateCourse, deleteCourse }}>
+        <CourseContext.Provider value={{ currentCourse, updateCurrentCourse, getAllCourses, userGuestCourses, getCourse, addCourse, updateCourse, deleteCourse, sentInvites }}>
             {children}
         </CourseContext.Provider>
     );

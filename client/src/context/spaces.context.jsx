@@ -6,12 +6,13 @@ export const SpaceContext = createContext();
 
 export const SpaceProvider = ({ children }) => {
 
-    const [currentSpace, setCurrentSpace] = useState(null);
+    const [currentSpace, setCurrentSpace] = useState(JSON.parse(localStorage.getItem('space')) || null);
     const token = localStorage.getItem('userToken');
     const authorization = `Bearer ${token}`;  
 
     const updateCurrentSpace = (space) => {
         setCurrentSpace(space);
+        localStorage.setItem('space',JSON.stringify(space));     
     };
 
     const getAllSpaces = async () => {
@@ -41,7 +42,8 @@ export const SpaceProvider = ({ children }) => {
 
         const space = await axiosRequest(config);
         setCurrentSpace({ ...space.result.space });
-        return space;
+        localStorage.setItem('space',JSON.stringify(space.result.space));     
+           return space;
     }
 
 

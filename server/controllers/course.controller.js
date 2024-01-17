@@ -4,7 +4,7 @@ const { Space } = require("../model/space.model");
 const { User } = require("../model/user.model");
 const { sendInvitation } = require("./sendMessage");
 
-//לקחת ממיכל את הפונקציה הזאת אחרי שתעשי COMMIT
+
 exports.getAllCourses = async (req, res, next) => {
     try {
         const { id } = req.params;
@@ -165,3 +165,49 @@ exports.patchCourse = async (req, res, next) => {
 
 }
 
+
+
+exports.sendInvitationsToUsers = async (req, res, next) => {
+    try {
+        const users = req.body;
+        const { id } = req.params;
+
+        let course = await Course.findOne({ _id: id });
+
+        const user = await User.findOne({ _id: course.ownerUser });
+
+        const saveInvitationsPromises = users.map(async (invitation) => {
+            try {
+                await saveInvitations(id, user.email, invitation, course.courseName);
+            } catch (err) {
+                console.error(`Failed to save invitation for ${invitation}: ${err}`);
+            }
+        });
+
+        await Promise.all(saveInvitationsPromises);
+
+        const emailPromises = users.map(async (invitation) => {
+            try {
+                await sendInvitation(invitation, course.courseName, user.email);
+            } catch (err) {
+                console.error(`Failed to send invitation for ${invitation}: ${err}`);
+            }
+        });
+
+        // חכה להשלמת כל ה-promises שנוצרו על ידי ה-map
+        await Promise.all(emailPromises);
+
+
+        const updateCourse = await Course.findByIdAndUpdate(
+            { _id: id },
+            { $push: { invitations: users } },
+            { new: true }
+        );
+
+        console.log(updateCourse);
+
+        res.status(201).json(course);
+    } catch (error) {
+        next(error)
+    }
+}

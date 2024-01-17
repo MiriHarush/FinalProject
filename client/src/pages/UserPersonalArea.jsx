@@ -108,6 +108,7 @@ const UserPersonalArea = () => {
         <Container style={{ paddingTop: '50px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <p style={{ color: 'rgb(174, 124, 61)', marginRight: '10px' }}> {currentUser.userName}</p>
+            {console.log(currentUser.profileImage)}
             <Avatar alt="User Avatar" src={currentUser.profileImage} style={{ marginRight: '950px' }} />
           </div>
 

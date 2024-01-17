@@ -22,7 +22,7 @@ const Comment = ({ id, user, profileImage, text, like, disLike, replies, onUpdat
     const commentID = currentComment.id;
     const comment = replyText;
      await replyComment(commentID , comment);
-     setCurrentComment({ ...currentComment, replies: [...replies , { userName:currentUser.userName, comment:replyText }] });
+     setCurrentComment({ ...currentComment, replies: [...replies , { userName:currentUser.userName, comment:replyText, profileImage:currentUser.profileImage }] });
      onUpdate();
      setReplying(false);
      setReplyText('');

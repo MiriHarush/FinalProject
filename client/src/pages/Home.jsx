@@ -5,7 +5,6 @@ import MuiAlert from '@mui/material/Alert';
 import { Link } from 'react-router-dom';
 import ForumIcon from '@mui/icons-material/Forum';
 import SignUp from './SignUp';
-import LogIn from './LogIn';
 import { CommentContext } from '../context/comments.context';
 import { UserContext } from '../context/users.context';
 import '../css/Home.css'
@@ -44,7 +43,6 @@ const Home = () => {
       {currentUser == null && (
         <div className='img' >
           <div style={{ flexDirection: 'row', gap: '20px', paddingTop: '10px' }}>
-            <LogIn />
             <SignUp />
           </div>
         </div>
