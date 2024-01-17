@@ -114,7 +114,7 @@ const UserPersonalArea = () => {
           <Typography variant="h2" gutterBottom style={{ color: 'rgb(174, 124, 61)' }}>
             Hi  {currentUser.userName} , Welcome to the personal area
           </Typography>
-          <div style={{ width: '100%' }}>
+          <div style={{ width: '100%', minHeight: '500px' }}>
             {currentUser ? (
               <>
                 <UserAsideTabs />
