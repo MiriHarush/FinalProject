@@ -46,7 +46,7 @@ exports.uploadFile = async (req, res, next) => {
       console.log(result);
       url[i] = result.url;
     }
-
+console.log(result);
     //  upload = await Lesson.findByIdAndUpdate(lesId, body, { new: true });
     upload = await Lesson.findByIdAndUpdate(
       { _id: lesId },

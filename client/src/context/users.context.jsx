@@ -4,7 +4,7 @@ import { axiosRequest } from '../utils/serverConnection';
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState(JSON.parse(localStorage.getItem('user'))|| null);
   const [loginError, setLoginError] = useState('');
 
   const signup = async (userData) => {
@@ -31,7 +31,9 @@ export const UserProvider = ({ children }) => {
       const loggedUser = await axiosRequest(config);
       setCurrentUser({ ...loggedUser.result.user });
       localStorage.setItem('userToken', loggedUser.result.token);
+      localStorage.setItem('user',JSON.stringify(loggedUser.result.user));
       setLoginError('');
+      return loggedUser;
     } catch (error) {
       if (error.response && error.response.data && error.response.data.message) {
         setLoginError(error.response.data.message);

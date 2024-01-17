@@ -5,12 +5,13 @@ export const LessonContext = createContext();
 
 export const LessonProvider = ({ children }) => {
   
-  const [currentLesson, setCurrentLesson] = useState(null);
+  const [currentLesson, setCurrentLesson] = useState(JSON.parse(localStorage.getItem('lesson')) ||null);
   const token = localStorage.getItem('userToken');
   const authorization = `Bearer ${token}`;  
 
   const updateCurrentLesson = (lesson) => {
     setCurrentLesson(lesson);
+    localStorage.setItem('lesson',JSON.stringify(lesson));     
   };
 
   const getAllLessons = async (idLesson) => {

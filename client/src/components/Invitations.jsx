@@ -3,6 +3,7 @@ import { InvitationContext } from '../context/invitations.context';
 import InvitationModal from './InvitationModal';
 import { UserContext } from '../context/users.context';
 import { Grid } from '@mui/material';
+import Typography from '@mui/material/Typography';
 
 
 const Invitations = () => {
@@ -23,9 +24,13 @@ const Invitations = () => {
 
     return (
         <Grid className='courseContainer'>
-            {invitations.map((invite) => {
-                return <InvitationModal invite={invite} onConfirmOrder={() => setConfirmOrder(true)} />
-            })}
+            {invitations.length === 0 ? (
+                <Typography style={{color: 'rgb(174, 124, 61)'}} variant="h5">You have no invitations</Typography>
+            ) : (
+                invitations.map((invite) => (
+                    <InvitationModal invite={invite} onConfirmOrder={() => setConfirmOrder(true)} />
+                ))
+            )}
         </Grid>
     )
 }

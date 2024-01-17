@@ -239,7 +239,7 @@ const LessonModal = () => {
   // Allowed content types for each option
   const allowedContentTypes = {
     image: ['image/jpeg', 'image/png', 'image/gif'],
-    video: ['video/mp4', 'video/mpeg', 'video/ogg'],
+    video: ['video/mp3', 'video/mp4', 'video/mpeg', 'video/ogg'],
     pdf: ['application/pdf'],
     zip: ['application/zip'],
     link: [], // No file for link
@@ -268,6 +268,7 @@ const LessonModal = () => {
     setFiles(currentLesson.content)
 
   }, [newContent]);
+
   // useEffect(() => {
   //   // console.log(newContent);
   //   // setFiles(currentLesson.content)

@@ -242,7 +242,7 @@ const LogIn = () => {
   });
 
   const [emailError, setEmailError] = useState('');
-  const [loginError, setLoginError] = useState('');
+  const [labelError, setLabelError] = useState(false); // <-- תיקון של שם המשתנה
 
   const { login } = useContext(UserContext);
   const navigate = useNavigate();
@@ -251,7 +251,7 @@ const LogIn = () => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
     setEmailError('');
-    setLoginError(''); // Reset login error when user changes input
+    setLabelError(false); // <-- תיקון של שם המשתנה
   };
 
   const validateEmail = () => {
@@ -271,22 +271,23 @@ const LogIn = () => {
     if (!validateEmail()) {
       return;
     }
-  
-    try {
-      await login(formData);
+
+    const loggedUser = await login(formData);
+    if (loggedUser.success === 'false') {
+      setFormData({
+        email: '',
+        password: '',
+      });
+      setLabelError(true);
+    } else {
       navigate('/userPersonalArea');
-    } catch (error) {
-      console.error('Login failed:', error);
-      setLoginError('Email or password not correct');
     }
   };
-  
-  
 
   return (
-    <Paper elevation={3} className="img" >
+    <Paper elevation={3} className="img">
       <ThemeProvider theme={theme}>
-        <Container component="main" maxWidth="xs" className='container-login' >
+        <Container component="main" maxWidth="xs" className="container-login">
           <Grid container spacing={2} justifyContent="center" alignItems="center">
             <Grid item xs={12}>
               <Typography variant="h4" align="center" gutterBottom style={{ color: 'rgb(174, 124, 61)' }}>
@@ -319,7 +320,12 @@ const LogIn = () => {
                     />
                   </Grid>
                 </Grid>
-                <Button type="submit" variant="contained" color="primary" fullWidth style={{ marginTop: '20px' ,color: 'white' }}>
+                {labelError && (
+                  <Typography variant="h4" style={{ marginTop: 10 }}>
+                    The email or password is incorrect
+                  </Typography>
+                )}
+                <Button type="submit" variant="contained" color="primary" fullWidth style={{ marginTop: '20px', color: 'white' }}>
                   Log In
                 </Button>
                 {loginError && <Typography variant="body2" style={{ marginTop: 10, color: 'red' }}>{loginError}</Typography>}
