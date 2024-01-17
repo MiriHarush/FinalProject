@@ -30,6 +30,8 @@ const Contact = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     addContact(formData);
+    setFormData({ email: '',
+    contentMessage: '',})
   };
 
   return (
@@ -150,6 +152,7 @@ const Contact = () => {
                 variant="contained"
                 color="primary"
                 style={{ background: 'rgb(174, 124, 61)' }}
+                onClick={handleSubmit}
               >
                 send
               </Button>

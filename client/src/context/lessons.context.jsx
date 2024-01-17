@@ -99,7 +99,6 @@ export const LessonProvider = ({ children }) => {
     const config = {
       headers: {
         'Authorization': authorization,  
-        'Content-Type': 'application/json',  
       },
       method: 'post',
       url: `http://localhost:3000/lesson/uploadFile/${lesId}`,

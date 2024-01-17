@@ -227,7 +227,7 @@ import { useLocation } from 'react-router-dom';
 const LessonModal = () => {
   const [contentType, setContentType] = useState('');
   const [uploadedFile, setUploadedFile] = useState(null);
-  const { currentLesson, uploadFile } = useContext(LessonContext);
+  const { currentLesson, uploadFile, getLesson } = useContext(LessonContext);
   const { currentCourse } = useContext(CourseContext);
   const [files, setFiles] = useState([]);
   const [filesChanges, setFilesChanges] = useState(0);
@@ -251,11 +251,15 @@ const LessonModal = () => {
 
 
   useEffect(() => {
-    console.log(newContent);
-    // setFiles(newContent);
-    setFiles(currentLesson.content)
+    // console.log(newContent);
+    // setFiles(currentLesson.content)
+    const fetchData = async () => {
+      const filesData = await getLesson(currentCourse._id);
+      setFiles(filesData.result.files);
+    };
+    fetchData();
+  }, [filesChanges]);
 
-  }, [newContent]);
 
 
   useEffect(() => {

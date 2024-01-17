@@ -2,6 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 
 const FooterContainer = styled.footer`
+position: sticky;
+bottom: 0;
   background-color: rgb(174, 124, 61);
   color: white;
   padding: 20px;

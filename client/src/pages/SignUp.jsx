@@ -104,8 +104,6 @@ const SignUp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { confirmPassword, ...formDataWithoutConfirmPassword } = formData;
-
-  
   
 
     const formDataWithImage = new FormData();

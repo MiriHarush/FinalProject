@@ -10,6 +10,13 @@ import { LessonContext } from '../context/lessons.context';
 import { InvitationContext } from '../context/invitations.context';
 import { useNavigate } from 'react-router-dom';
 import '../css/lesson.css';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import MailOutlineIcon from '@mui/icons-material/MailOutline';
+import AccessibilityNewIcon from '@mui/icons-material/AccessibilityNew';
+import Avatar from '@mui/material/Avatar';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 
 
 const CourseManagerDashboard = () => {
@@ -75,6 +82,37 @@ const CourseManagerDashboard = () => {
     setSelectedLesson(null);
     setLessonModalOpen(false);
   };
+
+  const handleChange = (field, value) => {
+    console.log("change");
+    // setCourse((prevCourse) => ({ ...prevCourse, [field]: value }));
+  };
+
+
+  const handleAddUser = async () => {
+    console.log("im shani");
+    // console.log(course.userToAdd);
+    if (currentCourse.userToAdd && currentCourse.permission === 'private') {
+      const existingUser = await checkUserExistence(currentCourse.userToAdd);
+
+      if (existingUser) {
+        setInvitations((prevCourse) => ([...prevCourse.invitations, existingUser]));
+        console.log(invitations);
+
+      } else {
+        console.log('User does not exist');
+      }
+    }
+    console.log(invitations);
+
+  };
+
+  const handleRemoveUser = (index) => {
+    const newUsers = [...currentCourse.invitations];
+    newUsers.splice(index, 1);
+    setInvitations(newUsers);
+  };
+
 
   return (
     <div className='centerContainer'>
@@ -145,6 +183,115 @@ const CourseManagerDashboard = () => {
           lesson={selectedLesson}
         />
       )}
+
+
+
+
+
+
+      {invitations.map((user, index) => (
+        <Box
+          key={index}
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            marginBottom: '10px',
+          }}
+        >
+          <Avatar sx={{ marginRight: '10px' }}>{user[0]}</Avatar>
+          <Typography sx={{ color: 'rgb(109, 106, 106)' }}>
+            {user}
+          </Typography>
+          <IconButton
+            aria-label="remove"
+            size="small"
+            onClick={() => handleRemoveUser(index)}
+            // sx={{ marginLeft: 'auto', color: 'red' }}
+            sx={{
+              // marginBottom: '20px',
+              // width: '300px',
+              // borderColor: 'rgb(174, 124, 61)',
+              // border: '1px solid rgb(174, 124, 61)',
+              marginLeft: 'auto',
+              borderRadius: '4px',
+              '&:focus': {
+                borderColor: 'rgb(174, 124, 61)',
+              },
+              '& label.Mui-focused': {
+                color: 'rgb(174, 124, 61)',
+              },
+              '& .MuiOutlinedInput-root': {
+                '& fieldset': {
+                  borderColor: 'rgb(174, 124, 61)',
+                },
+                '&:hover fieldset': {
+                  borderColor: 'rgb(174, 124, 61)',
+                },
+                '&.Mui-focused fieldset': {
+                  borderColor: 'rgb(174, 124, 61)',
+                },
+              },
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
+        </Box>
+      ))}
+      <TextField
+        label="User email for ordering"
+        variant="outlined"
+        value={currentCourse.userToAdd}
+        onChange={(e) => handleChange('userToAdd', e.target.value)}
+        // sx={{ marginBottom: '20px', width: '300px' }}
+        sx={{
+          marginBottom: '20px',
+          width: '300px',
+          // borderColor: 'rgb(174, 124, 61)',
+          // border: '1px solid rgb(174, 124, 61)',
+          borderRadius: '4px',
+          '&:focus': {
+            borderColor: 'rgb(174, 124, 61)',
+          },
+          '& label.Mui-focused': {
+            color: 'rgb(174, 124, 61)',
+          },
+          '& .MuiOutlinedInput-root': {
+            '& fieldset': {
+              borderColor: 'rgb(174, 124, 61)',
+            },
+            '&:hover fieldset': {
+              borderColor: 'rgb(174, 124, 61)',
+            },
+            '&.Mui-focused fieldset': {
+              borderColor: 'rgb(174, 124, 61)',
+            },
+          },
+        }}
+        InputProps={{
+          startAdornment: (
+            <MailOutlineIcon sx={{ color: 'rgb(109, 106, 106)' }} />
+          ),
+        }}
+      />
+      <Button
+        variant="contained"
+        onClick={handleAddUser}
+        // sx={{ backgroundColor: 'rgb(174, 124, 61)', color: 'white', marginBottom: '20px' }}
+        sx={{
+          backgroundColor: 'rgb(174, 124, 61)',
+          color: 'white',
+          marginBottom: '20px',
+          '&:hover': {
+            backgroundColor: 'rgba(255, 255, 255, 0.178)',
+            color: 'rgb(174, 124, 61)',
+            borderColor: 'rgb(174, 124, 61)',
+          },
+        }}
+        startIcon={<AccessibilityNewIcon />}
+
+      >
+        Add user
+      </Button>
     </div>
   );
 };
