@@ -10,6 +10,8 @@ import UserCourses from './UserCourses';
 import '../css/UserPersonalArea.css';
 
 
+
+
 const UserAsideTabs = () => {
 
   const [value, setValue] = useState('0');
@@ -30,6 +32,7 @@ const UserAsideTabs = () => {
           centered
           indicatorColor='rgb(174, 124, 61)'
           sx={{
+            color:'rgb(174, 124, 61)',
             width: '100%',
             backgroundColor: '#fff',
             borderRadius: '15px',

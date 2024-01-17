@@ -225,10 +225,12 @@ const FileModal = ({ fileUrl }) => {
       return (
         <FileCard key={fileName}>
           <FileIcon> 📄 </FileIcon>
+          <div style={{display: 'flex', alignItems: 'center'}}>
+
           <CardContent>
             <Typography variant="body1">{fileName}</Typography>
           </CardContent>
-          <ButtonsContainer>
+          <ButtonsContainer style={{ marginLeft: 'auto' }}>
             <IconButton color="primary" onClick={openFullView} className='colorIcon'>
               <OpenInNew />
             </IconButton>
@@ -236,6 +238,7 @@ const FileModal = ({ fileUrl }) => {
               <CloudDownload />
             </IconButton>
           </ButtonsContainer>
+          </div>
         </FileCard>
       );
     } else if (fileType === 'zip') {

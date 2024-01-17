@@ -260,6 +260,17 @@ const LessonModal = () => {
     fetchData();
   }, [filesChanges]);
 
+  }, [newContent]);
+  // useEffect(() => {
+  //   // console.log(newContent);
+  //   // setFiles(currentLesson.content)
+  //   const fetchData = async () => {
+  //     const filesData = await getLesson(currentCourse._id);
+  //     setFiles(filesData.result.files);
+  //   };
+  //   fetchData();
+  // }, [filesChanges]);
+
 
 
   useEffect(() => {

@@ -104,8 +104,8 @@ const SignUp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { confirmPassword, ...formDataWithoutConfirmPassword } = formData;
-  
 
+  
     const formDataWithImage = new FormData();
     formDataWithImage.append('file', formData.profileImage);
     delete formDataWithoutConfirmPassword.profileImage;

@@ -12,6 +12,9 @@ import {
 } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { UserContext } from '../context/users.context';
+// import Button from '@mui/material-next/Button';
+
+import  "../css/LogIn.css"
 
 const theme = createTheme({
   palette: {
@@ -64,11 +67,41 @@ const LogIn = () => {
 
   return (
     <Paper elevation={3} className="img" >
-      <ThemeProvider theme={theme}>
-        <Container component="main" maxWidth="xs" className='container-login' >
-          <Grid container spacing={2} justifyContent="center" alignItems="center">
-            <Grid item xs={12}>
-              <Typography variant="h4" align="center" gutterBottom style={{ color: 'rgb(174, 124, 61)' }}>
+     <ThemeProvider theme={theme}>
+       <Container component="main" maxWidth="xs" className='container-login' >
+         <Grid container spacing={2} justifyContent="center" alignItems="center">
+           <Grid item xs={12}>
+             <Typography variant="h4" align="center" gutterBottom  style={{ color: 'rgb(174, 124, 61)' }}>
+               Log In
+             </Typography>
+             <form onSubmit={handleSubmit} style={{ width: '100%' }}>
+               <Grid container spacing={2}>
+                 <Grid item xs={12}>
+                   <TextField
+                     label="Email"
+                     type="email"
+                     fullWidth
+                     required
+                     name="email"
+                     value={formData.email}
+                     onChange={handleChange}
+                     error={Boolean(emailError)}
+                   />
+                   {emailError && <FormHelperText style={{ color: 'red' }}>{emailError}</FormHelperText>}
+                 </Grid>
+                 <Grid item xs={12}>
+                   <TextField
+                     label="Password"
+                     type="password"
+                     fullWidth
+                     required
+                     name="password"
+                     value={formData.password}
+                     onChange={handleChange}
+                   />
+                 </Grid>
+               </Grid>
+               <Button type="submit" variant="contained" color="primary" fullWidth style={{ marginTop: '20px' ,color: 'white' }}>
                 Log In
               </Typography>
               <form onSubmit={handleSubmit} style={{ width: '100%' }}>

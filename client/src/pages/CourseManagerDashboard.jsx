@@ -117,7 +117,7 @@ const CourseManagerDashboard = () => {
   return (
     <div className='centerContainer'>
 
-      <h2 style={{ color: 'rgb(62, 63, 63)' }}>Course Manager Dashboard - Course ID:</h2>
+      <h2 style={{ color: 'rgba(255, 255, 255, 0.908)',fontWeight:'bold' }}>Course Manager Dashboard - Course ID:</h2>
       <div className='words'>
 
         <h3><span style={{ fontWeight: 'bold' }}>Course name: </span> {currentCourse.courseName}</h3>

@@ -8,13 +8,17 @@ import {
   Grid,
   TextField,
   InputAdornment,
-  Button,
   Link as MuiLink,
   FormHelperText,
 } from '@mui/material';
+import Button from '@mui/material-next/Button';
+
 import { ArrowBack as ArrowBackIcon, Email as EmailIcon } from '@mui/icons-material';
 import ResetPassword from './ResetPassword';
 import { UserContext } from '../context/users.context';
+import '../css/lesson.css';
+import { fontSize } from '@mui/system';
+
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
@@ -76,6 +80,8 @@ const ForgotPassword = () => {
     setEmail('');
     setConfirmationSent(false);
     setLoading(false);
+    // navigate('/login');
+
 
     if (successMessage) {
       setSuccessMessage('');
@@ -84,12 +90,13 @@ const ForgotPassword = () => {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
-      <Paper elevation={3} style={{ padding: 20, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <IconButton component={Link} to="/login" style={{ alignSelf: 'flex-start', marginBottom: 10 }}>
+    <div component="main" maxWidth="m" className='centerContainer' style={{ padding: '10%'}}>
+      <Paper elevation={3} style={{ padding: 50, display: 'flex', flexDirection: 'column', alignItems: 'center' ,background:'rgba(255, 255, 255, 0.56)'}}>
+      {/* <Paper elevation={3} > */}
+        <IconButton component={Link} to="/login" style={{ alignSelf: 'flex-start', marginBottom: 10, color:'rgb(174, 124, 61)' }}>
           <ArrowBackIcon />
         </IconButton>
-        <Typography variant="h5" align="center" gutterBottom style={{ color: 'rgb(174, 124, 61)' }}>
+        <Typography variant="h4" align="center" gutterBottom style={{ color: 'rgb(174, 124, 61)' }}>
           {resetPassword ? 'Password Reset Instructions' : 'Forgot Password'}
         </Typography>
         {resetPassword ? (
@@ -145,21 +152,21 @@ const ForgotPassword = () => {
               variant="contained"
               // color='rgb(174, 124, 61)'
               fullWidth
-              style={{ marginTop: 20,  backgroundColor:'rgb(174, 124, 61)' }}
+              style={{ display:'flex', justifyContent:'center'}}
               disabled={loading}
+              className='courseButton'
             >
               {loading ? 'Sending...' : 'Reset Password'}
             </Button>
-            <FormHelperText style={{ marginTop: 10 }}>
+            <FormHelperText style={{ marginTop: 10 , fontSize:20}}>
               Remember your password?{' '}
-              <MuiLink onClick={handleBackToLogin} style={{ color: 'rgb(174, 124, 61)', cursor: 'pointer' }}>
-                Log In
-              </MuiLink>
+            <a style={{ color: 'rgb(174, 124, 61)', cursor: 'pointer' }} href="/login">Log In</a>
+
             </FormHelperText>
           </form>
         )}
       </Paper>
-    </Container>
+    </div>
   );
 };
 
