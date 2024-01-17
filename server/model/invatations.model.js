@@ -15,6 +15,9 @@ const inviteSchema = new mongoose.Schema({
     courseId: {
         type: mongoose.Types.ObjectId,
         ref: 'Course'
+    },
+    courseName: {
+        type: String
     }
 })
 

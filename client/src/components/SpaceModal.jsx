@@ -1,15 +1,17 @@
 import React from 'react';
 import { Paper, Typography } from '@mui/material';
+import '../css/Space.css';
+
 
 const SpaceModel = ({ nameSpace, ownerSpace, onClick }) => {
   return (
     <Paper
+      className='space'
       onClick={onClick}
       elevation={3}
-      style={{ cursor: 'pointer', padding: '20px', margin: '20px', backgroundColor: '#f0f0f0' }}
+      style={{ cursor: 'pointer', padding: '10px', margin: '10px' }}
     >
-      <Typography variant="h5">Name Space: {nameSpace}</Typography>
-      <Typography variant="body1">Manager: {ownerSpace}</Typography>
+      <Typography variant="h5" className='textCenter'>{nameSpace}</Typography>
     </Paper>
   );
 };

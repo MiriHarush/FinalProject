@@ -7,7 +7,7 @@ exports.getAllLesson = async (req, res, next) => {
   try {
     const { idLesson } = req.params;
     const lesones = await Lesson.find({ ownerLesson: idLesson });
-    
+
     res.send(lesones);
   } catch (error) {
     next(error)
@@ -27,8 +27,8 @@ exports.getLesson = async (req, res, next) => {
 exports.uploadFile = async (req, res, next) => {
   const { lesId } = req.params;
   const userId = res.locals.user_id;
+  console.log(req.files);
   try {
-    console.log("mirii")
     let upload = await Lesson.findOne({ _id: lesId });
     if (!upload) {
       throw new Error("the lesson is not exist")
@@ -38,21 +38,21 @@ exports.uploadFile = async (req, res, next) => {
       throw new Error("you are not the auther")
     }
 
-    console.log("mirii2222222")
     const url = []
     for (let i = 0; i < req.files?.length; i++) {
+      console.log("fff", req.files[i].path);
       const file = req.files[i].path
-      const result = await cloudinary.uploader.upload(file, { resource_type: "auto" })
+      const result = await cloudinary.uploader.upload(file, { resource_type: "auto" });
+      console.log(result);
       url[i] = result.url;
     }
 
-    console.log("mirii333333")
     //  upload = await Lesson.findByIdAndUpdate(lesId, body, { new: true });
     upload = await Lesson.findByIdAndUpdate(
       { _id: lesId },
-      { $push: { content: url } }
+      { $push: { content: url } },
+      { new: true }
     )
-    console.log("mirii")
     res.send(upload)
   } catch (error) {
     next(error)
@@ -101,11 +101,12 @@ exports.deleteFile = async (req, res, next) => {
   console.log(fileName)
 
   const { delId } = req.query;
-  let files = await Lesson.findOneAndUpdate({ _id: delId }, { $pull: { content: { $in: [url] } } })
+
+      let files = await Lesson.findOneAndUpdate({ _id: delId }, { $pull: { content: { $in: [url] } } } )
 
   await cloudinary.uploader.destroy(fileName)
 
-
+ 
   res.status(200).json({ message: 'sucsses' })
 
 
@@ -113,20 +114,11 @@ exports.deleteFile = async (req, res, next) => {
 
 
 exports.deleteLesson = async (req, res, next) => {
-
-  // const url = req.query.url;
-  // console.log(url)
-
-
-  // const { delId } = req.query;
   const { delId } = req.params;
   const userId = res.locals.user_id;
   try {
-    console.log("miri")
     let lesson = await Lesson.findOne({ _id: delId })
     console.log(lesson)
-    
-        console.log("miri11111")
         if (String(lesson.ownerUser) !== String(userId)) {
           throw new Error("you are not auther")
         }
@@ -141,18 +133,8 @@ exports.deleteLesson = async (req, res, next) => {
       await cloudinary.uploader.destroy(fileName)
 
     })
-    // console.log(lesson)
     lesson = await Lesson.findByIdAndDelete(delId)
-    // .then(result => {
-    //   cloudinary.uploader.destroy(fileName, (err, result) => {
-    //     console.log(err, result)
-    //   })
-    //   res.status(200).json({ message: result })
-    // });
-
-
-    // res.send(course);
-    res.send({ message: 'The lesson deleted successfully' });
+     res.send({ message: 'The lesson deleted successfully' });
   }
   catch (error) {
     next(error)

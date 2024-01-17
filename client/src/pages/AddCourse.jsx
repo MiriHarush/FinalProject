@@ -1,7 +1,9 @@
 import React, { useContext, useState } from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
+// import Button from '@mui/material/Button';
+import Button from '@mui/material-next/Button';
+
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -19,28 +21,29 @@ import PublicIcon from '@mui/icons-material/Public';
 import LockIcon from '@mui/icons-material/Lock';
 import { CourseContext } from '../context/courses.context';
 import { UserContext } from '../context/users.context';
+import { SpaceContext } from '../context/spaces.context';
+import { color } from '@mui/system';
+
+import LaptopChromebookIcon from '@mui/icons-material/LaptopChromebook';
+// import AccessibilityNewIcon from '@mui/icons-material/AccessibilityNew';
+
+
+
+
+
 
 const checkUserExistence = async (userEmail) => {
   return new Promise((resolve) => {
     setTimeout(() => {
-      const fakeUser = {
-        email: userEmail,
-        name: 'John Doe',
-      };
+      const fakeUser =
+        userEmail
       resolve(fakeUser);
     }, 1000);
   });
 };
 
-const AddCourse = ({ spaceId }) => {
-  // const [course, setCourse] = useState({
-  //   courseName: '',
-  //   typeCourse: '',
-  //   permission: '',
-  //   inviteUsers: false,
-  //   usersToAdd: [],
-  //   userToAdd: '',
-  // });
+const AddCourse = ({ onClose }) => {
+  const { currentSpace } = useContext(SpaceContext);
   const { addCourse } = useContext(CourseContext);
   const { currentUser } = useContext(UserContext);
 
@@ -51,49 +54,46 @@ const AddCourse = ({ spaceId }) => {
     permission: '',
     lessons: [],
     description: '',
-    ownerCourse: spaceId,
-    ownerUser: currentUser.email
+    ownerCourse: currentSpace._id,
+    invitations: []
   });
 
-  // inviteUsers: false,
-  // usersToAdd: [],
-  // userToAdd: '',
-
-  //lessons description ownerCourse-(space) ownerUser
 
 
   const handleAddCourse = async () => {
-    console.log('Adding course to space:', spaceId, course);
-    // Additional logic for saving to the database can be added here
-    addCourse(course);
+    await addCourse(course);
+    onClose()
   };
 
   const handleChange = (field, value) => {
+    console.log("change");
     setCourse((prevCourse) => ({ ...prevCourse, [field]: value }));
   };
 
   const handleAddUser = async () => {
-    if (course.userToAdd && course.permission === 'פרטי') {
+    console.log(course.userToAdd);
+    if ( course.userToAdd&& course.permission === 'private') {
       const existingUser = await checkUserExistence(course.userToAdd);
 
       if (existingUser) {
         setCourse((prevCourse) => ({
           ...prevCourse,
-          usersToAdd: [...prevCourse.usersToAdd, existingUser],
+          invitations: [...prevCourse.invitations, existingUser],
           userToAdd: '',
         }));
       } else {
         console.log('User does not exist');
       }
     }
+
   };
 
   const handleRemoveUser = (index) => {
-    const newUsers = [...course.usersToAdd];
+    const newUsers = [...course.invitations];
     newUsers.splice(index, 1);
     setCourse((prevCourse) => ({
       ...prevCourse,
-      usersToAdd: newUsers,
+      invitations: newUsers,
     }));
   };
 
@@ -101,13 +101,12 @@ const AddCourse = ({ spaceId }) => {
     setCourse((prevCourse) => ({
       ...prevCourse,
       permission: value,
-      inviteUsers: false,
-      usersToAdd: [],
-      userToAdd: '',
+      invitations: []
     }));
   };
 
   return (
+
     <Box
       sx={{
         display: 'flex',
@@ -117,115 +116,219 @@ const AddCourse = ({ spaceId }) => {
         fontFamily: 'Arial, sans-serif',
         padding: '20px',
         borderRadius: '10px',
-        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-        backgroundColor: '#FFF',
+        boxShadow: '0px 4px 5px rgba(0, 0, 0, 0.5)',
+        backgroundColor: 'rgba(255, 255, 255, 0.578)',
       }}
     >
-      <Typography variant="h4" sx={{ marginBottom: '20px', color: '#333', display: 'flex', alignItems: 'center' }}>
-        <AddIcon fontSize="large" sx={{ marginRight: '10px', color: '#FF4081' }} />
-        הוספת קורס
+      <Typography variant="h4" sx={{ marginBottom: '2%', color: 'rgb(174, 124, 61)', display: 'flex', alignItems: 'center', fontWeight: 'bold' }}>
+        <AddIcon fontSize="large" sx={{ marginRight: '10px', color: 'rgb(174, 124, 61)' }} />
+        Add Course
       </Typography>
       <TextField
-        label="שם קורס"
+        label="Course Name"
         variant="outlined"
-        // value={course.courseName}
-        onChange={(e) => handleChange('name', e.target.value)}
-        sx={{ marginBottom: '20px', width: '300px' }}
-        InputProps={{
-          startAdornment: (
-            <AccessibilityNewIcon sx={{ color: '#FF4081' }} />
-          ),
+        onChange={(e) => handleChange('courseName', e.target.value)}
+        // sx={{ marginBottom: '20px', width: '300px'  }}
+        sx={{
+          marginBottom: '20px',
+          width: '300px',
+          // borderColor: 'rgb(174, 124, 61)',
+          // border: '1px solid rgb(174, 124, 61)',
+          borderRadius: '4px',
+          '&:focus': {
+            borderColor: 'rgb(174, 124, 61)',
+          },
+          '& label.Mui-focused': {
+            color: 'rgb(174, 124, 61)',
+          },
+          '& .MuiOutlinedInput-root': {
+            '& fieldset': {
+              borderColor: 'rgb(174, 124, 61)',
+            },
+            '&:hover fieldset': {
+              borderColor: 'rgb(174, 124, 61)',
+            },
+            '&.Mui-focused fieldset': {
+              borderColor: 'rgb(174, 124, 61)',
+            },
+          },
         }}
       />
-      <FormControl variant="outlined" sx={{ marginBottom: '20px', width: '300px' }}>
-        <InputLabel>אופי הקורס</InputLabel>
+      <TextField
+        label="Description"
+        variant="outlined"
+        onChange={(e) => handleChange('description', e.target.value)}
+        sx={{
+          marginBottom: '20px',
+          width: '300px',
+          borderRadius: '4px',
+          '&:focus': {
+            borderColor: 'rgb(174, 124, 61)',
+          },
+          '& label.Mui-focused': {
+            color: 'rgb(174, 124, 61)',
+          },
+          '& .MuiOutlinedInput-root': {
+            '& fieldset': {
+              borderColor: 'rgb(174, 124, 61)',
+            },
+            '&:hover fieldset': {
+              borderColor: 'rgb(174, 124, 61)',
+            },
+            '&.Mui-focused fieldset': {
+              borderColor: 'rgb(174, 124, 61)',
+            },
+          },
+        }}
+      />
+
+
+      <FormControl variant="outlined" sx={{
+        marginBottom: '20px', width: '300px', borderRadius: '4px',
+        '&:focus': {
+          borderColor: 'rgb(174, 124, 61)',
+        },
+        '& label.Mui-focused': {
+          color: 'rgb(174, 124, 61)',
+        },
+        '& .MuiOutlinedInput-root': {
+          '& fieldset': {
+            borderColor: 'rgb(174, 124, 61)',
+          },
+          '&:hover fieldset': {
+            borderColor: 'rgb(174, 124, 61)',
+          },
+          '&.Mui-focused fieldset': {
+            borderColor: 'rgb(174, 124, 61)',
+          },
+        },
+      }}>
+        <InputLabel>The type of the course</InputLabel>
         <Select
           value={course.typeCourse}
-          onChange={(e) => handleChange('type', e.target.value)}
-          label="אופי הקורס"
-          sx={{ color: '#2196F3' }}
+          onChange={(e) => handleChange('typeCourse', e.target.value)}
+          label="The type of the course"
+          sx={{ color: 'rgb(109, 106, 106)' }}
           inputProps={{
             startAdornment: (
               <>
-                <PeopleIcon sx={{ color: '#2196F3' }} />
-                {course.typeCourse === 'חוויתי' && <BusinessIcon sx={{ marginLeft: '5px' }} />}
-                {course.typeCourse === 'לימודי' && <PublicIcon sx={{ marginLeft: '5px' }} />}
-                {course.typeCourse === 'העשרה' && <LockIcon sx={{ marginLeft: '5px' }} />}
+                {course.typeCourse === 'experiential' && <BusinessIcon sx={{ marginLeft: '5px' }} />}
+                {course.typeCourse === 'studies' && <PublicIcon sx={{ marginLeft: '5px' }} />}
+                {course.typeCourse === 'enrichment' && <LockIcon sx={{ marginLeft: '5px' }} />}
               </>
             ),
           }}
         >
-          <MenuItem value="חוויתי">
+          <MenuItem value="experiential">
             <BusinessIcon sx={{ marginRight: '5px' }} />
-            חוויתי
+            experiential
           </MenuItem>
-          <MenuItem value="לימודי">
+          <MenuItem value="studies">
             <PublicIcon sx={{ marginRight: '5px' }} />
-            לימודי
+            studies
           </MenuItem>
-          <MenuItem value="העשרה">
+          <MenuItem value="enrichment">
             <LockIcon sx={{ marginRight: '5px' }} />
-            העשרה
+            enrichment
           </MenuItem>
         </Select>
       </FormControl>
-      <FormControl variant="outlined" sx={{ marginBottom: '20px', width: '300px' }}>
-        <InputLabel>הרשאת גישה לקורס</InputLabel>
+      <FormControl variant="outlined" sx={{
+        marginBottom: '20px', width: '300px', borderRadius: '4px',
+        '&:focus': {
+          borderColor: 'rgb(174, 124, 61)',
+        },
+        '& label.Mui-focused': {
+          color: 'rgb(174, 124, 61)',
+        },
+        '& .MuiOutlinedInput-root': {
+          '& fieldset': {
+            borderColor: 'rgb(174, 124, 61)',
+          },
+          '&:hover fieldset': {
+            borderColor: 'rgb(174, 124, 61)',
+          },
+          '&.Mui-focused fieldset': {
+            borderColor: 'rgb(174, 124, 61)',
+          },
+        },
+      }}>
+        <InputLabel>Permission to access the course</InputLabel>
         <Select
           value={course.permission}
           onChange={(e) => handlePermissionChange(e.target.value)}
-          label="הרשאת גישה לקורס"
-          sx={{ color: '#4CAF50' }}
+          label="Permission to access the course"
+          sx={{ color: 'rgb(109, 106, 106)' }}
           inputProps={{
             startAdornment: (
               <>
-                <MailOutlineIcon sx={{ color: '#4CAF50' }} />
-                {course.permission === 'פרטי' && <LockIcon sx={{ marginLeft: '5px' }} />}
-                {course.permission === 'ציבורי' && <PublicIcon sx={{ marginLeft: '5px' }} />}
+                <MailOutlineIcon sx={{ color: 'rgba(0, 0, 0, 0.712)' }} />
+                {course.permission === 'private' && <LockIcon sx={{ marginLeft: '5px' }} />}
+                {course.permission === 'public' && <PublicIcon sx={{ marginLeft: '5px' }} />}
               </>
             ),
           }}
         >
-          <MenuItem value="פרטי">
+          <MenuItem value="private">
             <LockIcon sx={{ marginRight: '5px' }} />
-            פרטי
+            private
           </MenuItem>
-          <MenuItem value="ציבורי">
+          <MenuItem value="public">
             <PublicIcon sx={{ marginRight: '5px' }} />
-            ציבורי
+            public
           </MenuItem>
         </Select>
       </FormControl>
 
-      {course.permission === 'פרטי' && (
+      {course.permission === 'private' && (
         <>
-          <FormControl variant="outlined" sx={{ marginBottom: '20px', width: '300px' }}>
-            <InputLabel>האם להזמין משתמשים?</InputLabel>
+          <FormControl variant="outlined" sx={{
+            marginBottom: '20px', width: '300px',
+            borderRadius: '4px',
+            '&:focus': {
+              borderColor: 'rgb(174, 124, 61)',
+            },
+            '& label.Mui-focused': {
+              color: 'rgb(174, 124, 61)',
+            },
+            '& .MuiOutlinedInput-root': {
+              '& fieldset': {
+                borderColor: 'rgb(174, 124, 61)',
+              },
+              '&:hover fieldset': {
+                borderColor: 'rgb(174, 124, 61)',
+              },
+              '&.Mui-focused fieldset': {
+                borderColor: 'rgb(174, 124, 61)',
+              },
+            },
+          }}>
+            <InputLabel>Do you invite users?</InputLabel>
             <Select
               value={course.inviteUsers}
               onChange={(e) => handleChange('inviteUsers', e.target.value)}
-              label="האם להזמין משתמשים?"
-              sx={{ color: '#FF4081' }}
+              label="Do you invite users?"
+              sx={{ color: 'rgb(109, 106, 106)' }}
               inputProps={{
                 startAdornment: (
-                  <AddIcon sx={{ color: '#FF4081' }} />
+                  <AddIcon sx={{ color: 'rgb(109, 106, 106)' }} />
                 ),
               }}
             >
               <MenuItem value={false}>
-                <CloseIcon sx={{ marginRight: '5px' }} />
-                לא
+                <CloseIcon sx={{ marginRight: '5px', color: 'rgb(109, 106, 106)' }} />
+                No
               </MenuItem>
               <MenuItem value={true}>
-                <AddIcon sx={{ marginRight: '5px' }} />
-                כן
+                <AddIcon sx={{ marginRight: '5px', color: 'rgb(109, 106, 106)' }} />
+                Yes
               </MenuItem>
             </Select>
           </FormControl>
 
           {course.inviteUsers && (
             <>
-              {course.usersToAdd.map((user, index) => (
+              {course.invitations.map((user, index) => (
                 <Box
                   key={index}
                   sx={{
@@ -234,38 +337,99 @@ const AddCourse = ({ spaceId }) => {
                     marginBottom: '10px',
                   }}
                 >
-                  <Avatar sx={{ marginRight: '10px' }}>{user.name[0]}</Avatar>
-                  <Typography sx={{ color: '#2196F3' }}>
-                    {user.email}
+                  <Avatar sx={{ marginRight: '10px' }}>{user[0]}</Avatar>
+                  <Typography sx={{ color: 'rgb(109, 106, 106)' }}>
+                    {user}
                   </Typography>
                   <IconButton
                     aria-label="remove"
                     size="small"
                     onClick={() => handleRemoveUser(index)}
-                    sx={{ marginLeft: 'auto', color: 'red' }}
+                    // sx={{ marginLeft: 'auto', color: 'red' }}
+                    sx={{
+                      // marginBottom: '20px',
+                      // width: '300px',
+                      // borderColor: 'rgb(174, 124, 61)',
+                      // border: '1px solid rgb(174, 124, 61)',
+                      marginLeft: 'auto',
+                      borderRadius: '4px',
+                      '&:focus': {
+                        borderColor: 'rgb(174, 124, 61)',
+                      },
+                      '& label.Mui-focused': {
+                        color: 'rgb(174, 124, 61)',
+                      },
+                      '& .MuiOutlinedInput-root': {
+                        '& fieldset': {
+                          borderColor: 'rgb(174, 124, 61)',
+                        },
+                        '&:hover fieldset': {
+                          borderColor: 'rgb(174, 124, 61)',
+                        },
+                        '&.Mui-focused fieldset': {
+                          borderColor: 'rgb(174, 124, 61)',
+                        },
+                      },
+                    }}
                   >
                     <CloseIcon />
                   </IconButton>
                 </Box>
               ))}
               <TextField
-                label="מייל משתמש להזמנה"
+                label="User email for ordering"
                 variant="outlined"
                 value={course.userToAdd}
                 onChange={(e) => handleChange('userToAdd', e.target.value)}
-                sx={{ marginBottom: '20px', width: '300px' }}
+                // sx={{ marginBottom: '20px', width: '300px' }}
+                sx={{
+                  marginBottom: '20px',
+                  width: '300px',
+                  // borderColor: 'rgb(174, 124, 61)',
+                  // border: '1px solid rgb(174, 124, 61)',
+                  borderRadius: '4px',
+                  '&:focus': {
+                    borderColor: 'rgb(174, 124, 61)',
+                  },
+                  '& label.Mui-focused': {
+                    color: 'rgb(174, 124, 61)',
+                  },
+                  '& .MuiOutlinedInput-root': {
+                    '& fieldset': {
+                      borderColor: 'rgb(174, 124, 61)',
+                    },
+                    '&:hover fieldset': {
+                      borderColor: 'rgb(174, 124, 61)',
+                    },
+                    '&.Mui-focused fieldset': {
+                      borderColor: 'rgb(174, 124, 61)',
+                    },
+                  },
+                }}
                 InputProps={{
                   startAdornment: (
-                    <MailOutlineIcon sx={{ color: '#2196F3' }} />
+                    <MailOutlineIcon sx={{ color: 'rgb(109, 106, 106)' }} />
                   ),
                 }}
               />
               <Button
                 variant="contained"
                 onClick={handleAddUser}
-                sx={{ backgroundColor: '#2196F3', color: '#fff', marginBottom: '20px' }}
+                // sx={{ backgroundColor: 'rgb(174, 124, 61)', color: 'white', marginBottom: '20px' }}
+                sx={{
+                  backgroundColor: 'rgb(174, 124, 61)',
+                  color: 'white',
+                  marginBottom: '20px',
+                  '&:hover': {
+                    backgroundColor: 'rgba(255, 255, 255, 0.178)',
+                    color: 'rgb(174, 124, 61)',
+                    borderColor: 'rgb(174, 124, 61)',
+                  },
+                }}
+                startIcon={<AccessibilityNewIcon /> }
+
               >
-                הוסף משתמש
+                Add user
               </Button>
             </>
           )}
@@ -275,12 +439,24 @@ const AddCourse = ({ spaceId }) => {
       <Button
         variant="contained"
         onClick={handleAddCourse}
-        sx={{ backgroundColor: '#FF4081', color: '#fff' }}
-        startIcon={<AccessibilityNewIcon />}
+        // sx={{ backgroundColor: 'rgb(174, 124, 61)', color: 'white' }}
+        sx={{
+          backgroundColor: 'rgb(174, 124, 61)',
+          color: 'white',
+          marginBottom: '20px',
+          '&:hover': {
+            // backgroundColor: 'black ',
+            backgroundColor: 'rgba(255, 255, 255, 0.178)',
+            color: 'rgb(174, 124, 61)',
+            borderColor: 'rgb(174, 124, 61)',
+          },
+        }}
+         startIcon={<LaptopChromebookIcon />}
       >
-        הוסף קורס
+        Add course
       </Button>
     </Box>
+
   );
 };
 

@@ -9,6 +9,7 @@ const { forgotPasswordEmail } = require("./sendMessage");
 const { Invite } = require("../model/invatations.model");
 const cloudinary = require("../utils/cloudinary");
 const { Types } = require("mongoose");
+const { Course } = require("../model/course.model");
 
 exports.getUsers = async (req, res, next) => {
     try {
@@ -30,9 +31,65 @@ exports.getInfoUser = async (req, res, next) => {
     }
 }
 
+// exports.createUser = async (req, res, next) => {
+//     const body = req.body;
+//     console.log('body:', req.body);
+
+//     console.log('file:', req.file);
+//     try {
+//         console.log("JOI");
+//         const validate = validCreateUser(body)
+//         if (validate.error)
+//             throw Error(validate.error);
+//         if (await checkIfUserExsist(body.email)) {
+//             throw new Error("This email alredy in this system")
+//         }
+
+//         const { contact } = body;
+//         const allowedContact = ['Email', 'SMS', 'Phone'];
+
+//         const file = req.file.path
+//         console.log(file);
+//         console.log(req.profileImage);
+//         const result = await cloudinary.uploader.upload(file, { resource_type: "image" })
+//         body.profileImage = result.url;
+
+
+//         if (contact && allowedContact.includes(contact)) {
+//             body.contact = contact;
+//         }
+//         const hash = await bcrypt.hash(body.password, 10);
+//         body.password = hash;
+//         const newUser = await User.create(body);
+//         if (!newUser) return next(new Error('problem creating user'))
+
+
+//         try {
+//             await createUserMail(newUser.email);
+//             // await sendSMS(newUser.phone);
+//             // console.log('SMS sent successfully.');
+//         } catch (err) {
+//             // console.error('Error sending SMS:', err);
+//             return next(err);
+//         }
+//         const user = { password: '********' }
+//         return res.status(201).json({
+//             status: 'sucsess',
+//             user
+//         }
+//         );
+//     }
+//     catch (err) {
+//         console.log(err);
+//         next(err);
+//     }
+// }
+
 exports.createUser = async (req, res, next) => {
     const body = req.body;
-    console.log(body);
+    console.log('body:',req.body);
+
+    console.log('file:',req.file);
     try {
         console.log("JOI");
         const validate = validCreateUser(body)
@@ -45,7 +102,13 @@ exports.createUser = async (req, res, next) => {
         const { contact } = body;
         const allowedContact = ['Email', 'SMS', 'Phone'];
 
+        console.log('fileee');
+        console.log('file '+req.file);
         const file = req.file.path
+        console.log('file 2');
+        console.log(file);
+    
+        console.log(req.profileImage);
         const result = await cloudinary.uploader.upload(file, { resource_type: "image" })
         body.profileImage = result.url ;
 
@@ -53,7 +116,6 @@ exports.createUser = async (req, res, next) => {
         if (contact && allowedContact.includes(contact)) {
             body.contact = contact;
         }
-
         const hash = await bcrypt.hash(body.password, 10);
         body.password = hash;
         const newUser = await User.create(body);
@@ -80,7 +142,6 @@ exports.createUser = async (req, res, next) => {
         next(err);
     }
 }
-
 const checkIfUserExsist = async (email) => {
     const user = await User.findOne({ email })
     if (user)
@@ -155,25 +216,24 @@ exports.updateLoginMethod = (req, res) => {
 
 
 exports.resetPassword = async (req, res, next) => {
+    console.log("body",req.body)
     try {
-        const { resetToken } = req.query;
+        const { token } = req.query;
         const { newPassword } = req.body;
 
-        console.log("resetToken" + resetToken);
         // Decode and verify the reset token
-        const decodedToken = jwt.verify(resetToken, "123@@");
-        console.log(decodedToken);
+        const decodedToken = jwt.verify(token, "123@@");
         const userId = decodedToken.userId;
-
         // Find the user in the database
         const user = await User.findById(userId);
+    
         if (!user) {
             throw new Error("User not found");
         }
-        console.log(user.resetToken);
+        console.log(user);
 
         // Check if the token matches the user's reset token
-        if (user.resetToken !== resetToken) {
+        if (user.resetToken !== token) {
             throw new Error("Invalid reset token");
         }
 
@@ -220,3 +280,41 @@ exports.forgotPassword = async (req, res, next) => {
     }
 };
 
+
+exports.getAcceptCourses = async (req, res, next) => {
+    try {
+        const { email } = req.body;
+        const userAcceptInvitations = await Invite.find({ acceptMail: email, statusInvite: 'accept' });
+
+        const courseInfo = [];
+        for (const accept of userAcceptInvitations) {
+            const courseId = accept.courseId;
+            const coursesAccept = await Course.findById(courseId);
+            if (coursesAccept) {
+                courseInfo.push(coursesAccept);
+            }
+        }
+        res.send(courseInfo);
+    } catch (error) {
+        next(error);
+    }
+}
+
+exports.getAcceptCourses = async (req, res, next) => {
+    try {
+        const { email } = req.body;
+        const userAcceptInvitations = await Invite.find({ acceptMail: email, statusInvite: 'accept' });
+
+        const courseInfo = [];
+        for (const accept of userAcceptInvitations) {
+            const courseId = accept.courseId;
+            const coursesAccept = await Course.findById(courseId);
+            if (coursesAccept) {
+                courseInfo.push(coursesAccept);
+            }
+        }
+        res.send(courseInfo);
+    } catch (error) {
+        next(error);
+    }
+}

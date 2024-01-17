@@ -1,12 +1,48 @@
 const mongoose = require("mongoose");
 
 const commentsSchema = new mongoose.Schema({
+    email: {
+        type: String,
+    },
     userName: {
         type: String,
-        require: true
+        required: true
     },
     contentComment: {
-        type: String
+        type: String,
+        required: true
+    },
+    like: {
+        type: Number,
+        default: 0,
+        required: false
+
+    },
+    disLike: {
+        type: Number,
+        default: 0,
+        required: false
+    },
+    ownerUser: {
+        type: mongoose.Types.ObjectId,
+        ref: 'User'
+    },
+    reply: [{
+        userName: {
+            type: String
+        },
+        comment: {
+            type: String
+        }, 
+        profileImage: {
+            type: String, 
+            url: String
+        }
+    }
+    ],
+    profileImage: {
+        type: String,
+        url: String
     }
 })
 

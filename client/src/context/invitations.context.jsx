@@ -1,9 +1,3 @@
-//כל ההזמנות ששלחו לי
-//
-//הוספה עדכון מחיקה 
-//צפייה בשיעורי הקורס
-//צפייה בשיעור אחד
-
 import { createContext, useState } from 'react';
 import { axiosRequest } from '../utils/serverConnection';
 
@@ -11,10 +5,22 @@ export const InvitationContext = createContext();
 
 export const InvitationProvider = ({ children }) => {
 
-  const [currentInvitation, setCurrentInvitation] = useState(null);
+  const [currentInvitation, setCurrentInvitation] = useState(JSON.parse(localStorage.getItem('invitation')) ||null);
+  const token = localStorage.getItem('userToken');
+  const authorization = `Bearer ${token}`;  
+
+  const updateCurrentInvite = (invite) => {
+    setCurrentInvitation(invite);
+    localStorage.setItem('invitation',JSON.stringify(invite));     
+};
+
 
   const getAllMyInvitations = async (userEmail) => {
     const config = {
+      headers: {
+        'Authorization': authorization,  
+        'Content-Type': 'application/json',  
+      },
       method: 'get',
       url: `http://localhost:3000/invitations/getInvitations/${userEmail}`,
     };
@@ -24,23 +30,15 @@ export const InvitationProvider = ({ children }) => {
     return allMyInvitations;
   };
 
-  // const addInvitation = async (invitation) => {
-  //   const config = {
-  //     method: 'post',
-  //     url: 'http://localhost:3000/invitations',
-  //     data: lessonData,
-  //   };
-
-  //   const newLesson = await axiosRequest(config);
-  //   console.log('added lesson:', newLesson);
-  //   return newLesson;
-  // };
-
-  const updateInviteStatus = async (id, lessonData) => {
+  const updateInviteStatus = async (idInvite, status) => {
     const config = {
+      headers: {
+        'Authorization': authorization,  
+        'Content-Type': 'application/json',  
+      },
       method: 'patch',
-      url: `http://localhost:3000/invitations/updateInviteStatus/${id}`,
-      data: lessonData,
+      url: `http://localhost:3000/invitations/updateInviteStatus/${idInvite}`,
+      data: {newStatus:status},
     };
 
     const updatedStatus = await axiosRequest(config);
@@ -48,10 +46,9 @@ export const InvitationProvider = ({ children }) => {
     return updatedStatus;
   };
 
-
   return (
-    <Lesson.Provider value={{ currentInvitation , getAllMyInvitations , updateInviteStatus }}>
+    <InvitationContext.Provider value={{ currentInvitation , updateCurrentInvite , getAllMyInvitations , updateInviteStatus }}>
       {children}
-    </Lesson.Provider>
+    </InvitationContext.Provider>
   );
 };

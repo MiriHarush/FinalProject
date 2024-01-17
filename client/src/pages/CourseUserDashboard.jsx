@@ -7,57 +7,92 @@ import Button from '@mui/material/Button';
 import { CourseContext } from '../context/courses.context';
 import { LessonContext } from '../context/lessons.context';
 import { InvitationContext } from '../context/invitations.context';
+import FileModal from '../components/FileModal';
+import CourseManagerDashboard from './CourseManagerDashboard';
+import { useNavigate } from 'react-router-dom';
+import '../css/lesson.css';
+
 
 const CourseUserDashboard = () => {
 
   const { currentCourse } = useContext(CourseContext);
-  const { getAllLessons } = useContext(LessonContext);
+  const { updateCurrentLesson, getAllLessons } = useContext(LessonContext);
+  const { getAllMyInvitations } = useContext(InvitationContext);
   const [lessons, setLessons] = useState([]);
-
   const [invitations, setInvitations] = useState([]);
+  const navigate = useNavigate();
 
-  // const invitations = [
-  //   { id: 1, instructorName: "a", courseName: "aa" },
-  //   { id: 2, instructorName: "b", courseName: "bb" },
-  //   { id: 3, instructorName: "c", courseName: "cc" }
-  // ]
+  console.log("curcur", currentCourse);
 
- 
   useEffect(() => {
     const fetchData = async () => {
       const lessonsData = await getAllLessons(currentCourse._id);
       setLessons(lessonsData.result);
 
+      // const invitationsData = await getAllMyInvitations(currentCourse._id);
+      // setInvitations(invitationsData.result);
     }
     fetchData();
 
   }, [])
 
-
   useEffect(() => {
     console.log("lessons", lessons);
   }, [lessons])
 
+  // useEffect(() => {
+  //   console.log("invitations", invitations);
+  // }, [invitations])
+
+  const getType = (file) => {
+    const url = file;
+    const urlArray = url.split('/');
+    const myFile = urlArray[urlArray.length - 1];
+    const fileName = myFile.split('.')[1];
+    return fileName;
+  }
+
+  const openLessonModal = (lesson) => {
+    updateCurrentLesson(lesson);
+    navigate('/lessonModal',{ state: { isManager: 'false' } });
+  }
 
   return (
     <>
-      <div>
-        <h1>lessons in course </h1>
+      <div  className='centerContainer'>
+      <h2 style={{ color: 'rgb(174, 124, 61)', fontWeight: 'bold' }}>Course User Dashboard</h2>
+
+        <h1 style={{color: 'rgb(174, 124, 61)'}}>lessons in course </h1>
         {lessons.length === 0 ? (
-          <p>no lessons</p>
+          <p style={{color: 'rgb(174, 124, 61)'}}>no lessons</p>
         ) : (
-          <ul>
+          <div style={{ display: 'flex', flexWrap: 'wrap' }}>
             {lessons.map((lesson) => (
-              <li key={lesson.id}>
-                <h2>{lesson.lessonName}</h2>
-                <p>{lesson.content}</p>
-                {/* הוסף כאן יותר מידע או תצוגה של השיעור */}
-              </li>
+              <Card style={{ margin: '10px', width: '45%' }}>
+                <CardContent>
+                  <Typography variant="h4" component="div">
+                    {lesson?.lessonName}
+                  </Typography>
+                  <hr />
+                  <Typography variant="body1" component="div">
+                    {lesson?.descerption}
+                  </Typography>
+                  <Button
+                  {...lesson}
+                variant="outlined"
+                color="primary"
+                onClick={() => openLessonModal(lesson)}
+                style={{ marginTop: '10px' }}
+              >
+                View Lesson
+              </Button>
+                </CardContent>
+              </Card>
             ))}
-          </ul>
+          </div>
         )}
       </div>
-
+{/* 
       <div>
         <h1>invitations</h1>
         <div style={{ display: 'flex', flexWrap: 'wrap' }}>
@@ -69,7 +104,7 @@ const CourseUserDashboard = () => {
             ))
           )}
         </div>
-      </div>
+      </div> */}
     </>
   );
 };

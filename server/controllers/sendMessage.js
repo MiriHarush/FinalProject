@@ -34,8 +34,8 @@ const createUserMail = async (mail) => {
     
     const userEmail = mail; 
     console.log(userEmail)
-    const subject = 'הודעת התחברות לאתר';
-    const message = 'ברוך הבא! התחברת בהצלחה לאתר שלנו.';
+    const subject = 'Website login message';
+    const message = 'Welcome! You have successfully connected to our website';
     
     const emailSent = await sendEmail(userEmail, subject, message);
     
@@ -65,6 +65,37 @@ const sendInvitation = async (mail, courseName, inviteMail) => {
     
 }
 
+const sendContactRequest = async (mail) => {
+    
+    const acceptMail = mail; 
+    console.log(acceptMail)
+    const subject = 'Thanks for your contant';
+    const message = `Hello, The request has been sent successfully<br> We will contact you as soon as possible.<br>`;
+    
+    const emailSent = await sendEmail(acceptMail, subject, message);
+    
+    if (emailSent) {
+        console.log('Email sent successfully.');
+    } else {
+        console.log('Failed to send email.');
+    }  
+}
+
+const sendContactRequestToAdmin = async (mailContact, contentMessage) => {
+    
+    const acceptMail = "donotreplay08@gmail.com"; 
+    const subject = 'Contact request';
+    const message = `${mailContact} Send a contact request <br> the request: ${contentMessage}.<br>`;
+    
+    const emailSent = await sendEmail(acceptMail, subject, message);
+    
+    if (emailSent) {
+        console.log('Email sent successfully.');
+    } else {
+        console.log('Failed to send email.');
+    }  
+}
+
 
 
 
@@ -87,7 +118,7 @@ const forgotPasswordEmail = async (recipientEmail, resetToken) => {
 
 
 
-module.exports = { createUserMail, sendInvitation, forgotPasswordEmail};
+module.exports = { createUserMail, sendInvitation, forgotPasswordEmail, sendContactRequest, sendContactRequestToAdmin};
 
 
 // const sendSMS = (phone) => {

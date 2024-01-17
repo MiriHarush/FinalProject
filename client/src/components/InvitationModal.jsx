@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
+// import Button from '@mui/material/Button';
+import Button from '@mui/material-next/Button';
+
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Grid from '@mui/material/Grid';
 import { styled } from '@mui/system';
+import { InvitationContext } from '../context/invitations.context';
+
+import '../css/lesson.css';
 
 
 const StyledCard = styled(Card)({
@@ -13,8 +18,8 @@ const StyledCard = styled(Card)({
     position: 'relative',
     boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
     borderRadius: '10px',
-    display: 'flex',  // הוסף תכונת Flex
-    flexDirection: 'column',  // כדי שהכפתורים יורדו לקרקע
+    display: 'flex',
+    flexDirection: 'column',
 });
 
 const StyledSeal = styled('div')({
@@ -43,11 +48,14 @@ const StyledStamp = styled('div')({
     fontWeight: 'bold',
 });
 
-const InvitationModal = ({ invite }) => {
-    const { instructorName, courseName } = invite;
+const InvitationModal = ({ invite, onConfirmOrder }) => {
+    const { inviteMail, courseId, courseName } = invite;
+    const { updateInviteStatus } = useContext(InvitationContext);
 
-    const orderConfirmation = () => {
-        // הוסף פעולות כאן אם יש צורך
+
+    const orderConfirmation = async (status) => {
+        await updateInviteStatus(invite._id, status);
+        onConfirmOrder();
     };
 
     return (
@@ -57,22 +65,26 @@ const InvitationModal = ({ invite }) => {
                 <StyledSeal />
                 <CardContent>
                     <Typography variant="h6" component="div">
-                        {`Invitation from ${instructorName}`}
+                        {`Invitation from ${inviteMail}`}
                     </Typography>
                     <Typography variant="body2" color="textSecondary">
                         {`To Course: ${courseName}`}
                     </Typography>
                     <Button
                         variant="contained"
-                        color="primary"
-                        style={{ margin: '10px' }}
+                        onClick={() => orderConfirmation("accept")}
+                        style={{ margin: '2%'}}
+                        className='courseButton'
                     >
                         Accept
                     </Button>
                     <Button
                         variant="contained"
-                        color="secondary"
-                        onClick={orderConfirmation}
+                        onClick={() => orderConfirmation("reject")}
+                        style={{margin: '2%'}}
+                       
+                        className='courseButton'
+
                     >
                         Reject
                     </Button>

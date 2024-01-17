@@ -1,29 +1,24 @@
-//הוספה עדכון מחיקה 
-//צפייה בשיעורי הקורס
-//צפייה בשיעור אחד
-
 import { createContext, useState } from 'react';
 import { axiosRequest } from '../utils/serverConnection';
 
 export const LessonContext = createContext();
 
 export const LessonProvider = ({ children }) => {
-  const [currentLesson, setCurrentLesson] = useState(null);
-
-
+  
+  const [currentLesson, setCurrentLesson] = useState(JSON.parse(localStorage.getItem('lesson')) ||null);
   const token = localStorage.getItem('userToken');
-  const authorization = `Bearer ${token}`;  // הכנסת ה-Token ל-headers
+  const authorization = `Bearer ${token}`;  
 
   const updateCurrentLesson = (lesson) => {
     setCurrentLesson(lesson);
+    localStorage.setItem('lesson',JSON.stringify(lesson));     
   };
 
-  
   const getAllLessons = async (idLesson) => {
     const config = {
       headers: {
-        'Authorization': authorization,  // הכנסת ה-Token ל-headers
-        'Content-Type': 'application/json',  // תלוי בסוג הבקשה שאת מבצעת
+        'Authorization': authorization,  
+        // 'Content-Type': 'application/json',  
       },
       method: 'get',
       url: `http://localhost:3000/lesson/getAllLessones/${idLesson}`
@@ -34,12 +29,11 @@ export const LessonProvider = ({ children }) => {
     return allLessons;
   };
 
-
   const getLesson = async (courseID) => {
     const config = {
       headers: {
-        'Authorization': authorization,  // הכנסת ה-Token ל-headers
-        'Content-Type': 'application/json',  // תלוי בסוג הבקשה שאת מבצעת
+        'Authorization': authorization,  
+        // 'Content-Type': 'application/json',  
       },
       method: 'get',
       url: `http://localhost:3000/lesson/getOneLessones/${courseID}`
@@ -54,8 +48,8 @@ export const LessonProvider = ({ children }) => {
   const addLesson = async (lessonData) => {
     const config = {
       headers: {
-        'Authorization': authorization,  // הכנסת ה-Token ל-headers
-        'Content-Type': 'application/json',  // תלוי בסוג הבקשה שאת מבצעת
+        'Authorization': authorization,  
+        // 'Content-Type': 'application/json',  
       },
       method: 'post',
       url: 'http://localhost:3000/lesson/createLesson',
@@ -71,8 +65,8 @@ export const LessonProvider = ({ children }) => {
   const updateLesson = async (id, lessonData) => {
     const config = {
       headers: {
-        'Authorization': authorization,  // הכנסת ה-Token ל-headers
-        'Content-Type': 'application/json',  // תלוי בסוג הבקשה שאת מבצעת
+        'Authorization': authorization,  
+        // 'Content-Type': 'application/json', 
       },
       method: 'patch',
       url: `http://localhost:3000/lesson/updateLesson/${id}`,
@@ -88,8 +82,8 @@ export const LessonProvider = ({ children }) => {
   const deleteLesson = async (id) => {
     const config = {
       headers: {
-        'Authorization': authorization,  // הכנסת ה-Token ל-headers
-        'Content-Type': 'application/json',  // תלוי בסוג הבקשה שאת מבצעת
+        'Authorization': authorization,  
+        // 'Content-Type': 'application/json', 
       },
       method: 'delete',
       url: `http://localhost:3000/lesson/deleteLesson/${id}`,
@@ -102,8 +96,25 @@ export const LessonProvider = ({ children }) => {
   };
 
 
+  const uploadFile = async (lesId, myData) => {
+    const config = {
+      headers: {
+        'Authorization': authorization,  
+        // 'Content-Type': 'application/json',  
+      },
+      method: 'post',
+      url: `http://localhost:3000/lesson/uploadFile/${lesId}`,
+      data:myData
+    };
+
+    const newFile = await axiosRequest(config);
+    console.log('added file:', newFile);
+    return newFile;
+  };
+
+
   return (
-    <LessonContext.Provider value={{ currentLesson, updateCurrentLesson, getAllLessons, getLesson, addLesson, updateLesson, deleteLesson }}>
+    <LessonContext.Provider value={{ currentLesson, updateCurrentLesson, getAllLessons, getLesson, addLesson, updateLesson, deleteLesson, uploadFile }}>
       {children}
     </LessonContext.Provider>
   );

@@ -6,7 +6,6 @@ const handleServerError = (error) => {
 };
 
 export const axiosRequest = async (config) => {
-  console.log("config", config);
   try {
     const response = await axios(config);
     console.log('Data from server:', response.data);
