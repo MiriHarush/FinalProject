@@ -6,10 +6,13 @@ import {
   Paper,
   Grid,
   TextField,
-  Button,
   FormHelperText,
 } from '@mui/material';
 import { UserContext } from '../context/users.context';
+import Button from '@mui/material-next/Button';
+import '../css/lesson.css';
+
+
 
 const ResetPassword = () => {
   const [password, setPassword] = useState('');
@@ -71,9 +74,9 @@ const token = urlParams.get('token');
   };
 
   return (
-    <Container component="main" maxWidth="xs">
-      <Paper elevation={3} style={{ padding: 20, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <Typography variant="h5" align="center" gutterBottom style={{ color: 'rgb(174, 124, 61)' }}>
+    <div component="main" maxWidth="xs" className='centerContainer' style={{ padding: '10%'}}>
+      <Paper elevation={3} style={{ padding: 50, display: 'flex', flexDirection: 'column', alignItems: 'center',background:'rgba(255, 255, 255, 0.56)'}}>
+        <Typography variant="h4" align="center" gutterBottom style={{ color: 'rgb(174, 124, 61)' }}>
           Reset Password
         </Typography>
         <form onSubmit={handleSubmit} style={{ width: '100%' }}>
@@ -88,6 +91,25 @@ const token = urlParams.get('token');
                 onChange={(e) => setPassword(e.target.value)}
                 error={Boolean(passwordError)}
                 helperText={passwordError}
+                sx={{
+                  '&:focus': {
+                    borderColor: 'rgb(174, 124, 61)',
+                  },
+                  '& label.Mui-focused': {
+                    color: 'rgb(174, 124, 61)',
+                  },
+                  '& .MuiOutlinedInput-root': {
+                    '& fieldset': {
+                      borderColor: 'rgb(174, 124, 61)',
+                    },
+                    '&:hover fieldset': {
+                      borderColor: 'rgb(174, 124, 61)',
+                    },
+                    '&.Mui-focused fieldset': {
+                      borderColor: 'rgb(174, 124, 61)',
+                    },
+                  },
+                }}
               />
             </Grid>
             <Grid item xs={12}>
@@ -127,17 +149,19 @@ const token = urlParams.get('token');
             variant="contained"
             // color="primary"
             fullWidth
-            style={{ marginTop: 20, backgroundColor: 'rgb(174, 124, 61)' }}
+            // style={{ marginTop: 20, backgroundColor: 'rgb(174, 124, 61)' }}
             disabled={loading}
+            className='courseButton'
+
           >
             {loading ? 'Resetting Password...' : 'Reset Password'}
           </Button>
           <FormHelperText style={{ marginTop: 10 }}>
-            <a href="/login">Remember your password? Log in here</a>.
+            <a style={{ color: 'rgb(174, 124, 61)', cursor: 'pointer' }} href="/login">Remember your password? Log in here</a>.
           </FormHelperText>
         </form>
       </Paper>
-    </Container>
+    </div>
   );
 };
 

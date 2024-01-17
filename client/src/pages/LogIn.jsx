@@ -12,6 +12,9 @@ import {
 } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { UserContext } from '../context/users.context';
+// import Button from '@mui/material-next/Button';
+
+import  "../css/LogIn.css"
 
 const theme = createTheme({
   palette: {
@@ -65,7 +68,7 @@ const LogIn = () => {
        <Container component="main" maxWidth="xs" className='container-login' >
          <Grid container spacing={2} justifyContent="center" alignItems="center">
            <Grid item xs={12}>
-             <Typography variant="h4" align="center" gutterBottom style={{ color: 'rgb(174, 124, 61)' }}>
+             <Typography variant="h4" align="center" gutterBottom  style={{ color: 'rgb(174, 124, 61)' }}>
                Log In
              </Typography>
              <form onSubmit={handleSubmit} style={{ width: '100%' }}>

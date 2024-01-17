@@ -1,7 +1,9 @@
-.img{
-    background-image: url("https://images.unsplash.com/photo-1485988412941-77a35537dae4?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTEyfHxsZWFybmluZyUyMHNwYWNlc3xlbnwwfHwwfHx8MA%3D%3D");
-    background-repeat: no-repeat;
-background-size: cover;
+.img {
+  background-image: url("https://images.pexels.com/photos/4145190/pexels-photo-4145190.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
+
+  /* background-image: url("https://images.unsplash.com/photo-1485988412941-77a35537dae4?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTEyfHxsZWFybmluZyUyMHNwYWNlc3xlbnwwfHwwfHx8MA%3D%3D"); */
+  background-repeat: no-repeat;
+  background-size: cover;
   background-position: center center;
   background-attachment: fixed;
 }

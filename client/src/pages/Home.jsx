@@ -42,10 +42,10 @@ const Home = () => {
     <>
     {console.log(currentUser)}
       {currentUser == null && (
-        <div className='img' style={{ textAlign: 'center' }}>
-          <div style={{ display: 'flex', flexDirection: 'row', gap: '20px', justifyContent: 'center', paddingTop: '10px' }}>
-            <SignUp />
+        <div className='img' >
+          <div style={{ flexDirection: 'row', gap: '20px', paddingTop: '10px' }}>
             <LogIn />
+            <SignUp />
           </div>
         </div>
       )}

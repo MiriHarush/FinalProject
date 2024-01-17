@@ -1,11 +1,16 @@
 import React, { useContext } from 'react';
 import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
+// import Button from '@mui/material/Button';
+import Button from '@mui/material-next/Button';
+
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Grid from '@mui/material/Grid';
 import { styled } from '@mui/system';
 import { InvitationContext } from '../context/invitations.context';
+
+import '../css/lesson.css';
+
 
 const StyledCard = styled(Card)({
     margin: '10px',
@@ -13,8 +18,8 @@ const StyledCard = styled(Card)({
     position: 'relative',
     boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
     borderRadius: '10px',
-    display: 'flex', 
-    flexDirection: 'column', 
+    display: 'flex',
+    flexDirection: 'column',
 });
 
 const StyledSeal = styled('div')({
@@ -67,18 +72,19 @@ const InvitationModal = ({ invite, onConfirmOrder }) => {
                     </Typography>
                     <Button
                         variant="contained"
-                        onClick={()=>orderConfirmation("accept")}
-                        style={{ margin: '10px', backgroundColor: 'rgb(174, 124, 61)', color: 'white'}}
+                        onClick={() => orderConfirmation("accept")}
+                        style={{ margin: '2%'}}
+                        className='courseButton'
                     >
                         Accept
                     </Button>
                     <Button
                         variant="contained"
-                        onClick={()=>orderConfirmation("reject")}
-                        style={{
-                            backgroundColor: 'rgb(174, 124, 61)', // כאן אתה מגדיר את הצבע של הרקע
-                            color: 'white', // כאן אתה מגדיר את צבע הטקסט
-                          }}
+                        onClick={() => orderConfirmation("reject")}
+                        style={{margin: '2%'}}
+                       
+                        className='courseButton'
+
                     >
                         Reject
                     </Button>

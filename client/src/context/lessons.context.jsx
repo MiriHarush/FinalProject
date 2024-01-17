@@ -17,7 +17,7 @@ export const LessonProvider = ({ children }) => {
     const config = {
       headers: {
         'Authorization': authorization,  
-        'Content-Type': 'application/json',  
+        // 'Content-Type': 'application/json',  
       },
       method: 'get',
       url: `http://localhost:3000/lesson/getAllLessones/${idLesson}`
@@ -32,7 +32,7 @@ export const LessonProvider = ({ children }) => {
     const config = {
       headers: {
         'Authorization': authorization,  
-        'Content-Type': 'application/json',  
+        // 'Content-Type': 'application/json',  
       },
       method: 'get',
       url: `http://localhost:3000/lesson/getOneLessones/${courseID}`
@@ -48,7 +48,7 @@ export const LessonProvider = ({ children }) => {
     const config = {
       headers: {
         'Authorization': authorization,  
-        'Content-Type': 'application/json',  
+        // 'Content-Type': 'application/json',  
       },
       method: 'post',
       url: 'http://localhost:3000/lesson/createLesson',
@@ -65,7 +65,7 @@ export const LessonProvider = ({ children }) => {
     const config = {
       headers: {
         'Authorization': authorization,  
-        'Content-Type': 'application/json', 
+        // 'Content-Type': 'application/json', 
       },
       method: 'patch',
       url: `http://localhost:3000/lesson/updateLesson/${id}`,
@@ -82,7 +82,7 @@ export const LessonProvider = ({ children }) => {
     const config = {
       headers: {
         'Authorization': authorization,  
-        'Content-Type': 'application/json', 
+        // 'Content-Type': 'application/json', 
       },
       method: 'delete',
       url: `http://localhost:3000/lesson/deleteLesson/${id}`,
@@ -99,7 +99,7 @@ export const LessonProvider = ({ children }) => {
     const config = {
       headers: {
         'Authorization': authorization,  
-        'Content-Type': 'application/json',  
+        // 'Content-Type': 'application/json',  
       },
       method: 'post',
       url: `http://localhost:3000/lesson/uploadFile/${lesId}`,
