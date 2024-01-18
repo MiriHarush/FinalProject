@@ -62,13 +62,12 @@ export const UserProvider = ({ children }) => {
     }
   };
 
-  const resetPassword = async ({ token , password}) => {
-    console.log(token , password);
+  const resetPassword = async ({ token , newPassword}) => {
     try {
       const config = {
         method: 'post',
-        url: 'http://localhost:3000/users/forgotPassword',
-        data: { token , password },
+        url: `http://localhost:3000/users/resetPassword?resetToken=${token}`,
+        data: { newPassword }
       };
 
       const message = await axiosRequest(config);

@@ -13,6 +13,7 @@ import './App.css'
 import styled from 'styled-components';
 import './index.css'; 
 import { ThemeProvider, createTheme } from '@mui/material';
+import FileList from './components/FileList';
 const theme = createTheme({
   typography: {
     fontFamily: 'Dosis'
@@ -21,25 +22,28 @@ const theme = createTheme({
 
 function App() {
   return (
-    <UserProvider>
-      <SpaceProvider>
-        <CourseProvider>
-          <InvitationProvider>
-          <LessonProvider>
+    <LessonProvider>
+    <FileList/>
+    </LessonProvider>
+    // <UserProvider>
+    //   <SpaceProvider>
+    //     <CourseProvider>
+    //       <InvitationProvider>
+    //       <LessonProvider>
             
-          <CommentProvider>
-            <ContactProvider>
-            <Router>
-              <RoutesNavBar />
-              <RoutesPages />
-            </Router>
-            </ContactProvider>
-            </CommentProvider>
-            </LessonProvider>
-            </InvitationProvider>
-            </CourseProvider>
-      </SpaceProvider>
-    </UserProvider>
+    //       <CommentProvider>
+    //         <ContactProvider>
+    //         <Router>
+    //           <RoutesNavBar />
+    //           <RoutesPages />
+    //         </Router>
+    //         </ContactProvider>
+    //         </CommentProvider>
+    //         </LessonProvider>
+    //         </InvitationProvider>
+    //         </CourseProvider>
+    //   </SpaceProvider>
+    // </UserProvider>
   );
 }
 
