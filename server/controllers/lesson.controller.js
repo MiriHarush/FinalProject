@@ -33,11 +33,9 @@ exports.uploadFile = async (req, res, next) => {
     if (!upload) {
       throw new Error("the lesson is not exist")
     }
-
     if (String(upload.ownerUser) !== String(userId)) {
       throw new Error("you are not the auther")
     }
-
     const url = []
     for (let i = 0; i < req.files?.length; i++) {
       console.log("fff", req.files[i].path);
@@ -46,7 +44,6 @@ exports.uploadFile = async (req, res, next) => {
       console.log(result);
       url[i] = result.url;
     }
-console.log(result);
     //  upload = await Lesson.findByIdAndUpdate(lesId, body, { new: true });
     upload = await Lesson.findByIdAndUpdate(
       { _id: lesId },
@@ -101,7 +98,8 @@ exports.deleteFile = async (req, res, next) => {
   console.log(fileName)
 
   const { delId } = req.query;
-  let files = await Lesson.findOneAndUpdate({ _id: delId }, { $pull: { content: { $in: [url] } } })
+
+      let files = await Lesson.findOneAndUpdate({ _id: delId }, { $pull: { content: { $in: [url] } } } )
 
   await cloudinary.uploader.destroy(fileName)
 

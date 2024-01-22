@@ -31,11 +31,65 @@ exports.getInfoUser = async (req, res, next) => {
     }
 }
 
+// exports.createUser = async (req, res, next) => {
+//     const body = req.body;
+//     console.log('body:', req.body);
+
+//     console.log('file:', req.file);
+//     try {
+//         console.log("JOI");
+//         const validate = validCreateUser(body)
+//         if (validate.error)
+//             throw Error(validate.error);
+//         if (await checkIfUserExsist(body.email)) {
+//             throw new Error("This email alredy in this system")
+//         }
+
+//         const { contact } = body;
+//         const allowedContact = ['Email', 'SMS', 'Phone'];
+
+//         const file = req.file.path
+//         console.log(file);
+//         console.log(req.profileImage);
+//         const result = await cloudinary.uploader.upload(file, { resource_type: "image" })
+//         body.profileImage = result.url;
+
+
+//         if (contact && allowedContact.includes(contact)) {
+//             body.contact = contact;
+//         }
+//         const hash = await bcrypt.hash(body.password, 10);
+//         body.password = hash;
+//         const newUser = await User.create(body);
+//         if (!newUser) return next(new Error('problem creating user'))
+
+
+//         try {
+//             await createUserMail(newUser.email);
+//             // await sendSMS(newUser.phone);
+//             // console.log('SMS sent successfully.');
+//         } catch (err) {
+//             // console.error('Error sending SMS:', err);
+//             return next(err);
+//         }
+//         const user = { password: '********' }
+//         return res.status(201).json({
+//             status: 'sucsess',
+//             user
+//         }
+//         );
+//     }
+//     catch (err) {
+//         console.log(err);
+//         next(err);
+//     }
+// }
+
 exports.createUser = async (req, res, next) => {
     const body = req.body;
-    console.log('body:', req.body);
+    console.log('body:',req.body);
 
-    console.log('file:', req.file);
+    console.log('file:',req.file);
     try {
         console.log("JOI");
         const validate = validCreateUser(body)
@@ -48,11 +102,15 @@ exports.createUser = async (req, res, next) => {
         const { contact } = body;
         const allowedContact = ['Email', 'SMS', 'Phone'];
 
+        console.log('fileee');
+        console.log('file '+req.file);
         const file = req.file.path
+        console.log('file 2');
         console.log(file);
+    
         console.log(req.profileImage);
         const result = await cloudinary.uploader.upload(file, { resource_type: "image" })
-        body.profileImage = result.url;
+        body.profileImage = result.url ;
 
 
         if (contact && allowedContact.includes(contact)) {
@@ -84,7 +142,6 @@ exports.createUser = async (req, res, next) => {
         next(err);
     }
 }
-
 const checkIfUserExsist = async (email) => {
     const user = await User.findOne({ email })
     if (user)
